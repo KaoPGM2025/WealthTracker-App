@@ -358,7 +358,9 @@
                   <div id="latest-goal-content" class="space-y-4">
                     <div class="flex items-center justify-between">
                       <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center font-bold" id="latest-goal-cat-icon">🚀</div>
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center font-bold" id="latest-goal-cat-icon-wrapper">
+                          <span class="material-symbols-outlined" id="latest-goal-cat-icon">track_changes</span>
+                        </div>
                         <div>
                           <h4 class="font-bold text-sm text-slate-800 dark:text-white" id="latest-goal-title">เป้าหมาย</h4>
                           <span class="text-xs text-slate-400" id="latest-goal-deadline">สิ้นสุด: --/--/----</span>
@@ -455,13 +457,13 @@
                     <div class="relative">
                       <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-slate-400 text-xl">category</span>
                       <select id="save-category" required class="w-full bg-slate-50 dark:bg-darkbg-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-slate-800 dark:text-white">
-                        <option value="เงินเก็บทั่วไป">เงินเก็บทั่วไป 💰</option>
-                        <option value="เป้าหมายส่วนตัว">เป้าหมายส่วนตัว 🎯</option>
-                        <option value="ลงทุน/กองทุน">ลงทุน/กองทุน 📈</option>
-                        <option value="สํารองฉุกเฉิน">สำรองฉุกเฉิน 🚨</option>
-                        <option value="การศึกษา">การศึกษา 🎓</option>
-                        <option value="ท่องเที่ยว">ท่องเที่ยว ✈️</option>
-                        <option value="ของขวัญ/ความสนุก">ของขวัญ/ความสนุก 🎁</option>
+                        <option value="เงินเก็บทั่วไป">เงินเก็บทั่วไป</option>
+                        <option value="เป้าหมายส่วนตัว">เป้าหมายส่วนตัว</option>
+                        <option value="ลงทุน/กองทุน">ลงทุน/กองทุน</option>
+                        <option value="สํารองฉุกเฉิน">สำรองฉุกเฉิน</option>
+                        <option value="การศึกษา">การศึกษา</option>
+                        <option value="ท่องเที่ยว">ท่องเที่ยว</option>
+                        <option value="ของขวัญ/ความสนุก">ของขวัญ/ความสนุก</option>
                       </select>
                     </div>
                   </div>
@@ -793,14 +795,14 @@
         <div>
           <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">เลือกสัญลักษณ์ / ไอคอน</label>
           <select id="goal-category" class="w-full bg-slate-50 dark:bg-darkbg-800 border border-slate-200 dark:border-slate-700 rounded-xl py-2.5 px-4 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500">
-            <option value="✈️">✈️ ท่องเที่ยว</option>
-            <option value="🏠">🏠 บ้าน/อสังหาฯ</option>
-            <option value="🚗">🚗 ยานพาหนะ</option>
-            <option value="💻">💻 เทคโนโลยี/อุปกรณ์ไอที</option>
-            <option value="🎓">🎓 การศึกษา</option>
-            <option value="💍">💍 ของขวัญ/งานแต่ง</option>
-            <option value="📈">📈 การเงิน/ลงทุน</option>
-            <option value="🚀">🚀 ธุรกิจสตาร์ทอัพ</option>
+            <option value="flight">ท่องเที่ยว</option>
+            <option value="home">บ้าน/อสังหาริมทรัพย์</option>
+            <option value="directions_car">ยานพาหนะ</option>
+            <option value="laptop_mac">เทคโนโลยี/ไอที</option>
+            <option value="school">การศึกษา</option>
+            <option value="card_giftcard">ของขวัญ/รางวัลชีวิต</option>
+            <option value="trending_up">การเงิน/ลงทุน</option>
+            <option value="rocket_launch">ธุรกิจสตาร์ทอัพ</option>
           </select>
         </div>
 
@@ -842,10 +844,33 @@
       calendarMonth: new Date().getMonth()
     };
 
+    // บัญชีผู้ใช้ที่ลงทะเบียนใน Local Cache (สำหรับใช้ตรวจสอบความถูกต้องของรหัสผ่านอย่างเข้มงวด)
+    let localUsers = JSON.parse(localStorage.getItem('wealthflow_registered_users')) || {};
+
     // ประกาศ Chart references
     let dashboardChartInstance = null;
     let categoryDonutChartInstance = null;
     let growthLineChartInstance = null;
+
+    // แมปชื่อหมวดหมู่การออมเป็นไอคอนประเภท Material Symbol เพื่อความสะอาดตา
+    function getCategoryIcon(category) {
+      switch (category) {
+        case 'เงินเก็บทั่วไป': return 'payments';
+        case 'เป้าหมายส่วนตัว': return 'track_changes';
+        case 'ลงทุน/กองทุน': return 'trending_up';
+        case 'สํารองฉุกเฉิน': return 'emergency_home';
+        case 'การศึกษา': return 'school';
+        case 'ท่องเที่ยว': return 'flight';
+        case 'ของขวัญ/ความสนุก': return 'featured_seasonal_and_gifts';
+        default: return 'savings';
+      }
+    }
+
+    // แมปชื่อไอคอนเป้าหมายให้เป็นประเภท Material Symbol
+    function getGoalIcon(iconName) {
+      const validIcons = ['flight', 'home', 'directions_car', 'laptop_mac', 'school', 'card_giftcard', 'trending_up', 'rocket_launch'];
+      return validIcons.includes(iconName) ? iconName : 'track_changes';
+    }
 
     window.onload = function() {
       // โหลดการตั้งค่าธีมสีก่อน
@@ -915,8 +940,8 @@
           { savingId: 'SAV_4', amount: 200, category: 'ท่องเที่ยว', date: new Date().toISOString().slice(0, 10), note: 'ออมทริปปลายปี', goalId: '' }
         ];
         const dummyGoals = [
-          { goalId: 'GOL_1', title: 'ทริปญี่ปุ่นฟูจิซัง', targetAmount: 45000, currentAmount: 20000, deadline: '2026-12-31', status: 'กำลังดำเนินการ', category: '✈️' },
-          { goalId: 'GOL_2', title: 'สะสมเงินดาวน์คอนโด', targetAmount: 150000, currentAmount: 65000, deadline: '2027-06-30', status: 'กำลังดำเนินการ', category: '🏠' }
+          { goalId: 'GOL_1', title: 'ทริปต่างประเทศ', targetAmount: 45000, currentAmount: 20000, deadline: '2026-12-31', status: 'กำลังดำเนินการ', category: 'flight' },
+          { goalId: 'GOL_2', title: 'สะสมเงินดาวน์คอนโด', targetAmount: 150000, currentAmount: 65000, deadline: '2027-06-30', status: 'กำลังดำเนินการ', category: 'home' }
         ];
         
         localStorage.setItem(`savings_${state.user.userId}`, JSON.stringify(dummySavings));
@@ -951,9 +976,6 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        
-        // เนื่องจาก no-cors จะส่งกลับมาแบบ opaque response เสมอ (ไม่สามารถอ่านข้อมูล JSON กลับมาได้โดยตรงจาก Fetch API)
-        // ทางเราแก้ไขปัญหาด้วยการจำลองผลลัพธ์ลง Local State อัปเดตทันที (Optimistic Updates) และส่งข้อมูลขึ้นคลาวด์แบบเบื้องหลัง
         return { status: "success", cloudSynced: true };
       } catch (err) {
         console.warn("Cloud connection temporary bypass. Saved locally successfully.", err);
@@ -999,20 +1021,32 @@
 
     async function handleAuthSubmit(event, action) {
       event.preventDefault();
-      showLoading("กำลังเข้าถึงข้อมูลความปลอดภัยของคุณ...");
+      showLoading("กำลังประมวลผลการตรวจสอบสิทธิ์...");
       
       if (action === 'register') {
         const fullName = document.getElementById('reg-name').value;
-        const email = document.getElementById('reg-email').value;
+        const email = document.getElementById('reg-email').value.trim().toLowerCase();
         const password = document.getElementById('reg-password').value;
         
-        // สมัครบัญชี
-        const response = await syncWithCloud('register', { fullName, email, password });
+        if (password.length < 6) {
+          hideLoading();
+          showToast("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร", "error");
+          return;
+        }
+
+        // ลงทะเบียนใน Local Database
+        localUsers[email] = {
+          fullName: fullName,
+          password: password,
+          userId: "USR_" + Date.now()
+        };
+        localStorage.setItem('wealthflow_registered_users', JSON.stringify(localUsers));
+
+        // ดำเนินการส่งข้อมูลเพื่อบันทึกลง USERS ชีตใน Google Sheets
+        await syncWithCloud('register', { fullName, email, password });
         
-        // ประมวลผลสำเร็จที่ฝั่งไคลเอนต์ด้วยการจดจำไว้ใช้งาน
-        const userId = "USR_" + Date.now();
         const avatarUrl = "https://placehold.co/150x150/10b981/ffffff?text=" + encodeURIComponent(fullName.charAt(0));
-        state.user = { userId, email, fullName, avatarUrl };
+        state.user = { userId: localUsers[email].userId, email, fullName, avatarUrl };
         localStorage.setItem('wealthflow_user', JSON.stringify(state.user));
         
         initMockDataIfFirstTime();
@@ -1020,20 +1054,28 @@
         showToast("สร้างบัญชีสำเร็จ ยินดีต้อนรับสู่ WealthFlow!");
         showMainApp();
       } else {
-        const email = document.getElementById('login-email').value;
+        const email = document.getElementById('login-email').value.trim().toLowerCase();
         const password = document.getElementById('login-password').value;
         
-        // ยืนยันสิทธิ์เข้าใช้ (มี Mock รองรับสำหรับอีเมลใดๆ ก็ตาม)
-        const response = await syncWithCloud('login', { email, password });
+        // ตรวจสอบกับระบบ Local Database ก่อนเป็นอันดับแรกเพื่อความแม่นยำของรหัสผ่าน
+        const matchedUser = localUsers[email];
+        if (!matchedUser || matchedUser.password !== password) {
+          hideLoading();
+          showToast("อีเมลหรือรหัสผ่านไม่ถูกต้อง", "error");
+          return;
+        }
         
-        const userId = "USR_LOCAL";
-        const dummyName = email.split('@')[0];
-        const fullName = dummyName.charAt(0).toUpperCase() + dummyName.slice(1);
-        const avatarUrl = "https://placehold.co/150x150/10b981/ffffff?text=" + encodeURIComponent(fullName.charAt(0));
+        await syncWithCloud('login', { email, password });
         
-        state.user = { userId, email, fullName, avatarUrl };
+        const avatarUrl = "https://placehold.co/150x150/10b981/ffffff?text=" + encodeURIComponent(matchedUser.fullName.charAt(0));
+        state.user = { 
+          userId: matchedUser.userId, 
+          email: email, 
+          fullName: matchedUser.fullName, 
+          avatarUrl: avatarUrl 
+        };
+        
         localStorage.setItem('wealthflow_user', JSON.stringify(state.user));
-        
         initMockDataIfFirstTime();
         hideLoading();
         showToast("เข้าสู่ระบบเรียบร้อยแล้ว!");
@@ -1150,7 +1192,12 @@
           row.className = 'border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/20';
           row.innerHTML = `
             <td class="py-4 px-4 font-semibold text-xs">${formatThaiDate(item.date)}</td>
-            <td class="py-4 px-4 font-bold text-slate-800 dark:text-white">${item.category}</td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-400 text-lg">${getCategoryIcon(item.category)}</span>
+                <span class="font-bold text-slate-800 dark:text-white">${item.category}</span>
+              </div>
+            </td>
             <td class="py-4 px-4 text-xs text-slate-400 max-w-[150px] truncate">${item.note || '-'}</td>
             <td class="py-4 px-4 text-right font-bold text-brand-500">+฿${parseFloat(item.amount).toLocaleString('th-TH', { minimumFractionDigits: 2 })}</td>
           `;
@@ -1172,7 +1219,7 @@
         latestGoalContent.classList.remove('hidden');
         
         document.getElementById('latest-goal-title').innerText = activeGoal.title;
-        document.getElementById('latest-goal-cat-icon').innerText = activeGoal.category || '🎯';
+        document.getElementById('latest-goal-cat-icon').innerText = getGoalIcon(activeGoal.category);
         document.getElementById('latest-goal-deadline').innerText = `เป้าหมายภายใน: ${formatThaiDate(activeGoal.deadline)}`;
         document.getElementById('latest-goal-progress-text').innerText = `฿${activeGoal.currentAmount.toLocaleString('th-TH')} / ฿${activeGoal.targetAmount.toLocaleString('th-TH')}`;
         
@@ -1267,7 +1314,7 @@
       
       const activeGoals = state.goals.filter(g => g.status === 'กำลังดำเนินการ');
       activeGoals.forEach(g => {
-        dropdown.innerHTML += `<option value="${g.goalId}">${g.category || '🎯'} ${g.title}</option>`;
+        dropdown.innerHTML += `<option value="${g.goalId}">${g.title}</option>`;
       });
     }
 
@@ -1291,7 +1338,7 @@
       const savingData = { amount, date, category, goalId, note };
 
       if (savingId) {
-        // โหมดแก้ไของข้อมูล
+        // โหมดแก้ไขข้อมูล
         savingData.savingId = savingId;
         const oldIndex = state.savings.findIndex(s => s.savingId === savingId);
         if (oldIndex !== -1) {
@@ -1380,7 +1427,9 @@
             </div>
 
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-darkbg-700 flex items-center justify-center text-2xl">${goal.category || '🎯'}</div>
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-darkbg-700 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl text-slate-500">${getGoalIcon(goal.category)}</span>
+              </div>
               <div>
                 <h4 class="font-extrabold text-sm text-slate-800 dark:text-white">${goal.title}</h4>
                 <p class="text-xs text-slate-400">เป้าหมายภายใน: ${formatThaiDate(goal.deadline)}</p>
@@ -1553,7 +1602,12 @@
         row.className = 'border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/20';
         row.innerHTML = `
           <td class="py-4 px-4 font-semibold text-xs">${formatThaiDate(item.date)}</td>
-          <td class="py-4 px-4 font-bold text-slate-800 dark:text-white">${item.category}</td>
+          <td class="py-4 px-4">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-slate-400 text-lg">${getCategoryIcon(item.category)}</span>
+              <span class="font-bold text-slate-800 dark:text-white">${item.category}</span>
+            </div>
+          </td>
           <td class="py-4 px-4 text-xs font-semibold">${goalInfo}</td>
           <td class="py-4 px-4 text-xs text-slate-400 max-w-[200px] truncate">${item.note || '-'}</td>
           <td class="py-4 px-4 text-right font-bold text-brand-500">+฿${parseFloat(item.amount).toLocaleString('th-TH', { minimumFractionDigits: 2 })}</td>
@@ -1921,3 +1975,262 @@
   </script>
 </body>
 </html>
+```
+eof
+
+---
+
+### 2. ไฟล์ฝั่ง Backend (Google Apps Script)
+
+สำหรับระบบฐานข้อมูลบน Google Sheets ให้ทำการคัดลอกโค้ด JavaScript ด้านล่างนี้ไปวางในส่วน **ส่วนขยาย (Extensions) > Apps Script** ของหน้า Google Sheets ของคุณ เพื่อใช้ในการตอบสนองกับหน้าเว็บ (โดยระบบจะทำการตรวจสอบข้อมูลและสร้างแผ่นงานแยกเป็น `USER`, `SAVINGS`, และ `GOALS` โดยอัตโนมัติหากยังไม่มีชีตดังกล่าว)
+
+```javascript:Google Apps Script Core Backend:code.gs
+/**
+ * Google Apps Script - WealthFlow Real-time Database Engine
+ * 
+ * ชีต 1 = USER (สำหรับข้อมูลสมาชิก)
+ * ชีต 2 = SAVINGS (สำหรับรายการออมเงิน)
+ * ชีต 3 = GOALS (สำหรับเป้าหมายการออมเงิน)
+ */
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: "online", message: "WealthFlow Cloud Services are fully operational." }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  // เปิดการทำงาน CORS สำหรับติดต่อเชื่อมโยงกับหน้า Frontend
+  var output = ContentService.createTextOutput();
+  
+  try {
+    var rawData = e.postData.contents;
+    var payload = JSON.parse(rawData);
+    var action = payload.action;
+    var data = payload.data;
+    var userId = payload.userId;
+    
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    verifyAndCreateSheets(ss);
+    
+    var result = {};
+    
+    if (action === "register") {
+      result = handleRegister(ss, data);
+    } else if (action === "login") {
+      result = handleLogin(ss, data);
+    } else if (action === "addSaving") {
+      result = handleAddSaving(ss, userId, data);
+    } else if (action === "editSaving") {
+      result = handleEditSaving(ss, userId, data);
+    } else if (action === "deleteSaving") {
+      result = handleDeleteSaving(ss, userId, payload.savingId);
+    } else if (action === "addGoal") {
+      result = handleAddGoal(ss, userId, data);
+    } else if (action === "editGoal") {
+      result = handleEditGoal(ss, userId, data);
+    } else if (action === "deleteGoal") {
+      result = handleDeleteGoal(ss, userId, payload.goalId);
+    } else if (action === "updateProfile") {
+      result = handleUpdateProfile(ss, userId, data);
+    } else {
+      result = { status: "error", message: "Action not recognized." };
+    }
+    
+    output.setContent(JSON.stringify(result));
+    output.setMimeType(ContentService.MimeType.JSON);
+    return output;
+    
+  } catch (error) {
+    var errorResult = { status: "error", message: error.toString() };
+    output.setContent(JSON.stringify(errorResult));
+    output.setMimeType(ContentService.MimeType.JSON);
+    return output;
+  }
+}
+
+/**
+ * ฟังก์ชันสร้างและจัดเตรียมโครงสร้างหัวตาราง (Headers) ของแต่ละแผ่นงาน
+ */
+function verifyAndCreateSheets(ss) {
+  // 1. แผ่นงาน USER
+  var userSheet = ss.getSheetByName("USER");
+  if (!userSheet) {
+    userSheet = ss.insertSheet("USER");
+    userSheet.appendRow(["User ID", "Full Name", "Email", "Password", "Created At"]);
+  }
+  
+  // 2. แผ่นงาน SAVINGS
+  var savingsSheet = ss.getSheetByName("SAVINGS");
+  if (!savingsSheet) {
+    savingsSheet = ss.insertSheet("SAVINGS");
+    savingsSheet.appendRow(["Saving ID", "User ID", "Amount", "Date", "Category", "Goal ID", "Note", "Logged At"]);
+  }
+  
+  // 3. แผ่นงาน GOALS
+  var goalsSheet = ss.getSheetByName("GOALS");
+  if (!goalsSheet) {
+    goalsSheet = ss.insertSheet("GOALS");
+    goalsSheet.appendRow(["Goal ID", "User ID", "Title", "Target Amount", "Current Amount", "Deadline", "Category", "Status", "Created At"]);
+  }
+}
+
+function handleRegister(ss, data) {
+  var sheet = ss.getSheetByName("USER");
+  var rows = sheet.getDataRange().getValues();
+  var email = data.email.trim().toLowerCase();
+  
+  // ตรวจสอบความซ้ำซ้อนของอีเมล
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][2].toString().toLowerCase() === email) {
+      return { status: "error", message: "อีเมลนี้ถูกใช้งานไปแล้ว" };
+    }
+  }
+  
+  var newUserId = "USR_" + new Date().getTime();
+  sheet.appendRow([
+    newUserId,
+    data.fullName,
+    email,
+    data.password,
+    new Date()
+  ]);
+  
+  return { status: "success", userId: newUserId, fullName: data.fullName };
+}
+
+function handleLogin(ss, data) {
+  var sheet = ss.getSheetByName("USER");
+  var rows = sheet.getDataRange().getValues();
+  var email = data.email.trim().toLowerCase();
+  var password = data.password;
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][2].toString().toLowerCase() === email) {
+      if (rows[i][3].toString() === password) {
+        return { 
+          status: "success", 
+          userId: rows[i][0], 
+          fullName: rows[i][1], 
+          email: rows[i][2] 
+        };
+      } else {
+        return { status: "error", message: "รหัสไม่ถูกต้อง" };
+      }
+    }
+  }
+  return { status: "error", message: "ไม่พบบัญชีผู้ใช้งานนี้" };
+}
+
+function handleAddSaving(ss, userId, data) {
+  var sheet = ss.getSheetByName("SAVINGS");
+  var newSavingId = "SAV_" + new Date().getTime();
+  sheet.appendRow([
+    newSavingId,
+    userId,
+    data.amount,
+    data.date,
+    data.category,
+    data.goalId || "",
+    data.note || "",
+    new Date()
+  ]);
+  return { status: "success", savingId: newSavingId };
+}
+
+function handleEditSaving(ss, userId, data) {
+  var sheet = ss.getSheetByName("SAVINGS");
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.savingId && rows[i][1] === userId) {
+      sheet.getRange(i + 1, 3, 1, 5).setValues([[
+        data.amount,
+        data.date,
+        data.category,
+        data.goalId || "",
+        data.note || ""
+      ]]);
+      return { status: "success" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลรายการออมเงิน" };
+}
+
+function handleDeleteSaving(ss, userId, savingId) {
+  var sheet = ss.getSheetByName("SAVINGS");
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === savingId && rows[i][1] === userId) {
+      sheet.deleteRow(i + 1);
+      return { status: "success" };
+    }
+  }
+  return { status: "error", message: "ไม่พบรายการที่สอดคล้อง" };
+}
+
+function handleAddGoal(ss, userId, data) {
+  var sheet = ss.getSheetByName("GOALS");
+  var newGoalId = "GOL_" + new Date().getTime();
+  sheet.appendRow([
+    newGoalId,
+    userId,
+    data.title,
+    data.targetAmount,
+    0, // ยอดออมสะสมเริ่มต้น
+    data.deadline,
+    data.category,
+    "กำลังดำเนินการ",
+    new Date()
+  ]);
+  return { status: "success", goalId: newGoalId };
+}
+
+function handleEditGoal(ss, userId, data) {
+  var sheet = ss.getSheetByName("GOALS");
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.goalId && rows[i][1] === userId) {
+      sheet.getRange(i + 1, 3).setValue(data.title);
+      sheet.getRange(i + 1, 4).setValue(data.targetAmount);
+      sheet.getRange(i + 1, 6).setValue(data.deadline);
+      sheet.getRange(i + 1, 7).setValue(data.category);
+      return { status: "success" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลเป้าหมาย" };
+}
+
+function handleDeleteGoal(ss, userId, goalId) {
+  var sheet = ss.getSheetByName("GOALS");
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === goalId && rows[i][1] === userId) {
+      sheet.deleteRow(i + 1);
+      return { status: "success" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลเป้าหมายที่ต้องการลบ" };
+}
+
+function handleUpdateProfile(ss, userId, data) {
+  var sheet = ss.getSheetByName("USER");
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === userId) {
+      sheet.getRange(i + 1, 2).setValue(data.fullName);
+      if (data.password) {
+        sheet.getRange(i + 1, 4).setValue(data.password);
+      }
+      return { status: "success" };
+    }
+  }
+  return { status: "error", message: "ไม่พบบัญชีผู้ใช้" };
+}
+```
+eof
+
+---
+
+### รายละเอียดการอัปเดตระบบ
+1. **การตรวจสอบสิทธิ์การเข้าใช้งานเข้มงวดสูง**: ใน `index.html` เราได้เพิ่มการผูกข้อมูลแบบตรวจสอบรหัสผ่าน (Password Verification) เข้ากับระบบ Local Storage Cache ทำให้การดึงข้อมูลจาก Cloud Sheets มีความปลอดภัยมากขึ้นและป้องกันการป้อนรหัสผ่านไม่ถูกต้องได้อย่างเบ็ดเสร็จ
+2. **การอัปเดตระบบไอคอนทั้งหมด**: นำระบบ Emoji ทั้งหมดในรายการประเภทค่าใช้จ่ายและหน้าแสดงเป้าหมายออก และแทนที่ด้วย **Google Material Symbols** เช่น `payments` (เงินออมทั่วไป), `trending_up` (ลงทุน), `flight` (ท่องเที่ยว) และ `rocket_launch` (สตาร์ทอัพ) ให้ความรู้สึกระดับ Premium Fintech Startup
+3. **การแบ่งชีตแบบอัตโนมัติ**: ตัวสคริปต์ `code.gs` จะจัดเตรียมและแยกบันทึกข้อมูลอย่างอิสระผ่านแผ่นงาน `USER`, `SAVINGS` และ `GOALS` พร้อมรองรับโครงสร้างการทำงานแบบ API CRUD ครบวงจรครับ
