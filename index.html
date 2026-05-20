@@ -18,7 +18,7 @@
                             500: '#4f46e5',
                             600: '#4338ca',
                             700: '#3730a3',
-                            accent: '#10b981', /* Emerald accent representing wealth */
+                            accent: '#10b981',
                         }
                     },
                     fontFamily: {
@@ -70,7 +70,6 @@
 </head>
 <body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
 
-    
     <!-- SYSTEM NOTIFICATIONS (Toast Alert Container) -->
     <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
 
@@ -196,10 +195,16 @@
                                 </p>
                             </div>
                         </div>
-                        <button onclick="toggleTheme()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 transition-colors">
-                            <span class="material-symbols-outlined text-lg dark:hidden">dark_mode</span>
-                            <span class="material-symbols-outlined text-lg hidden dark:block text-amber-400">light_mode</span>
-                        </button>
+                        <div class="flex items-center gap-1.5">
+                            <!-- RELOAD/F5 BUTTON -->
+                            <button onclick="syncData()" title="ดึงข้อมูลล่าสุด" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all">
+                                <span class="material-symbols-outlined text-lg">sync</span>
+                            </button>
+                            <button onclick="toggleTheme()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                                <span class="material-symbols-outlined text-lg dark:hidden">dark_mode</span>
+                                <span class="material-symbols-outlined text-lg hidden dark:block text-amber-400">light_mode</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- User Information Quick Widget -->
@@ -269,6 +274,10 @@
                             <p class="text-xs text-slate-500 dark:text-slate-400">รายงานพฤติกรรมและความคืบหน้าการออมเงินโดยรวม</p>
                         </div>
                         <div class="flex items-center gap-2">
+                            <button onclick="syncData()" class="px-3 py-1.5 bg-brand-500/10 hover:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all">
+                                <span class="material-symbols-outlined text-sm animate-spin-hover">sync</span>
+                                <span>ซิงค์ข้อมูล/รีโหลด</span>
+                            </button>
                             <span id="sync-status" class="text-xs text-emerald-500 bg-emerald-500/10 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 border border-emerald-500/20">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Synchronized
                             </span>
@@ -398,6 +407,7 @@
 
                         <div class="glass-panel p-8 rounded-3xl border border-white/50 dark:border-slate-800 shadow-sm">
                             <form id="saving-form" onsubmit="handleSavingSubmit(event)" class="space-y-4">
+                                <input type="hidden" id="edit-saving-id" value="">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">จำนวนเงินที่ออม (บาท)</label>
@@ -427,10 +437,15 @@
                                         <input type="text" id="save-note" class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all text-slate-800 dark:text-slate-100" placeholder="เช่น เงินปันผล, เก็บแบงก์ 50">
                                     </div>
                                 </div>
-                                <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-semibold text-sm transition-all shadow-lg shadow-brand-500/10 flex items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined">save</span>
-                                    <span>บันทึกเงินออม</span>
-                                </button>
+                                <div class="flex gap-2">
+                                    <button type="submit" class="flex-1 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-semibold text-sm transition-all shadow-lg shadow-brand-500/10 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined">save</span>
+                                        <span id="btn-save-saving-text">บันทึกเงินออม</span>
+                                    </button>
+                                    <button type="button" id="btn-cancel-edit-saving" onclick="cancelSavingEdit()" class="hidden px-4 py-3 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-semibold text-sm text-slate-500 transition-all">
+                                        ยกเลิก
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -443,7 +458,7 @@
                             <h2 class="text-2xl font-bold">เป้าหมายการออมเงิน</h2>
                             <p class="text-xs text-slate-500 dark:text-slate-400">ควบคุมความฝันของคุณด้วยกรอบเวลาทางการเงินที่ชัดเจน</p>
                         </div>
-                        <button onclick="toggleModal('goal-modal', true)" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-brand-500/10 flex items-center gap-1.5 self-start md:self-auto">
+                        <button onclick="openGoalCreateModal()" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-brand-500/10 flex items-center gap-1.5 self-start md:self-auto">
                             <span class="material-symbols-outlined text-sm">add_circle</span>
                             <span>สร้างเป้าหมายใหม่</span>
                         </button>
@@ -458,7 +473,7 @@
                 <section id="view-history" class="app-view space-y-6 hidden">
                     <div>
                         <h2 class="text-2xl font-bold">ประวัติการออมเงิน</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">รายละเอียดพฤติกรรมการออม ค้นหา คัดกรอง และส่งข้อมูลออกได้ง่ายดาย</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">รายละเอียดพฤติกรรมการออม ค้นหา คัดกรอง และแก้ไขข้อมูลได้ง่ายดาย</p>
                     </div>
 
                     <!-- Search, Filter & Sorters -->
@@ -673,16 +688,17 @@
         </div>
     </div>
 
-    <!-- DIALOG MODAL: GOAL ADDING MODAL -->
+    <!-- DIALOG MODAL: GOAL ADDING / EDIT MODAL -->
     <div id="goal-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="bg-white dark:bg-slate-900 w-full max-w-md p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-2xl space-y-4 mx-4">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-                <h4 class="font-bold text-sm">สร้างเป้าหมายการออมใหม่</h4>
+                <h4 id="goal-modal-title" class="font-bold text-sm">สร้างเป้าหมายการออมใหม่</h4>
                 <button onclick="toggleModal('goal-modal', false)" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center">
                     <span class="material-symbols-outlined text-sm">close</span>
                 </button>
             </div>
             <form id="goal-form" onsubmit="handleGoalSubmit(event)" class="space-y-4">
+                <input type="hidden" id="edit-goal-id" value="">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">ชื่อเป้าหมายความฝันของคุณ</label>
                     <input type="text" id="goal-title" required class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:outline-none" placeholder="เช่น ซื้อคอมพิวเตอร์ทำงาน, กองทุนเที่ยวญี่ปุ่น">
@@ -703,7 +719,7 @@
                 </div>
                 <button type="submit" class="w-full py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-semibold text-xs shadow-md shadow-brand-500/10 flex items-center justify-center gap-1.5">
                     <span class="material-symbols-outlined text-sm">track_changes</span>
-                    <span>สร้างเป้าหมายเดี๋ยวนี้</span>
+                    <span id="btn-save-goal-text">สร้างเป้าหมายเดี๋ยวนี้</span>
                 </button>
             </form>
         </div>
@@ -711,6 +727,7 @@
 
     <!-- JAVASCRIPT LOGIC WORKSPACE -->
     <script>
+        
         // Global State
         const AppState = {
             currentUser: null,
@@ -737,7 +754,7 @@
 
         function initApp() {
             // Check theme
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedTheme = localStorage.getItem('theme') || 'dark';
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
             } else {
@@ -790,7 +807,6 @@
             syncData();
         }
 
-        // NAVIGATION LOGIC
         function navigate(viewName) {
             // Hide all views
             const views = document.querySelectorAll('.app-view');
@@ -831,40 +847,22 @@
         async function makePostRequest(action, payload = {}) {
             showLoader(true);
             try {
-                // Ensure active username
                 if (AppState.currentUser) {
                     payload.username = AppState.currentUser.username;
                 }
                 payload.action = action;
 
-                // Call App Script Web API
-                const response = await fetch(AppState.apiEndpoint, {
-                    method: 'POST',
-                    mode: 'no-cors', // Standard Google Apps Script cross-origin bypass
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                // Fallback to offline simulations when 'no-cors' prevents direct JSON reading or returns opacity
-                // However, for standard deployment: To ensure a premium robust experience, we perform standard sync
-                // and local simulation backup to allow instant execution response.
-                
-                // Let's call standard fetch to get real response. If it fails due to CORS, we simulate.
-                // Note: Standard fetch to deployed script with text response works if GAS returns properly configured headers.
-                // We'll execute a fetch with GET or CORS handling and fallback gracefully:
+                // POST request via fallbacks to keep live states robust
                 return await fetchWithFallback(action, payload);
 
             } catch (err) {
                 console.error("Network Fetch error:", err);
                 showLoader(false);
-                showToast("พบปัญหาความเร็วอินเทอร์เน็ต! สลับเป็นโหมดประมวลผลโลคัล", "warning");
+                showToast("สลับเป็นโหมดประมวลผลภายในอุปกรณ์ (Local Mode)", "warning");
                 return simulateFallback(action, payload);
             }
         }
 
-        // Highly secure fetch with fallback system
         async function fetchWithFallback(action, payload) {
             try {
                 const controller = new AbortController();
@@ -881,13 +879,12 @@
                 showLoader(false);
                 return data;
             } catch(e) {
-                // Return simulation backup
                 showLoader(false);
+                // Return simulation backup
                 return simulateFallback(action, payload);
             }
         }
 
-        // Local Storage Simulation backup if connection is unavailable
         function simulateFallback(action, payload) {
             console.log(`Executing Fallback simulator [${action}]`);
             const users = JSON.parse(localStorage.getItem('USERS') || '[]');
@@ -896,7 +893,7 @@
             const settings = JSON.parse(localStorage.getItem('SETTINGS') || '{}');
 
             if (action === 'login') {
-                const user = users.find(u => u.username === payload.username && u.password === payload.password);
+                const user = users.find(u => u.username.toLowerCase() === payload.username.toLowerCase() && u.password === payload.password);
                 if (user) {
                     return { success: true, user: { username: user.username, name: user.name } };
                 } else {
@@ -905,7 +902,7 @@
             }
             
             if (action === 'register') {
-                const exists = users.some(u => u.username === payload.username);
+                const exists = users.some(u => u.username.toLowerCase() === payload.username.toLowerCase());
                 if (exists) {
                     return { success: false, message: 'มีชื่อผู้ใช้นี้ในระบบแล้ว' };
                 }
@@ -914,11 +911,11 @@
                 return { success: true };
             }
 
-            const username = AppState.currentUser ? AppState.currentUser.username : '';
+            const username = AppState.currentUser ? AppState.currentUser.username.toLowerCase() : '';
 
             if (action === 'getData') {
-                const userSavings = savings.filter(s => s.username === username);
-                const userGoals = goals.filter(g => g.username === username);
+                const userSavings = savings.filter(s => s.username.toLowerCase() === username);
+                const userGoals = goals.filter(g => g.username.toLowerCase() === username);
                 const userSettings = settings[username] || { currency: '฿', monthly_target: 10000 };
                 return {
                     success: true,
@@ -942,6 +939,19 @@
                 return { success: true, saving: newSave };
             }
 
+            if (action === 'editSaving') {
+                const index = savings.findIndex(s => s.id === payload.id);
+                if (index !== -1) {
+                    savings[index].amount = parseFloat(payload.amount);
+                    savings[index].category = payload.category;
+                    savings[index].date = payload.date;
+                    savings[index].note = payload.note || '';
+                    localStorage.setItem('SAVINGS', JSON.stringify(savings));
+                    return { success: true };
+                }
+                return { success: false, message: 'ไม่พบรายการที่ต้องการแก้ไข' };
+            }
+
             if (action === 'deleteSaving') {
                 const updated = savings.filter(s => s.id !== payload.id);
                 localStorage.setItem('SAVINGS', JSON.stringify(updated));
@@ -960,6 +970,19 @@
                 goals.push(newGoal);
                 localStorage.setItem('GOALS', JSON.stringify(goals));
                 return { success: true, goal: newGoal };
+            }
+
+            if (action === 'editGoal') {
+                const index = goals.findIndex(g => g.id === payload.id);
+                if (index !== -1) {
+                    goals[index].title = payload.title;
+                    goals[index].target = parseFloat(payload.target);
+                    goals[index].current = parseFloat(payload.current || 0);
+                    goals[index].deadline = payload.deadline;
+                    localStorage.setItem('GOALS', JSON.stringify(goals));
+                    return { success: true };
+                }
+                return { success: false, message: 'ไม่พบเป้าหมายที่ต้องการแก้ไข' };
             }
 
             if (action === 'deleteGoal') {
@@ -997,7 +1020,7 @@
                 showToast("เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ!", "success");
                 showMainApp();
             } else {
-                showToast("รหัสไม่ถูกต้อง หรือไม่มีชื่อผู้ใช้ในระบบ", "error");
+                showToast(res.message || "รหัสไม่ถูกต้อง", "error");
             }
         }
 
@@ -1055,6 +1078,10 @@
         }
 
         async function syncData() {
+            const statusIndicator = document.getElementById('sync-status');
+            statusIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-spin"></span> Syncing...`;
+            statusIndicator.className = "text-xs text-amber-500 bg-amber-500/10 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 border border-amber-500/20";
+
             const res = await makePostRequest('getData');
             if (res && res.success) {
                 AppState.savings = res.savings || [];
@@ -1063,33 +1090,42 @@
                     AppState.settings = { ...AppState.settings, ...res.settings };
                 }
 
-                // Apply UI update
+                // Update Local Storage states securely
+                localStorage.setItem('SAVINGS', JSON.stringify(AppState.savings));
+                localStorage.setItem('GOALS', JSON.stringify(AppState.goals));
+                const currentUsername = AppState.currentUser ? AppState.currentUser.username.toLowerCase() : 'global';
+                const localSettings = JSON.parse(localStorage.getItem('SETTINGS') || '{}');
+                localSettings[currentUsername] = AppState.settings;
+                localStorage.setItem('SETTINGS', JSON.stringify(localSettings));
+
+                statusIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Synchronized`;
+                statusIndicator.className = "text-xs text-emerald-500 bg-emerald-500/10 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 border border-emerald-500/20";
+
                 refreshDashboard();
                 renderGoals();
                 applyHistoryFilters();
                 updateSettingsForm();
+                showToast("อัปเดตข้อมูลและบันทึกข้อมูลเรียบร้อยแล้ว", "success");
             } else {
-                showToast("ไม่สามารถซิงโครไนซ์ข้อมูลกับ Google Sheets ได้", "error");
+                statusIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span> Offline Mode`;
+                statusIndicator.className = "text-xs text-red-500 bg-red-500/10 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 border border-red-500/20";
+                showToast("ไม่สามารถซิงโครไนซ์ข้อมูลได้ โหลดข้อมูลจาก Local Cache", "error");
             }
         }
 
         function refreshDashboard() {
-            // Calculate savings indicators
             const total = AppState.savings.reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
             
-            // Filter savings today
             const todayStr = new Date().toISOString().split('T')[0];
             const todaySavings = AppState.savings
                 .filter(s => s.date === todayStr)
                 .reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
 
-            // Filter savings this month
-            const currentYearMonth = todayStr.substring(0, 7); // "YYYY-MM"
+            const currentYearMonth = todayStr.substring(0, 7);
             const monthSavings = AppState.savings
                 .filter(s => s.date.startsWith(currentYearMonth))
                 .reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
 
-            // Update Dash Labels
             document.getElementById('dash-total-savings').textContent = formatCurrency(total);
             document.getElementById('dash-today-savings').textContent = formatCurrency(todaySavings);
             document.getElementById('dash-month-savings').textContent = formatCurrency(monthSavings);
@@ -1099,7 +1135,6 @@
             const activeGoalContainer = document.getElementById('dash-active-goal-container');
             activeGoalContainer.innerHTML = '';
             
-            // Find most urgent active goal
             const activeGoal = AppState.goals[0];
             if (activeGoal) {
                 const pct = Math.min(Math.round((activeGoal.current / activeGoal.target) * 100), 100);
@@ -1126,7 +1161,6 @@
             const recentBody = document.getElementById('dash-recent-table-body');
             recentBody.innerHTML = '';
             
-            // Sort savings by date desc
             const sortedRecent = [...AppState.savings]
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .slice(0, 5);
@@ -1147,12 +1181,12 @@
                 recentBody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">ไม่มีข้อมูลธุรกรรมขณะนี้</td></tr>`;
             }
 
-            // Render Dashboard Mini Trend Chart
             renderDashboardTrendChart();
         }
 
         async function handleSavingSubmit(event) {
             event.preventDefault();
+            const editId = document.getElementById('edit-saving-id').value;
             const amount = parseFloat(document.getElementById('save-amount').value);
             const category = document.getElementById('save-category').value;
             const date = document.getElementById('save-date').value;
@@ -1163,18 +1197,45 @@
                 return;
             }
 
-            const res = await makePostRequest('addSaving', { amount, category, date, note });
+            let res;
+            if (editId) {
+                res = await makePostRequest('editSaving', { id: editId, amount, category, date, note });
+            } else {
+                res = await makePostRequest('addSaving', { amount, category, date, note });
+            }
+
             if (res && res.success) {
-                showToast("บันทึกข้อมูลการออมเงินเสร็จสิ้น", "success");
-                document.getElementById('save-amount').value = '';
-                document.getElementById('save-note').value = '';
-                
-                // Refresh data states
+                showToast(editId ? "แก้ไขข้อมูลการออมเรียบร้อย" : "บันทึกข้อมูลการออมเงินเสร็จสิ้น", "success");
+                cancelSavingEdit();
                 await syncData();
                 navigate('dashboard');
             } else {
                 showToast("เกิดข้อผิดพลาดในการบันทึกข้อมูล", "error");
             }
+        }
+
+        function editSaving(id) {
+            const saving = AppState.savings.find(s => s.id === id);
+            if (!saving) return;
+
+            navigate('add-saving');
+            document.getElementById('edit-saving-id').value = saving.id;
+            document.getElementById('save-amount').value = saving.amount;
+            document.getElementById('save-category').value = saving.category;
+            document.getElementById('save-date').value = saving.date;
+            document.getElementById('save-note').value = saving.note;
+
+            document.getElementById('btn-save-saving-text').textContent = "บันทึกการแก้ไข";
+            document.getElementById('btn-cancel-edit-saving').classList.remove('hidden');
+        }
+
+        function cancelSavingEdit() {
+            document.getElementById('edit-saving-id').value = '';
+            document.getElementById('save-amount').value = '';
+            document.getElementById('save-note').value = '';
+            document.getElementById('save-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('btn-save-saving-text').textContent = "บันทึกเงินออม";
+            document.getElementById('btn-cancel-edit-saving').classList.add('hidden');
         }
 
         async function deleteSaving(id) {
@@ -1215,9 +1276,14 @@
                                 <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">${g.title}</h4>
                                 <p class="text-[10px] text-slate-400">ครบกำหนด: ${formatThaiDate(g.deadline)}</p>
                             </div>
-                            <button onclick="deleteGoal('${g.id}')" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-500 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
-                                <span class="material-symbols-outlined text-sm">delete</span>
-                            </button>
+                            <div class="flex items-center gap-1">
+                                <button onclick="editGoal('${g.id}')" title="แก้ไข" class="w-7 h-7 rounded-lg text-slate-400 hover:text-brand-500 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                    <span class="material-symbols-outlined text-sm">edit</span>
+                                </button>
+                                <button onclick="deleteGoal('${g.id}')" title="ลบ" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-500 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="mt-4 space-y-2">
@@ -1248,8 +1314,32 @@
             });
         }
 
+        function openGoalCreateModal() {
+            document.getElementById('edit-goal-id').value = '';
+            document.getElementById('goal-form').reset();
+            document.getElementById('goal-modal-title').textContent = "สร้างเป้าหมายการออมใหม่";
+            document.getElementById('btn-save-goal-text').textContent = "สร้างเป้าหมายเดี๋ยวนี้";
+            toggleModal('goal-modal', true);
+        }
+
+        function editGoal(id) {
+            const goal = AppState.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            document.getElementById('edit-goal-id').value = goal.id;
+            document.getElementById('goal-title').value = goal.title;
+            document.getElementById('goal-target').value = goal.target;
+            document.getElementById('goal-current').value = goal.current;
+            document.getElementById('goal-deadline').value = goal.deadline;
+
+            document.getElementById('goal-modal-title').textContent = "แก้ไขเป้าหมายการออม";
+            document.getElementById('btn-save-goal-text').textContent = "บันทึกการแก้ไข";
+            toggleModal('goal-modal', true);
+        }
+
         async function handleGoalSubmit(event) {
             event.preventDefault();
+            const editId = document.getElementById('edit-goal-id').value;
             const title = document.getElementById('goal-title').value.trim();
             const target = parseFloat(document.getElementById('goal-target').value);
             const current = parseFloat(document.getElementById('goal-current').value || 0);
@@ -1260,14 +1350,20 @@
                 return;
             }
 
-            const res = await makePostRequest('addGoal', { title, target, current, deadline });
+            let res;
+            if (editId) {
+                res = await makePostRequest('editGoal', { id: editId, title, target, current, deadline });
+            } else {
+                res = await makePostRequest('addGoal', { title, target, current, deadline });
+            }
+
             if (res && res.success) {
-                showToast("สร้างเป้าหมายการเงินใหม่สำเร็จแล้ว", "success");
+                showToast(editId ? "แก้ไขเป้าหมายทางการเงินเรียบร้อย" : "สร้างเป้าหมายการเงินใหม่สำเร็จแล้ว", "success");
                 toggleModal('goal-modal', false);
                 document.getElementById('goal-form').reset();
                 await syncData();
             } else {
-                showToast("พบปัญหาในการสร้างเป้าหมาย", "error");
+                showToast("พบปัญหาในการดำเนินการข้อมูลเป้าหมาย", "error");
             }
         }
 
@@ -1296,17 +1392,14 @@
 
             let filtered = [...AppState.savings];
 
-            // Filter Category
             if (category) {
                 filtered = filtered.filter(s => s.category === category);
             }
 
-            // Search Note
             if (search) {
                 filtered = filtered.filter(s => s.note.toLowerCase().includes(search));
             }
 
-            // Sorter logic
             if (sort === 'desc') {
                 filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
             } else if (sort === 'asc') {
@@ -1336,9 +1429,14 @@
                     <td class="px-6 py-4 text-slate-500 max-w-[200px] truncate">${s.note || '-'}</td>
                     <td class="px-6 py-4 text-right font-bold text-emerald-500">+${formatCurrency(s.amount)}</td>
                     <td class="px-6 py-4 text-center">
-                        <button onclick="deleteSaving('${s.id}')" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center mx-auto">
-                            <span class="material-symbols-outlined text-sm">delete</span>
-                        </button>
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="editSaving('${s.id}')" title="แก้ไข" class="w-7 h-7 rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                            </button>
+                            <button onclick="deleteSaving('${s.id}')" title="ลบ" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center">
+                                <span class="material-symbols-outlined text-sm">delete</span>
+                            </button>
+                        </div>
                     </td>
                 `;
                 body.appendChild(tr);
@@ -1374,13 +1472,12 @@
         function renderDashboardTrendChart() {
             const ctx = document.getElementById('chart-dashboard-savings').getContext('2d');
             
-            // Build month dynamic labels (days 1-30)
             const dateLabels = [];
             const savingsData = [];
             
             const today = new Date();
             const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-            const monthPrefix = today.toISOString().substring(0, 7); // YYYY-MM
+            const monthPrefix = today.toISOString().substring(0, 7);
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayStr = `${monthPrefix}-${String(day).padStart(2, '0')}`;
@@ -1438,7 +1535,6 @@
             const trendCtx = document.getElementById('chart-analytics-trend').getContext('2d');
             const pieCtx = document.getElementById('chart-analytics-pie').getContext('2d');
 
-            // Build trend chart: Accumulate per category
             const categories = ["กองทุนสำรองเลี้ยงชีพ", "เงินออมฉุกเฉิน", "เป้าหมายส่วนตัว", "การศึกษาและสันทนาการ", "การลงทุน"];
             const categorySums = categories.map(cat => {
                 return AppState.savings
@@ -1466,7 +1562,6 @@
                 }
             });
 
-            // Trend over months
             const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
             const monthlyData = Array(12).fill(0);
 
@@ -1517,24 +1612,20 @@
                 "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             ];
 
-            // Update Label
             document.getElementById('calendar-month-year').textContent = `${monthNames[month]} ${year + 543}`;
 
             const firstDayIndex = new Date(year, month, 1).getDay();
             const lastDay = new Date(year, month + 1, 0).getDate();
 
-            // Populate empty cells before the first day of month
             for (let i = 0; i < firstDayIndex; i++) {
                 const emptyCell = document.createElement('div');
                 emptyCell.className = "p-4";
                 grid.appendChild(emptyCell);
             }
 
-            // Populate actual days
             for (let day = 1; day <= lastDay; day++) {
                 const dayStr = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 
-                // Check if savings exist on this day
                 const daySavings = AppState.savings.filter(s => s.date === dayStr);
                 const hasSavings = daySavings.length > 0;
                 const totalAmt = daySavings.reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
@@ -1604,7 +1695,6 @@
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             }
-            // Redraw active charts to adapt grid lines
             if (document.getElementById('view-dashboard').classList.contains('hidden') === false) {
                 renderDashboardTrendChart();
             }
@@ -1624,9 +1714,9 @@
             
             const toast = document.createElement('div');
             toast.className = "p-4 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-2 pointer-events-auto " + 
-                (type === 'success' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white');
+                (type === 'success' ? 'bg-emerald-500 text-white' : type === 'warning' ? 'bg-amber-500 text-white' : 'bg-red-500 text-white');
             
-            const icon = type === 'success' ? 'check_circle' : 'error';
+            const icon = type === 'success' ? 'check_circle' : type === 'warning' ? 'warning' : 'error';
             
             toast.innerHTML = `
                 <span class="material-symbols-outlined">${icon}</span>
@@ -1635,12 +1725,10 @@
 
             container.appendChild(toast);
             
-            // Trigger animation in
             setTimeout(() => {
                 toast.classList.remove('translate-y-2');
             }, 10);
 
-            // Destroy toast after 3s
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-[-10px]');
                 setTimeout(() => toast.remove(), 300);
