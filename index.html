@@ -88,7 +88,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-darkBg text-slate-800 dark:text-slate-100 h-full font-sans antialiased transition-colors duration-300">
 
-    <!-- Alert Toast Component -->
+    <!-- Alert Toast Component (Notification Center) -->
     <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 max-w-sm w-full">
         <div class="glass-panel p-4 rounded-2xl shadow-premium flex items-center gap-3 border-l-4 border-brand-500">
             <span id="toastIcon" class="material-symbols-outlined text-brand-500 text-2xl">check_circle</span>
@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <!-- Spinner Loading Overlay -->
+    <!-- Spinner Loading Overlay (Blocking UI during REST API updates) -->
     <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-darkBg/40 backdrop-blur-sm hidden">
         <div class="glass-panel p-6 rounded-3xl flex flex-col items-center gap-4 shadow-2xl">
             <div class="animate-spin rounded-full h-10 w-10 border-4 border-brand-500 border-t-transparent"></div>
@@ -121,7 +121,7 @@
                     <h1 class="text-3xl font-extrabold tracking-tight">PROSPER</h1>
                     <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">โมเดิร์นเว็บแอปพลิเคชันบริหารความมั่งคั่งและการออมเงิน</p>
                     <div class="text-[11px] bg-slate-200/50 dark:bg-white/5 inline-block px-2.5 py-1 rounded-full mt-3 font-mono text-slate-600 dark:text-slate-300">
-                        อัปเดตฟีเจอร์ยศและแผนงานประจำวัน: 22 พฤษภาคม 2026
+                        อัปเดตฟีเจอร์ยศและแผนงานประจำวัน: 23 พฤษภาคม 2026
                     </div>
                 </div>
 
@@ -257,7 +257,7 @@
                             <span class="material-symbols-outlined text-xs">schedule</span>
                             <span>เวลาปัจจุบันของระบบ</span>
                         </div>
-                        <div id="liveClock" class="text-xs font-semibold text-slate-700 dark:text-slate-300">วันศุกร์ที่ 22 พฤษภาคม 2569</div>
+                        <div id="liveClock" class="text-xs font-semibold text-slate-700 dark:text-slate-300">วันเสาร์ที่ 23 พฤษภาคม 2569</div>
                     </div>
 
                     <!-- System controls & shortcuts -->
@@ -305,7 +305,7 @@
                                         <span class="text-[10px] uppercase tracking-widest font-extrabold text-brand-200">PROSPER FINANCE PREMIUM</span>
                                         <span id="hero-rank-badge" class="px-2.5 py-0.5 text-[9px] font-extrabold rounded-full border">กำลังคำนวณยศ...</span>
                                     </div>
-                                    <h2 class="text-2xl lg:text-3xl font-extrabold" id="dashboard-welcome">สวัสดีตอนเย็น!</h2>
+                                    <h2 class="text-2xl lg:text-3xl font-extrabold" id="dashboard-welcome">สวัสดีครับ!</h2>
                                     <p class="text-xs text-slate-200">การออมคือหนทางสร้างความมั่นคงที่ยั่งยืน เริ่มต้นวางแผนชีวิตเพื่ออิสรภาพวันนี้</p>
                                 </div>
                                 <button onclick="switchTab('add-savings')" class="inline-flex items-center justify-center gap-2 bg-white text-emerald-700 px-5 py-3 rounded-2xl text-xs font-extrabold shadow-md transform active:scale-95 transition-all self-start md:self-auto">
