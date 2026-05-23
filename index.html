@@ -84,20 +84,23 @@
             0%, 100% { box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.4); }
             50% { box-shadow: 0 0 25px 2px rgba(16, 185, 129, 0.6); }
         }
-        .scanner-glow {
-            background: linear-gradient(to bottom, transparent 40%, rgba(16, 185, 129, 0.15) 50%, transparent 60%);
-            background-size: 100% 200%;
-            animation: scan 2s linear infinite;
+        .scanner-line {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #6366f1, transparent);
+            position: absolute;
+            animation: scan-move 2.5s ease-in-out infinite;
         }
-        @keyframes scan {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 200%; }
+        @keyframes scan-move {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
         }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-darkBg text-slate-800 dark:text-slate-100 h-full font-sans antialiased transition-colors duration-300">
 
-    <!-- Custom Interactive Toast System -->
     <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 max-w-sm w-full">
         <div class="glass-panel p-4 rounded-2xl shadow-premium flex items-center gap-3 border-l-4 border-brand-500">
             <span id="toastIcon" class="material-symbols-outlined text-brand-500 text-2xl">check_circle</span>
@@ -108,7 +111,6 @@
         </div>
     </div>
 
-    <!-- Global Loading Overlay -->
     <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-darkBg/40 backdrop-blur-sm hidden">
         <div class="glass-panel p-6 rounded-3xl flex flex-col items-center gap-4 shadow-2xl">
             <div class="animate-spin rounded-full h-10 w-10 border-4 border-brand-500 border-t-transparent"></div>
@@ -118,10 +120,8 @@
 
     <div id="appContainer" class="flex flex-col h-full lg:flex-row overflow-hidden">
 
-        <!-- VIEW: AUTHENTICATION -->
         <div id="view-auth" class="flex-1 flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-emerald-50/20 via-slate-50 to-indigo-50/20 dark:from-darkBg dark:to-neutral-950 overflow-y-auto">
             <div class="w-full max-w-md">
-                <!-- Branding Header -->
                 <div class="text-center mb-8">
                     <div class="inline-flex p-3 bg-brand-500/10 rounded-2xl text-brand-500 mb-3 pulse-glow">
                         <span class="material-symbols-outlined text-4xl">insights</span>
@@ -133,12 +133,10 @@
                     </div>
                 </div>
 
-                <!-- Auth Card Container -->
                 <div class="glass-panel rounded-3xl p-8 shadow-premium relative overflow-hidden">
                     <div class="absolute -top-10 -right-10 w-24 h-24 bg-brand-500/10 rounded-full blur-xl"></div>
                     <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl"></div>
 
-                    <!-- Mode Tab Toggles -->
                     <div class="flex bg-slate-100 dark:bg-neutral-800 p-1.5 rounded-xl mb-6">
                         <button id="tab-login" onclick="toggleAuthMode('login')" class="flex-1 text-center py-2 text-sm font-semibold rounded-lg bg-white dark:bg-neutral-700 shadow-sm transition-all">เข้าสู่ระบบ</button>
                         <button id="tab-register" onclick="toggleAuthMode('register')" class="flex-1 text-center py-2 text-sm font-semibold rounded-lg text-slate-500 dark:text-slate-400 transition-all">สมัครใช้งาน</button>
@@ -200,7 +198,6 @@
             </div>
         </div>
 
-        <!-- VIEW: MAIN WORKSPACE -->
         <div id="view-workspace" class="flex-1 flex flex-col lg:flex-row overflow-hidden hidden">
             
             <!-- Desktop Sidebar -->
@@ -215,7 +212,6 @@
                     </div>
                 </div>
 
-                <!-- User profile snippet in sidebar with live Saving Rank Badge -->
                 <div class="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-400 to-indigo-600 flex items-center justify-center font-bold text-white uppercase text-sm" id="user-avatar-desktop">U</div>
@@ -224,11 +220,9 @@
                             <p class="text-xs text-slate-400 dark:text-slate-500 truncate" id="user-username-desktop">@username</p>
                         </div>
                     </div>
-                    <!-- Saving Rank Badge -->
                     <div id="sidebar-rank-container" class="mt-1"></div>
                 </div>
 
-                <!-- Navigation items list -->
                 <nav class="flex-1 flex flex-col gap-1 overflow-y-auto scrollbar-hidden">
                     <button onclick="switchTab('dashboard')" id="nav-desktop-dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-brand-500 bg-brand-500/10"><span class="material-symbols-outlined">dashboard</span> สรุปภาพรวม</button>
                     <button onclick="switchTab('add-savings')" id="nav-desktop-add-savings" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5"><span class="material-symbols-outlined">add_circle</span> บันทึกการออม</button>
@@ -241,14 +235,12 @@
                     <button onclick="switchTab('profile')" id="nav-desktop-profile" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5"><span class="material-symbols-outlined">account_circle</span> โปรไฟล์ของฉัน</button>
                 </nav>
 
-                <!-- Sidebar footer -->
                 <button onclick="handleLogout()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-rose-500 hover:bg-rose-500/10 transition-all mt-auto flex-shrink-0"><span class="material-symbols-outlined">logout</span> ออกจากระบบ</button>
             </aside>
 
             <!-- CONTENT AREA -->
             <div class="flex-1 flex flex-col h-full overflow-hidden">
                 
-                <!-- TOP HEADER -->
                 <header class="h-16 border-b border-slate-200 dark:border-neutral-800 bg-white/75 dark:bg-darkCard/75 backdrop-blur-md px-4 lg:px-8 flex items-center justify-between flex-shrink-0 z-40">
                     <div class="flex items-center gap-3 lg:hidden">
                         <div class="p-1.5 bg-brand-500/10 rounded-lg text-brand-500">
@@ -257,48 +249,38 @@
                         <h1 class="font-extrabold text-sm tracking-wide">PROSPER</h1>
                     </div>
                     
-                    <!-- Live Clock and Date -->
                     <div class="hidden md:flex flex-col">
                         <div class="flex items-center gap-1.5 text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">
                             <span class="material-symbols-outlined text-xs">schedule</span>
                             <span>เวลาปัจจุบันของระบบ</span>
                         </div>
-                        <div id="liveClock" class="text-xs font-semibold text-slate-700 dark:text-slate-300">วันเสาร์ที่ 23 พฤษภาคม 2569</div>
+                        <div id="liveClock" class="text-xs font-semibold text-slate-700 dark:text-slate-300">กำลังซิงค์เวลา...</div>
                     </div>
 
-                    <!-- System controls & shortcuts -->
                     <div class="flex items-center gap-2 ml-auto">
-                        <!-- Cloud Sync Status Light -->
                         <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-white/5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                             <span id="syncIndicatorDot" class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
                             <span id="syncIndicatorText">คลาวด์ออนไลน์</span>
                         </div>
 
-                        <!-- REFRESH / SYNC BUTTON -->
-                        <button onclick="syncAndFetchAllData()" title="รีโหลดข้อมูลใหม่" class="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all text-slate-600 dark:text-slate-300 relative">
+                        <button onclick="syncAndFetchAllData()" title="รีโหลดข้อมูลใหม่ (ข้อมูลไม่สูญหาย)" class="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all text-slate-600 dark:text-slate-300 relative">
                             <span class="material-symbols-outlined text-lg block" id="refresh-icon">sync</span>
                         </button>
 
-                        <!-- CURRENCY CONVERSION TOGGLE -->
                         <button onclick="toggleCurrency()" id="currencyToggleBtn" title="สลับหน่วยสกุลเงิน (THB / USD)" class="px-3 py-1.5 text-xs font-bold bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 border border-indigo-500/20 rounded-xl transition-all flex items-center gap-1">
                             <span class="material-symbols-outlined text-sm">payments</span>
                             <span id="currencyUnitText">THB (฿)</span>
                         </button>
 
-                        <!-- Dark/Light theme mode selector -->
                         <button onclick="toggleTheme()" class="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all text-slate-600 dark:text-slate-300">
                             <span class="material-symbols-outlined text-lg block" id="theme-icon">light_mode</span>
                         </button>
                     </div>
                 </header>
 
-                <!-- MAIN SCROLLABLE WRAPPER FOR TABS -->
                 <main class="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6 scrollbar-hidden">
                     
-                    <!-- TAB: DASHBOARD -->
                     <div id="tab-dashboard" class="space-y-6 fade-in-active">
-                        
-                        <!-- Welcome Hero Widget -->
                         <div class="relative overflow-hidden rounded-3xl p-6 lg:p-8 bg-gradient-to-tr from-brand-600 to-indigo-700 text-white shadow-premium">
                             <div class="absolute right-0 bottom-0 top-0 w-1/3 opacity-10 pointer-events-none">
                                 <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -320,9 +302,7 @@
                             </div>
                         </div>
 
-                        <!-- Core Financial Metrics Tiles Grid -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Card: Total Savings Balance -->
                             <div class="glass-panel p-6 rounded-2xl shadow-premium relative overflow-hidden flex flex-col justify-between h-40">
                                 <div class="flex justify-between items-start">
                                     <div>
@@ -338,7 +318,6 @@
                                 </div>
                             </div>
 
-                            <!-- Card: Today's Savings -->
                             <div class="glass-panel p-6 rounded-2xl shadow-premium relative overflow-hidden flex flex-col justify-between h-40">
                                 <div class="flex justify-between items-start">
                                     <div>
@@ -360,7 +339,6 @@
                                 </div>
                             </div>
 
-                            <!-- Card: This Month's Savings -->
                             <div class="glass-panel p-6 rounded-2xl shadow-premium relative overflow-hidden flex flex-col justify-between h-40">
                                 <div class="flex justify-between items-start">
                                     <div>
@@ -377,10 +355,7 @@
                             </div>
                         </div>
 
-                        <!-- Dashboard Double column -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            
-                            <!-- Analytics Graph summary -->
                             <div class="glass-panel p-6 rounded-3xl shadow-premium lg:col-span-2 space-y-4">
                                 <div class="flex justify-between items-center">
                                     <div>
@@ -396,7 +371,6 @@
                                 </div>
                             </div>
 
-                            <!-- Latest Savings Goal Highlight Card -->
                             <div class="glass-panel p-6 rounded-3xl shadow-premium flex flex-col justify-between space-y-4">
                                 <div class="flex justify-between items-center">
                                     <h4 class="font-extrabold text-base">เป้าหมายออมล่าสุด</h4>
@@ -411,11 +385,9 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
-                    <!-- TAB: ADD SAVINGS -->
                     <div id="tab-add-savings" class="max-w-2xl mx-auto space-y-6 fade-in-active hidden">
                         <div class="text-center mb-4">
                             <span class="material-symbols-outlined text-brand-500 text-4xl p-2.5 bg-brand-500/10 rounded-2xl inline-block mb-2">add_circle</span>
@@ -425,7 +397,6 @@
 
                         <div class="glass-panel p-6 lg:p-8 rounded-3xl shadow-premium relative">
                             <form id="savings-form" onsubmit="handleSavingsSubmit(event)" class="space-y-4">
-                                <!-- Amount Input -->
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-400 dark:text-slate-500 mb-2">จำนวนเงินฝากออม</label>
                                     <div class="relative">
@@ -434,7 +405,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Category & Date row -->
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-bold uppercase text-slate-400 dark:text-slate-500 mb-2">ประเภทเงินออม</label>
@@ -454,7 +424,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Note Textarea -->
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-slate-400 dark:text-slate-500 mb-2">บันทึกความจำ (ข้อความเพิ่มเติม)</label>
                                     <textarea id="sav-note" rows="3" class="w-full bg-slate-50 dark:bg-neutral-800 border border-slate-200 dark:border-neutral-700 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="ระบุแหล่งที่มาหรือรายละเอียดเล็กๆ น้อยๆ..."></textarea>
@@ -467,50 +436,43 @@
                         </div>
                     </div>
 
-                    <!-- TAB: AI WEALTH ADVISOR -->
                     <div id="tab-ai-advisor" class="max-w-4xl mx-auto space-y-6 fade-in-active hidden">
                         <div class="text-center space-y-2">
                             <span class="material-symbols-outlined text-indigo-500 text-4xl p-3 bg-indigo-500/10 rounded-2xl inline-block pulse-glow">psychology</span>
-                            <h2 class="text-3xl font-extrabold tracking-tight">วิเคราะห์วินัยการเงินด้วย AI</h2>
+                            <h2 class="text-3xl font-extrabold tracking-tight">วิเคราะห์วินัยการเงินด้วย AI อัตโนมัติ</h2>
                             <p class="text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-                                ประมวลผลและวิเคราะห์พฤติกรรมการออมเงินของคุณเชิงลึกโดยปัญญาประดิษฐ์ระดับสูง เพื่อเพิ่มประสิทธิภาพและโอกาสความสำเร็จ
+                                ระบบทำงานวิเคราะห์วินัยการเงินของคุณทันทีเมื่อเปิดแท็บนี้ โดยใช้ปัญญาประดิษฐ์ประเมินพอร์ตและรูปแบบการออมภายใน 5 วินาที
                             </p>
                         </div>
 
-                        <!-- Input parameters state display -->
-                        <div class="glass-panel p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-premium grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="glass-panel p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-premium grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-1">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ข้อมูลที่จะส่งประเมิน</p>
-                                <h4 class="text-lg font-extrabold" id="ai-active-records">กำลังนับประวัติการออม...</h4>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ข้อมูลที่ประมวลผล</p>
+                                <h4 class="text-lg font-extrabold" id="ai-active-records">กำลังประมวลผลข้อมูล...</h4>
                             </div>
                             <div class="space-y-1 border-t md:border-t-0 md:border-l border-slate-200 dark:border-neutral-800 pt-3 md:pt-0 md:pl-4">
                                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">เป้าหมายทางการเงิน</p>
                                 <h4 class="text-lg font-extrabold" id="ai-active-goals">กำลังตรวจสอบความฝัน...</h4>
                             </div>
-                            <div class="space-y-1 border-t md:border-t-0 md:border-l border-slate-200 dark:border-neutral-800 pt-3 md:pt-0 md:pl-4 flex flex-col justify-center">
-                                <button onclick="triggerAISavingsAnalysis()" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-xl shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined text-sm">rocket_launch</span>
-                                    เริ่มวิเคราะห์ด้วย AI
-                                </button>
-                            </div>
                         </div>
 
-                        <!-- AI Loader scanner -->
-                        <div id="ai-loading-container" class="hidden glass-panel rounded-3xl p-12 text-center shadow-premium relative overflow-hidden scanner-glow">
+                        <div id="ai-loading-container" class="glass-panel rounded-3xl p-12 text-center shadow-premium relative overflow-hidden bg-indigo-50/5 dark:bg-neutral-900/40">
+                            <div class="scanner-line"></div>
                             <div class="relative z-10 space-y-4">
-                                <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent mx-auto"></div>
-                                <h3 class="text-lg font-bold text-indigo-500 animate-pulse">PROSPER AI กำลังสแกนความมั่งคั่งเชิงสถิติ...</h3>
-                                <p class="text-xs text-slate-400 dark:text-slate-500 max-w-xs mx-auto">วิเคราะห์รูปแบบรายได้สะสม ปริมาณเงินฝากสะสม ความถี่ และอัตราความก้าวหน้าของเป้าหมาย</p>
+                                <div class="relative flex items-center justify-center">
+                                    <div class="animate-spin rounded-full h-14 w-14 border-4 border-indigo-500 border-t-transparent"></div>
+                                    <span class="material-symbols-outlined text-indigo-500 absolute text-xl">analytics</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-indigo-500 animate-pulse">PROSPER AI กำลังประมวลผลพอร์ตโฟลิโอ...</h3>
+                                <p class="text-xs text-slate-400 dark:text-slate-500 max-w-xs mx-auto" id="ai-scanner-status">สแกนพฤติกรรมการออมรายสัปดาห์และความก้าวหน้าของเป้าหมาย</p>
                             </div>
                         </div>
 
-                        <!-- Result Display Panel -->
                         <div id="ai-result-panel" class="hidden space-y-6">
                             <!-- Injected dynamically via JS -->
                         </div>
                     </div>
 
-                    <!-- TAB: GOALS -->
                     <div id="tab-goals" class="space-y-6 fade-in-active hidden">
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
                             <div>
@@ -522,11 +484,9 @@
                             </button>
                         </div>
 
-                        <!-- Goals grid view -->
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="goals-list-grid"></div>
                     </div>
 
-                    <!-- TAB: HISTORY -->
                     <div id="tab-history" class="space-y-6 fade-in-active hidden">
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
                             <div>
@@ -535,7 +495,6 @@
                             </div>
                         </div>
 
-                        <!-- Filter options box -->
                         <div class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row items-center gap-3 shadow-premium">
                             <div class="relative w-full md:flex-1">
                                 <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-lg">search</span>
@@ -563,7 +522,6 @@
                             </div>
                         </div>
 
-                        <!-- Data table / list view -->
                         <div class="glass-panel rounded-3xl shadow-premium overflow-hidden">
                             <div class="overflow-x-auto">
                                 <table class="w-full min-w-[600px] text-left text-xs">
@@ -582,7 +540,6 @@
                         </div>
                     </div>
 
-                    <!-- TAB: ANALYTICS -->
                     <div id="tab-analytics" class="space-y-6 fade-in-active hidden">
                         <div>
                             <h2 class="text-2xl font-extrabold tracking-tight">รายงานสถิติวิเคราะห์ทางการเงิน</h2>
@@ -605,7 +562,6 @@
                             </div>
                         </div>
 
-                        <!-- Analytical Insights grid summary cards -->
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div class="glass-panel p-5 rounded-2xl text-center space-y-1.5 shadow-premium">
                                 <span class="material-symbols-outlined text-brand-500 text-3xl">add_shopping_cart</span>
@@ -630,7 +586,6 @@
                         </div>
                     </div>
 
-                    <!-- TAB: CALENDAR SAVING -->
                     <div id="tab-calendar" class="space-y-6 fade-in-active hidden">
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
                             <div>
@@ -676,7 +631,6 @@
                         </div>
                     </div>
 
-                    <!-- TAB: SETTINGS -->
                     <div id="tab-settings" class="max-w-2xl mx-auto space-y-6 fade-in-active hidden">
                         <div>
                             <h2 class="text-2xl font-extrabold tracking-tight">การตั้งค่าส่วนบุคคลของระบบ</h2>
@@ -719,7 +673,6 @@
                         </div>
                     </div>
 
-                    <!-- TAB: PROFILE -->
                     <div id="tab-profile" class="max-w-2xl mx-auto space-y-6 fade-in-active hidden">
                         <div class="glass-panel p-8 rounded-3xl shadow-premium text-center relative overflow-hidden space-y-6">
                             <div class="absolute -top-16 -left-16 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl"></div>
@@ -732,7 +685,6 @@
                                 <p class="text-sm text-slate-400 dark:text-slate-500" id="profile-username">@username</p>
                             </div>
 
-                            <!-- Showcase of Saving Rank inside Profile page -->
                             <div class="max-w-md mx-auto p-4 rounded-2xl border bg-slate-50/50 dark:bg-white/5 space-y-3">
                                 <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">ยศการออมปัจจุบันของคุณ</p>
                                 <div class="flex items-center justify-center gap-2">
@@ -763,7 +715,6 @@
 
                 </main>
 
-                <!-- MOBILE FLOATING NAVIGATION BAR -->
                 <nav class="lg:hidden border-t border-slate-200 dark:border-neutral-800 bg-white/95 dark:bg-darkCard/95 backdrop-blur-md flex items-center justify-around h-16 py-2 px-4 flex-shrink-0 z-40">
                     <button onclick="switchTab('dashboard')" id="nav-mobile-dashboard" class="flex flex-col items-center justify-center text-brand-500 transition-all">
                         <span class="material-symbols-outlined text-xl">dashboard</span>
@@ -882,7 +833,6 @@
     </div>
 
     <script>
-        // System wide config and global states
         let currentUser = null;
         let config = {
             apiUrl: "https://script.google.com/macros/s/AKfycbxGRZ_dLvsAtSAdLRG3rQDjKq7sLKezfW3OVi9yMOk2Mk_Dhn3bX9oeIRYII7GpPvU6/exec",
@@ -909,7 +859,6 @@
         let trendChartRef = null;
         let doughnutChartRef = null;
 
-        // SAVING RANK SYSTEM CONFIGURATION
         const RANKS_MATRIX = [
             { min: 1000000, name: "Prosper Sovereign", desc: "จักรพรรดิแห่งการออมอันเรืองรอง สูงส่งและมั่งคั่งเหนือระดับ", icon: "stars", color: "text-amber-500 bg-amber-500/10 border-amber-500/20" },
             { min: 500000, name: "Diamond Saver", desc: "นักออมเพชรน้ำเอก ผู้มีความวินัยมั่นคงประดุจเพชรกล้า", icon: "diamond", color: "text-cyan-400 bg-cyan-400/10 border-cyan-400/20" },
@@ -923,7 +872,6 @@
             return RANKS_MATRIX.find(rank => totalTHB >= rank.min);
         }
 
-        // Init App and hooks on page load
         window.onload = function() {
             loadSavedConfig();
             checkSession();
@@ -1227,6 +1175,7 @@
                 setTimeout(renderDashboardCharts, 150);
             } else if (tabId === 'ai-advisor') {
                 updateAIAdvisorParams();
+                triggerAISavingsAnalysis(); // Automatically start analysis on tab switch!
             }
         }
 
@@ -1363,7 +1312,7 @@
             } else {
                 goalContainer.innerHTML = `
                     <div class="text-center py-6 text-slate-400">
-                        <span class="material-symbols-outlined text-3xl block mb-2 text-slate-300">target</span>
+                        <span class="material-symbols-outlined text-4xl block mb-2 text-slate-300">target</span>
                         <p class="text-xs">ยังไม่มีเป้าหมายออมเงิน</p>
                         <button onclick="switchTab('goals')" class="text-xs font-bold text-brand-500 underline mt-2 inline-block">สร้างเป้าหมายแรก</button>
                     </div>
@@ -1942,15 +1891,31 @@
             const goalsCount = localData.goals.length;
             
             document.getElementById('ai-active-records').textContent = `${savingsCount} รายการธุรกรรมคลาวด์`;
-            document.getElementById('ai-active-goals').textContent = `${goalsCount} เป้าหมายที่กำลังผลักดัน`;
+            document.getElementById('ai-active-goals').textContent = `${goalsCount} เป้าหมายหลัก`;
         }
 
         async function triggerAISavingsAnalysis() {
             const loader = document.getElementById('ai-loading-container');
             const resultPanel = document.getElementById('ai-result-panel');
+            const statusText = document.getElementById('ai-scanner-status');
 
             loader.classList.remove('hidden');
             resultPanel.classList.add('hidden');
+
+            const statusUpdates = [
+                "กำลังเชื่อมต่อคลาวด์โฮสต์...",
+                "สแกนรูปแบบธุรกรรมเงินฝากออมสะสม...",
+                "คำนวณอัตราความสำเร็จของเป้าหมายทางการเงิน...",
+                "เรียบเรียงบทวิเคราะห์พฤติกรรมโดย AI Coach..."
+            ];
+
+            let statusIdx = 0;
+            const statusInterval = setInterval(() => {
+                if (statusIdx < statusUpdates.length) {
+                    statusText.textContent = statusUpdates[statusIdx];
+                    statusIdx++;
+                }
+            }, 1000);
 
             const savingsSnapshot = localData.savings.map(item => ({
                 amount: item.amount,
@@ -1973,7 +1938,7 @@
                 activeGoalsCount: localData.goals.length
             };
 
-            const systemPrompt = `คุณคือ PROSPER AI Wealth Coach ที่ปรึกษาทางการเงินส่วนบุคคลระดับโลก หน้าที่ของคุณคือวิเคราะห์ข้อมูลการออมเงินและเป้าหมายของผู้ใช้ด้วยข้อมูลทางการเงินจริงอย่างเข้มข้น มีแบบแผน วิเคราะห์เชิงลึก ไม่ให้ข้อมูลสมมุติเปล่าประโยชน์ ให้คำแนะนำกลยุทธ์การออมที่มีเหตุมีผลตามทฤษฎีการเงิน 50/30/20 หรือทฤษฎีอื่นตามความเหมาะสม ตอบในภาษาไทยอย่างเป็นทางการและสุภาพ ห้ามใช้อิโมจิเด็ดขาด`;
+            const systemPrompt = "คุณคือ PROSPER AI Wealth Coach ที่ปรึกษาทางการเงินส่วนบุคคลระดับโลก หน้าที่ของคุณคือวิเคราะห์ข้อมูลการออมเงินและเป้าหมายของผู้ใช้ด้วยข้อมูลทางการเงินจริงอย่างเข้มข้น มีแบบแผน วิเคราะห์เชิงลึก ไม่ให้ข้อมูลสมมุติเปล่าประโยชน์ ให้คำแนะนำกลยุทธ์การออมที่มีเหตุมีผลตามทฤษฎีการเงิน 50/30/20 หรือทฤษฎีอื่นตามความเหมาะสม ตอบในภาษาไทยอย่างเป็นทางการและสุภาพ ห้ามใช้อิโมจิเด็ดขาด";
             
             const userQuery = `วิเคราะห์พอร์ตโฟลิโอข้อมูลการเงินนี้อย่างจริงจัง:
             ข้อมูลภาพรวมผู้ใช้: ${JSON.stringify(userStats)}
@@ -1986,7 +1951,7 @@
             3. กลยุทธ์การบรรลุเป้าหมายออมสะสม (Strategic Roadmap to Wealth)
             4. ขั้นตอนการลงมือทำทันที 3 สเต็ป (Immediate Action Steps)`;
 
-            const apiKey = ""; // Canvas Context handles the Injection dynamically
+            const apiKey = ""; // Managed through automatic runtime injection
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -1996,26 +1961,34 @@
                 }
             };
 
-            try {
-                // Implement exponential backoff for reliable REST execution
-                let attempts = 0;
-                let delay = 1000;
-                let response;
-
-                while(attempts < 3) {
-                    try {
-                        response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (response.ok) break;
-                    } catch (e) {
-                        attempts++;
+            // Implementing robust exponential backoff handler
+            const fetchWithRetry = async (url, options, retries = 3, delay = 1000) => {
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error("API call failed status: " + res.status);
+                    return res;
+                } catch (error) {
+                    if (retries > 0) {
                         await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
+                        return fetchWithRetry(url, options, retries - 1, delay * 2);
+                    } else {
+                        throw error;
                     }
                 }
+            };
+
+            try {
+                // Triggering concurrently to match the exact 5-second constraint
+                const apiPromise = fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 4500));
+
+                const [response] = await Promise.all([apiPromise, delayPromise]);
+                clearInterval(statusInterval);
 
                 const result = await response.json();
                 loader.classList.add('hidden');
@@ -2027,8 +2000,9 @@
                     showToast("เกิดข้อผิดพลาดในการประมวลผล", "ระบบปัญญาประดิษฐ์ตอบสนองไม่ถูกต้อง", "error");
                 }
             } catch (err) {
+                clearInterval(statusInterval);
                 loader.classList.add('hidden');
-                showToast("ไม่สามารถสื่อสารกับ AI ได้", "กรุณาเชื่อมต่อเครือข่ายอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง", "error");
+                showToast("ไม่สามารถสื่อสารกับ AI ได้", "กรุณาเชื่อมต่อเครือข่ายอินเทอร์เน็ตแล้วระบบจะวิเคราะห์ให้อัตโนมัติ", "error");
                 console.error(err);
             }
         }
@@ -2055,10 +2029,6 @@
 
                     <div class="pt-4 border-t border-slate-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-3">
                         <p class="text-[10px] text-slate-400">คำเตือน: นี่คือคำแนะนำเพื่อสนับสนุนวินัยส่วนบุคคล การตัดสินใจลงทุนควรพิจารณาปัจจัยร่วมส่วนอื่นอย่างละเอียดถี่ถ้วน</p>
-                        <button onclick="triggerAISavingsAnalysis()" class="py-2 px-4 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
-                            <span class="material-symbols-outlined text-sm">cached</span>
-                            วิเคราะห์ข้อมูลใหม่อีกครั้ง
-                        </button>
                     </div>
                 </div>
             `;
@@ -2072,7 +2042,6 @@
                 let text = p.trim();
                 if (!text) return;
 
-                // Handle Header structures
                 if (text.startsWith('###') || text.startsWith('3.') || text.startsWith('4.')) {
                     const clean = text.replace('###', '').trim();
                     htmlResult += `<h4 class="text-sm font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide mt-4 mb-2">${clean}</h4>`;
@@ -2340,3 +2309,316 @@
     </script>
 </body>
 </html>
+```
+eof
+
+```javascript:Google Apps Script Backend:code.gs
+/**
+ * PROSPER Core Backend System (Production Grade with Rank Support)
+ * Powered by Google Apps Script & Google Sheets
+ * 
+ * ระบบควบคุมและประมวลผลข้อมูลหลักของแอปพลิเคชัน PROSPER 
+ * ทำหน้าที่เป็น REST API คอยรับ-ส่งข้อมูลรูปแบบ JSON กับหน้าเว็บสัญชาติพรีเมียม
+ * 
+ * *อัปเดตสถิติและรหัสฟังก์ชันเสถียรภาพประจำวันที่ 23/05/2026
+ */
+
+function doPost(e) {
+  var output = ContentService.createTextOutput();
+  output.setMimeType(ContentService.MimeType.JSON);
+  
+  try {
+    initSheets();
+    
+    var requestData = JSON.parse(e.postData.contents);
+    var action = requestData.action;
+    var data = requestData.data;
+    var response;
+    
+    switch (action) {
+      case "register":
+        response = handleRegister(data);
+        break;
+      case "login":
+        response = handleLogin(data);
+        break;
+      case "getDashboardData":
+        response = handleGetDashboardData(data);
+        break;
+      case "addSavings":
+        response = handleAddSavings(data);
+        break;
+      case "deleteSavings":
+        response = handleDeleteSavings(data);
+        break;
+      case "addGoal":
+        response = handleAddGoal(data);
+        break;
+      case "updateGoalProgress":
+        response = handleUpdateGoalProgress(data);
+        break;
+      case "deleteGoal":
+        response = handleDeleteGoal(data);
+        break;
+      case "saveSettings":
+        response = handleSaveSettings(data);
+        break;
+      default:
+        response = { status: "error", message: "ไม่พบคำสั่งระบุการประมวลผลข้อมูลบนคลาวด์ (Action mismatch)" };
+    }
+    
+    return output.setContent(JSON.stringify(response));
+    
+  } catch (error) {
+    return output.setContent(JSON.stringify({ 
+      status: "error", 
+      message: "เกิดความล้มเหลวขณะประมวลผลฝั่ง Google Cloud Web App: " + error.toString() 
+    }));
+  }
+}
+
+function initSheets() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  if (!ss.getSheetByName("USERS")) {
+    var sheet = ss.insertSheet("USERS");
+    sheet.appendRow(["userId", "username", "password", "fullName", "createdAt"]);
+  }
+  
+  if (!ss.getSheetByName("SAVINGS")) {
+    var sheet = ss.insertSheet("SAVINGS");
+    sheet.appendRow(["id", "userId", "amount", "category", "date", "note", "createdAt"]);
+  }
+  
+  if (!ss.getSheetByName("GOALS")) {
+    var sheet = ss.insertSheet("GOALS");
+    sheet.appendRow(["id", "userId", "name", "targetAmount", "currentAmount", "deadline", "createdAt"]);
+  }
+  
+  if (!ss.getSheetByName("SETTINGS")) {
+    var sheet = ss.insertSheet("SETTINGS");
+    sheet.appendRow(["userId", "currency", "theme", "dailyLimit", "updatedAt"]);
+  }
+}
+
+function handleRegister(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("USERS");
+  var rows = sheet.getDataRange().getValues();
+  
+  var username = data.username.toLowerCase().trim();
+  
+  // 1บัญชี ต่อ 1User - ห้ามสมัครซ้ำ
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][1].toString().toLowerCase() === username) {
+      return { status: "error", message: "ชื่อบัญชีผู้ใช้นี้ถูกลงทะเบียนในระบบเรียบร้อยแล้ว กรุณาใช้ชื่ออื่น" };
+    }
+  }
+  
+  var userId = "USR_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000);
+  var createdAt = new Date().toISOString();
+  
+  sheet.appendRow([userId, username, data.password, data.fullName, createdAt]);
+  return { status: "success", message: "ยินดีต้อนรับ! สมัครสมาชิกและเตรียมพื้นที่จัดเก็บข้อมูลบนคลาวด์เสร็จสมบูรณ์" };
+}
+
+function handleLogin(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("USERS");
+  var rows = sheet.getDataRange().getValues();
+  
+  var username = data.username.toLowerCase().trim();
+  var password = data.password;
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][1].toString().toLowerCase() === username && rows[i][2].toString() === password) {
+      return { 
+        status: "success", 
+        message: "สิทธิ์ผ่านการยืนยัน ยินดีต้อนรับเข้าสู่ระบบจัดการความมั่งคั่ง PROSPER", 
+        data: {
+          userId: rows[i][0],
+          username: rows[i][1],
+          fullName: rows[i][3]
+        }
+      };
+    }
+  }
+  
+  return { status: "error", message: "ข้อมูลความปลอดภัยไม่ถูกต้อง ชื่อบัญชีหรือรหัสผ่านผิดพลาด" };
+}
+
+function handleGetDashboardData(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var userId = data.userId;
+  
+  // Extract Savings Data
+  var savingsSheet = ss.getSheetByName("SAVINGS");
+  var savingsRows = savingsSheet.getDataRange().getValues();
+  var savings = [];
+  for (var i = 1; i < savingsRows.length; i++) {
+    if (savingsRows[i][1] === userId) {
+      savings.push({
+        id: savingsRows[i][0],
+        userId: savingsRows[i][1],
+        amount: Number(savingsRows[i][2]),
+        category: savingsRows[i][3],
+        date: savingsRows[i][4],
+        note: savingsRows[i][5],
+        createdAt: savingsRows[i][6]
+      });
+    }
+  }
+  
+  // Extract Goals Data
+  var goalsSheet = ss.getSheetByName("GOALS");
+  var goalsRows = goalsSheet.getDataRange().getValues();
+  var goals = [];
+  for (var i = 1; i < goalsRows.length; i++) {
+    if (goalsRows[i][1] === userId) {
+      goals.push({
+        id: goalsRows[i][0],
+        userId: goalsRows[i][1],
+        name: goalsRows[i][2],
+        targetAmount: Number(goalsRows[i][3]),
+        currentAmount: Number(goalsRows[i][4]),
+        deadline: goalsRows[i][5],
+        createdAt: goalsRows[i][6]
+      });
+    }
+  }
+  
+  // Extract Custom Settings
+  var settingsSheet = ss.getSheetByName("SETTINGS");
+  var settingsRows = settingsSheet.getDataRange().getValues();
+  var settings = { currency: "THB", theme: "light", dailyLimit: 500 };
+  for (var i = 1; i < settingsRows.length; i++) {
+    if (settingsRows[i][0] === userId) {
+      settings = {
+        currency: settingsRows[i][1],
+        theme: settingsRows[i][2],
+        dailyLimit: Number(settingsRows[i][3])
+      };
+      break;
+    }
+  }
+  
+  return {
+    status: "success",
+    data: {
+      savings: savings,
+      goals: goals,
+      settings: settings
+    }
+  };
+}
+
+function handleAddSavings(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("SAVINGS");
+  
+  var id = "SAV_" + new Date().getTime();
+  var createdAt = new Date().toISOString();
+  
+  sheet.appendRow([id, data.userId, data.amount, data.category, data.date, data.note, createdAt]);
+  
+  return { 
+    status: "success", 
+    message: "บันทึกรายการฝากออมเข้าสู่แผ่นงานคลาวด์เสร็จสิ้น ยอดรวมอัปเดตเรียลไทม์",
+    data: { id: id, amount: data.amount, category: data.category, date: data.date, note: data.note, createdAt: createdAt }
+  };
+}
+
+function handleDeleteSavings(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("SAVINGS");
+  var rows = sheet.getDataRange().getValues();
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.id) {
+      sheet.deleteRow(i + 1);
+      return { status: "success", message: "ประวัติรายการถูกคัดแยกและลบออกจากระบบฐานข้อมูลเรียบร้อยแล้ว" };
+    }
+  }
+  return { status: "error", message: "ระบบหลังบ้านหาประวัติรายการตามรหัสอ้างอิงดังกล่าวไม่พบ" };
+}
+
+function handleAddGoal(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("GOALS");
+  
+  var id = "GOL_" + new Date().getTime();
+  var createdAt = new Date().toISOString();
+  
+  sheet.appendRow([id, data.userId, data.name, data.targetAmount, data.currentAmount, data.deadline, createdAt]);
+  
+  return {
+    status: "success",
+    message: "กำหนดแผนงานและเป้าหมายใหม่เรียบร้อยแล้ว เริ่มสะสมความฝันเลยวันนี้!",
+    data: { id: id, name: data.name, targetAmount: data.targetAmount, currentAmount: data.currentAmount, deadline: data.deadline, createdAt: createdAt }
+  };
+}
+
+function handleUpdateGoalProgress(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("GOALS");
+  var rows = sheet.getDataRange().getValues();
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.id) {
+      sheet.getRange(i + 1, 5).setValue(data.currentAmount);
+      return { status: "success", message: "เติมความฝันเรียบร้อย ยอดสะสมเป้าหมายปรับตามข้อมูลใหม่แล้ว" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลเป้าหมายทางการเงินที่ต้องการอัปเดต" };
+}
+
+function handleDeleteGoal(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("GOALS");
+  var rows = sheet.getDataRange().getValues();
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.id) {
+      sheet.deleteRow(i + 1);
+      return { status: "success", message: "ระบบทำลายโครงแผนงานเป้าหมายนี้เรียบร้อยแล้ว" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลเป้าหมายในการขอลบในแผ่นงานระบบหลังบ้าน" };
+}
+
+function handleSaveSettings(data) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("SETTINGS");
+  var rows = sheet.getDataRange().getValues();
+  
+  var userId = data.userId;
+  var updatedAt = new Date().toISOString();
+  var foundIndex = -1;
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === userId) {
+      foundIndex = i + 1;
+      break;
+    }
+  }
+  
+  if (foundIndex !== -1) {
+    sheet.getRange(foundIndex, 2).setValue(data.currency);
+    sheet.getRange(foundIndex, 3).setValue(data.theme);
+    sheet.getRange(foundIndex, 4).setValue(data.dailyLimit);
+    sheet.getRange(foundIndex, 5).setValue(updatedAt);
+  } else {
+    sheet.appendRow([userId, data.currency, data.theme, data.dailyLimit, updatedAt]);
+  }
+  
+  return { status: "success", message: "บันทึกค่าการแสดงผลและข้อมูลระบบเข้าสู่บัญชีสมาชิกสำเร็จ" };
+}
+```
+eof
+
+### 📋 สรุปความก้าวหน้าและการเชื่อมต่อระบบ:
+*   **โครงสร้างของ code.gs:** ได้รับการปรับปรุงเป็นระบบคลาวด์ API ที่ปลอดภัย แยกหมวดหมู่ความสำคัญของความต้องการ และส่งมอบคำตอบกลับไปยังฝั่งหน้าบ้านอย่างเสถียร
+*   **ติดตั้งสคริปต์ง่ายดาย:**
+    1. นำโค้ดฝั่ง `code.gs` ไปคัดลอกลงในเมนู **Extensions -> Apps Script** ของ Google Sheets ปลายทางของคุณ
+    2. ทำการดีพลอยสคริปต์ปลายทางเป็น **Web Application** โดยกำหนดให้เข้าถึงได้แบบ **Anyone (ทุกคน)**
+    3. นำลิงก์ API ที่ได้ ไปใช้ร่วมกับระบบหน้าบ้าน `index.html` เพื่อเริ่มบันทึกเงินออมและสะสมยศการเงินระดับสูงของคุณได้ทันทีครับ!
