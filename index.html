@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Wealth - ระบบบันทึกการออมอัจฉริยะแบบไร้ขอบเขต</title>
-    <!-- Tailwind CSS -->
+    <title>Smart Wealth - ระบบบันทึกการออมอัจฉริยะส่วนตัว</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Premium Google Font -->
+    <!-- Inter Premier Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Google Material Symbols (Outlined, Fillable, 24px) -->
+    <!-- Google Material Symbols (Fully Clean, No Emojis, Clean Modern Outlined) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" />
-    <!-- Chart.js Official Platform CDN -->
+    <!-- Chart.js Platform Link -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
@@ -92,12 +92,13 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen">
     
+    <!-- Toast Containers -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full"></div>
 
-    <!-- Hidden production endpoint config (User provided production fallback is preserved) -->
+    <!-- Hidden Apps Script API Gateway -->
     <input type="hidden" id="gas-api-url" value="https://script.google.com/macros/s/AKfycbxGRZ_dLvsAtSAdLRG3rQDjKq7sLKezfW3OVi9yMOk2Mk_Dhn3bX9oeIRYII7GpPvU6/exec">
 
-    <!-- Auth Module Page Layout -->
+    <!-- Authentication Page (Login/Register) -->
     <div id="auth-page" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-tr from-slate-50 via-slate-100 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
         <div class="absolute -top-48 -left-48 w-[400px] h-[400px] bg-blue-500/10 rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
         <div class="absolute -bottom-48 -right-48 w-[400px] h-[400px] bg-indigo-500/10 rounded-full filter blur-3xl opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
@@ -114,7 +115,7 @@
                 </div>
             </div>
 
-            <!-- Login View -->
+            <!-- Login View Form -->
             <div id="login-form-container">
                 <div class="flex items-center gap-2 mb-6">
                     <span class="material-symbols-outlined text-slate-500">lock_open</span>
@@ -122,14 +123,14 @@
                 </div>
                 <form id="login-form" class="space-y-4">
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">ชื่อผู้ใช้งาน (Username)</label>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">ชื่อผู้ใช้งาน</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">person</span>
                             <input type="text" id="login-username" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-slate-900 text-sm outline-none transition" placeholder="ระบุชื่อผู้ใช้ของคุณ">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">รหัสผ่าน (Password)</label>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">รหัสผ่าน</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">key</span>
                             <input type="password" id="login-password" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-slate-900 text-sm outline-none transition" placeholder="ระบุรหัสผ่านเข้าใช้งาน">
@@ -145,7 +146,7 @@
                 </div>
             </div>
 
-            <!-- Register View -->
+            <!-- Register View Form -->
             <div id="register-form-container" class="hidden">
                 <div class="flex items-center gap-2 mb-6">
                     <span class="material-symbols-outlined text-emerald-500">add_moderator</span>
@@ -156,18 +157,18 @@
                         <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">ชื่อผู้ใช้งานที่ต้องการสร้าง</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">assignment_ind</span>
-                            <input type="text" id="reg-username" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 text-sm outline-none transition" placeholder="เฉพาะภาษาอังกฤษและตัวเลขเท่านั้น">
+                            <input type="text" id="reg-username" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 text-sm outline-none transition" placeholder="ระบุชื่อผู้ใช้ภาษาอังกฤษเท่านั้น">
                         </div>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">รหัสผ่านสำหรับเข้าใช้</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">shield_lock</span>
-                            <input type="password" id="reg-password" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 text-sm outline-none transition" placeholder="ขั้นต่ำอย่างน้อย 4 ตัวอักษรขึ้นไป">
+                            <input type="password" id="reg-password" required class="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-2 focus:ring-blue-500 text-sm outline-none transition" placeholder="ขั้นต่ำอย่างน้อย 4 ตัวอักษร">
                         </div>
                     </div>
                     <div class="bg-blue-500/5 dark:bg-blue-500/10 p-3.5 rounded-2xl border border-blue-200/30 dark:border-blue-900/30">
-                        <p class="text-[10px] text-blue-700 dark:text-blue-300 flex items-start gap-2 leading-relaxed">
+                        <p class="text-[10px] text-blue-700 dark:text-blue-300 flex items-start gap-2 leading-relaxed font-semibold">
                             <span class="material-symbols-outlined text-base flex-shrink-0 mt-0.5">help</span>
                             <span>ระเบียบระบบ: การเข้าใช้งานจะยึดหลัก 1 บัญชีต่อ 1 บุคคล ตรวจสอบโครงสร้างผ่านระบบคลาวด์ Google Sheets เสมอ</span>
                         </p>
@@ -184,11 +185,11 @@
         </div>
     </div>
 
-    <!-- Main Dashboard UI Frame -->
+    <!-- Main Dashboard Application Layout -->
     <div id="main-app" class="hidden min-h-screen flex flex-col md:flex-row bg-slate-50 dark:bg-slate-950">
         <!-- Sidebar Navigation Frame -->
-        <aside class="w-full md:w-64 bg-white/95 dark:bg-slate-900/90 backdrop-glass border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col z-30 fixed bottom-0 md:relative md:h-screen w-full md:flex">
-            <!-- Brand Identity Panel (Desktop visual) -->
+        <aside class="w-full md:w-64 bg-white/95 dark:bg-slate-900/90 backdrop-glass border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col z-30 fixed bottom-0 md:relative md:h-screen flex">
+            <!-- Brand Identity Header -->
             <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center hidden md:flex">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-3xl">account_balance_wallet</span>
@@ -199,8 +200,8 @@
                 </div>
             </div>
 
-            <!-- Profile Dashboard Section inside sidebar -->
-            <div class="p-4 border-b border-slate-200 dark:border-slate-800 hidden md:flex items-center gap-3 bg-blue-500/5 dark:bg-blue-500/10 m-3 rounded-2xl">
+            <!-- Profile Badge section -->
+            <div onclick="switchTab('profile')" class="p-4 border-b border-slate-200 dark:border-slate-800 hidden md:flex items-center gap-3 bg-blue-500/5 dark:bg-blue-500/10 m-3 rounded-2xl cursor-pointer hover:bg-blue-500/10 transition">
                 <div id="user-avatar-badge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-inner">
                     US
                 </div>
@@ -213,7 +214,7 @@
                 </div>
             </div>
 
-            <!-- Responsive Tab Bar Controller -->
+            <!-- Main Tabs Controller Navigation -->
             <nav class="flex-1 p-2 md:p-3 md:space-y-1 flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto w-full justify-between md:justify-start">
                 <button onclick="switchTab('dashboard')" class="nav-btn active flex items-center gap-3 px-3 md:px-4 py-2.5 text-xs font-bold rounded-xl w-full justify-center md:justify-start transition" data-tab="dashboard">
                     <span class="material-symbols-outlined text-lg">grid_view</span>
@@ -239,6 +240,10 @@
                     <span class="material-symbols-outlined text-lg">calendar_today</span>
                     <span class="hidden md:inline">ปฏิทินการออม</span>
                 </button>
+                <button onclick="switchTab('profile')" class="nav-btn flex items-center gap-3 px-3 md:px-4 py-2.5 text-xs font-bold rounded-xl w-full justify-center md:justify-start transition md:hidden lg:flex" data-tab="profile">
+                    <span class="material-symbols-outlined text-lg">person</span>
+                    <span class="hidden md:inline">โปรไฟล์ส่วนตัว</span>
+                </button>
                 <button onclick="switchTab('settings')" class="nav-btn flex items-center gap-3 px-3 md:px-4 py-2.5 text-xs font-bold rounded-xl w-full justify-center md:justify-start transition" data-tab="settings">
                     <span class="material-symbols-outlined text-lg">tune</span>
                     <span class="hidden md:inline">การตั้งค่า</span>
@@ -251,7 +256,7 @@
         </aside>
 
         <main class="flex-1 flex flex-col md:pb-0 pb-16 overflow-y-auto max-h-screen">
-            <!-- Navigation Header -->
+            <!-- Header Block -->
             <header class="bg-white/60 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 p-4 md:px-8 flex justify-between items-center z-20 backdrop-glass sticky top-0">
                 <div class="flex items-center gap-3">
                     <div class="flex flex-col">
@@ -261,16 +266,16 @@
                 </div>
                 
                 <div class="flex items-center gap-3">
-                    <!-- F5 Sync Button -->
+                    <!-- F5 Live Refresh Sync Button -->
                     <button onclick="fetchDatabaseData()" title="ซิงค์อัปเดตข้อมูลกับชีต" class="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl transition relative flex items-center justify-center">
                         <span id="sync-icon" class="material-symbols-outlined text-lg leading-none">sync</span>
                     </button>
-                    <!-- Currency Switch Tab -->
+                    <!-- Currency Switchers (No Emojis) -->
                     <div class="bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl flex gap-0.5">
-                        <button onclick="toggleCurrency('THB')" id="currency-thb" class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm">THB (฿)</button>
-                        <button onclick="toggleCurrency('USD')" id="currency-usd" class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition text-slate-500 dark:text-slate-400">USD ($)</button>
+                        <button onclick="toggleCurrency('THB')" id="currency-thb" class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm">THB</button>
+                        <button onclick="toggleCurrency('USD')" id="currency-usd" class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition text-slate-500 dark:text-slate-400">USD</button>
                     </div>
-                    <!-- Display Theme Toggler -->
+                    <!-- Dark Mode Controller -->
                     <button onclick="toggleDarkMode()" class="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl transition">
                         <span class="material-symbols-outlined text-lg dark:hidden">dark_mode</span>
                         <span class="material-symbols-outlined text-lg hidden dark:inline">light_mode</span>
@@ -282,9 +287,9 @@
                 
                 <!-- Tab View: Dashboard -->
                 <section id="view-dashboard" class="app-view space-y-6">
-                    <!-- Summary Performance Stat Cards -->
+                    <!-- Summary Card Group -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <!-- Total Wallet Display -->
+                        <!-- Stat Card: Total Savings -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
                             <div class="absolute top-0 right-0 w-28 h-28 bg-blue-500/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
@@ -300,7 +305,7 @@
                             </div>
                         </div>
 
-                        <!-- Daily Saving Stat Display -->
+                        <!-- Stat Card: Today Savings -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
                             <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-500/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
@@ -316,7 +321,7 @@
                             </div>
                         </div>
 
-                        <!-- Month Saving Stat Display -->
+                        <!-- Stat Card: Monthly Savings -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
                             <div class="absolute top-0 right-0 w-28 h-28 bg-indigo-500/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
@@ -332,7 +337,7 @@
                             </div>
                         </div>
 
-                        <!-- Savings Rank System Panel -->
+                        <!-- Stat Card: Pro Savings Rank System -->
                         <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-lg border border-slate-800">
                             <div class="absolute top-0 right-0 w-28 h-28 bg-white/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
@@ -356,9 +361,8 @@
                         </div>
                     </div>
 
-                    <!-- Local AI analysis section + Chart.js Layout -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Chart section -->
+                        <!-- Visual Savings Trend Card (Chart.js) -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm lg:col-span-2 space-y-4">
                             <div class="flex justify-between items-center">
                                 <div>
@@ -371,22 +375,22 @@
                             </div>
                         </div>
 
-                        <!-- Real-time Offline AI Engine Coach Display -->
+                        <!-- Real-time Local AI Financial Coach Panel -->
                         <div class="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950 text-white border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between space-y-4">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center gap-2">
                                     <span class="material-symbols-outlined text-blue-400">psychology</span>
                                     <h3 class="font-extrabold text-xs text-slate-100 uppercase tracking-wider">AI โค้ชการเงินส่วนตัว</h3>
                                 </div>
-                                <span class="px-2.5 py-0.5 bg-blue-500/15 text-blue-400 border border-blue-500/30 text-[9px] font-bold rounded-full uppercase tracking-wider">ประมวลผลด่วน</span>
+                                <span class="px-2.5 py-0.5 bg-blue-500/15 text-blue-400 border border-blue-500/30 text-[9px] font-bold rounded-full uppercase tracking-wider">ประมวลผลภายใน</span>
                             </div>
                             <div class="flex-1 overflow-y-auto max-h-56 pr-1 space-y-3 mt-2">
-                                <div id="ai-insight-box" class="text-[11px] text-slate-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/5 whitespace-pre-line">
-                                    กำลังเริ่มคำนวณสถิติและเปรียบเทียบแผนพฤติกรรมการออมเงินของคุณ...
+                                <div id="ai-insight-box" class="text-[11px] text-slate-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/5 whitespace-pre-line font-medium">
+                                    กำลังเริ่มคำนวณสถิติและวิเคราะห์แนวทางการจัดการทางการเงินส่วนบุคคลของคุณ...
                                 </div>
                             </div>
                             <div class="text-[9px] text-slate-500 dark:text-slate-400 flex items-center justify-between font-bold pt-3 border-t border-white/5">
-                                <span>Engine: SmartWealth Analytics Local API</span>
+                                <span>Engine: SmartWealth Analytics 2026</span>
                                 <span class="flex h-1.5 w-1.5 relative">
                                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                   <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
@@ -395,7 +399,7 @@
                         </div>
                     </div>
 
-                    <!-- Target / Goal Progress Overview -->
+                    <!-- Target Goals Micro Panel -->
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
                         <div class="flex justify-between items-center">
                             <div>
@@ -447,8 +451,8 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">รายละเอียดบันทึกช่วยจำ (Note)</label>
-                            <input type="text" id="saving-note" class="w-full px-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 text-xs outline-none transition" placeholder="ออมจากการทำอาหารกินเอง หรือลดภาระรายจ่ายสินค้าไม่จำเป็น">
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">รายละเอียดบันทึกช่วยจำ</label>
+                            <input type="text" id="saving-note" class="w-full px-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 text-xs outline-none transition" placeholder="ระบุโน้ตช่วยจำ เช่น ออมจากเงินรางวัลทำงานพิเศษ">
                         </div>
                         <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl transition shadow-lg shadow-blue-500/25 text-xs flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-sm">inventory_2</span>
@@ -482,14 +486,14 @@
                         <p class="text-[10px] text-slate-400 dark:text-slate-500 font-bold">ข้อมูลประวัติประเมินการฝากส่งข้อมูลของคุณ</p>
                     </div>
 
-                    <!-- Search Filter control panel -->
+                    <!-- Filter panel -->
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-3xl grid grid-cols-1 md:grid-cols-4 gap-4 shadow-sm">
                         <!-- Text search -->
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
                             <input type="text" id="search-saving" oninput="filterSavings()" class="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl text-xs outline-none transition" placeholder="ค้นหาจากบันทึกช่วยจำ...">
                         </div>
-                        <!-- Cat search -->
+                        <!-- Select category -->
                         <select id="filter-category" onchange="filterSavings()" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl text-xs font-bold outline-none transition text-slate-700 dark:text-slate-300">
                             <option value="">เลือกทุกหมวดหมู่จัดสรร</option>
                             <option value="การศึกษา">Education (การศึกษา)</option>
@@ -500,20 +504,20 @@
                             <option value="ออมทั่วไป">General Savings (การออมทั่วไป)</option>
                             <option value="สินทรัพย์ดิจิทัล">Digital Asset (สินทรัพย์ดิจิทัล)</option>
                         </select>
-                        <!-- Order by search -->
+                        <!-- Sorting options -->
                         <select id="sort-saving" onchange="filterSavings()" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl text-xs font-bold outline-none transition text-slate-700 dark:text-slate-300">
                             <option value="date-desc">เรียงลำดับวันที่ (ล่าสุดก่อน)</option>
                             <option value="date-asc">เรียงลำดับวันที่ (เก่าที่สุดก่อน)</option>
                             <option value="amount-desc">จำนวนยอดออม (มากที่สุดก่อน)</option>
                             <option value="amount-asc">จำนวนยอดออม (น้อยที่สุดก่อน)</option>
                         </select>
-                        <!-- Dynamic indicator count -->
+                        <!-- Row counter -->
                         <div class="text-right flex items-center justify-end text-[9px] text-slate-400 dark:text-slate-500 font-bold px-2">
                             พบรายการธุรกรรมรวมทั้งสิ้น <span id="history-count" class="mx-1 text-blue-600 dark:text-blue-400">0</span> รายการ
                         </div>
                     </div>
 
-                    <!-- Log Table -->
+                    <!-- History data log table -->
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
@@ -527,7 +531,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="history-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-                                    <!-- Populated dynamically -->
+                                    <!-- Dynamic rows -->
                                 </tbody>
                             </table>
                         </div>
@@ -542,7 +546,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Doughnut distribution chart layout -->
+                        <!-- Asset Allocation Doughnut Chart -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
                             <h3 class="font-extrabold text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500">สัดส่วนจัดสรรทรัพย์สิน (Asset Allocation)</h3>
                             <div class="relative w-full h-64 flex justify-center items-center">
@@ -550,7 +554,7 @@
                             </div>
                         </div>
 
-                        <!-- Bar chart layout -->
+                        <!-- Bar comparison chart -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
                             <h3 class="font-extrabold text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500">เปรียบเทียบขนาดสัดส่วนตามหมวดหมู่</h3>
                             <div class="relative w-full h-64">
@@ -568,7 +572,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Interactive Calendar Frame -->
+                        <!-- Monthly Calendar widget -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm lg:col-span-2 space-y-6">
                             <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
                                 <h3 id="calendar-month-year" class="font-extrabold text-xs text-slate-800 dark:text-white uppercase tracking-wider">พฤษภาคม 2026</h3>
@@ -586,11 +590,11 @@
                                 <div>อา.</div><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div>ส.</div>
                             </div>
                             <div id="calendar-days" class="grid grid-cols-7 gap-2 text-center text-xs">
-                                <!-- Calendar Days elements are dynamic -->
+                                <!-- Generated Dynamically -->
                             </div>
                         </div>
 
-                        <!-- Calendar Summary Sidebar Widget -->
+                        <!-- Side stats card -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-6 flex flex-col justify-between">
                             <div class="space-y-4">
                                 <h3 class="font-extrabold text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500">สถิติความถี่นำฝากประจำเดือน</h3>
@@ -624,6 +628,49 @@
                     </div>
                 </section>
 
+                <!-- Tab View: User Profile Hub -->
+                <section id="view-profile" class="app-view hidden max-w-2xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 page-enter">
+                    <div class="flex items-center gap-4">
+                        <div id="profile-avatar-large" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-2xl shadow-lg">
+                            US
+                        </div>
+                        <div>
+                            <h2 id="profile-display-username" class="text-xl font-black text-slate-800 dark:text-white">Username</h2>
+                            <p class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">บัญชีสมาชิกหลักของระบบ</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ระดับชั้นยศการออมทางการเงิน</span>
+                            <h3 id="profile-rank-badge-text" class="text-base font-black text-yellow-500 mt-0.5">Bronze Saver</h3>
+                        </div>
+                        <span id="profile-rank-badge-icon" class="material-symbols-outlined text-3xl text-yellow-500 bg-yellow-500/10 p-2.5 rounded-xl">workspace_premium</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl p-4">
+                            <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดนำออมทั้งหมดสะสม</span>
+                            <h4 id="profile-total-saving" class="text-lg font-black mt-1">฿0.00</h4>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl p-4">
+                            <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">จำนวนบันทึกธุรกรรม</span>
+                            <h4 id="profile-transaction-count" class="text-lg font-black mt-1">0 ครั้ง</h4>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 text-xs text-slate-500 dark:text-slate-400 pt-4 border-t border-slate-100 dark:border-slate-850">
+                        <div class="flex justify-between font-bold">
+                            <span>ประเภทระบบบัญชี:</span>
+                            <span class="text-slate-800 dark:text-slate-200">คลาวด์เดี่ยว (1 บัญชีต่อ 1 บุคคล)</span>
+                        </div>
+                        <div class="flex justify-between font-bold">
+                            <span>สถานะระบบวิเคราะห์ AI:</span>
+                            <span class="text-emerald-500">เสถียร / ทำงานแบบท้องถิ่น (Offline Auto)</span>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Tab View: Settings -->
                 <section id="view-settings" class="app-view hidden max-w-2xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 page-enter">
                     <div class="flex items-center gap-3">
@@ -635,16 +682,16 @@
                     </div>
 
                     <div class="divide-y divide-slate-100 dark:divide-slate-800 space-y-4">
-                        <!-- Theme Toggle Setting -->
+                        <!-- Theme settings selection -->
                         <div class="flex justify-between items-center py-4">
                             <div>
-                                <h4 class="font-extrabold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">รูปแบบการแสดงสไตล์ (Theme)</h4>
-                                <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">สลับระหว่างธีมสว่างหรือธีมมืดเพื่อสุขภาพดวงตาและการประหยัดแบตเตอรี่</p>
+                                <h4 class="font-extrabold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">รูปแบบการแสดงสไตล์</h4>
+                                <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">สลับระหว่างธีมสว่างหรือธีมมืดเพื่อสุขภาพดวงตาและการประหยัดพลังงาน</p>
                             </div>
                             <button onclick="toggleDarkMode()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl text-[9px] font-bold transition">สลับโหมดสี</button>
                         </div>
 
-                        <!-- Currency Configuration -->
+                        <!-- Currency preferences -->
                         <div class="flex justify-between items-center py-4">
                             <div>
                                 <h4 class="font-extrabold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">สกุลเงินในการวิเคราะห์รายงาน</h4>
@@ -656,7 +703,7 @@
                             </select>
                         </div>
 
-                        <!-- API Gateway Info -->
+                        <!-- System network description -->
                         <div class="flex justify-between items-center py-4">
                             <div>
                                 <h4 class="font-extrabold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">โครงข่ายเซิร์ฟเวอร์เชื่อมโยงข้อมูล</h4>
@@ -665,12 +712,12 @@
                             <span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] font-bold rounded-full uppercase tracking-wider">ออนไลน์เรียลไทม์</span>
                         </div>
 
-                        <!-- Advanced structure description -->
+                        <!-- Additional architecture specs description -->
                         <div class="py-4 space-y-2">
                             <h4 class="font-extrabold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">สถาปัตยกรรมข้อมูลในโครงการ</h4>
                             <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl space-y-2 text-[9px] text-slate-400 dark:text-slate-500 font-bold leading-relaxed border border-slate-100 dark:border-slate-800">
-                                <p>🔒 ระเบียบการแยกข้อมูลธุรกรรม: การแบ่งโครงสร้าง USERS, SAVINGS และ GOALS อย่างชัดเจนบน Google Sheets</p>
-                                <p>🚀 การทำงานสไตล์ Asynchronous: ประสิทธิภาพในการอัปเดตแบบไร้สะดุดด้วย Google Apps Script Web App Endpoint</p>
+                                <p>ระเบียบการแยกข้อมูลธุรกรรม: การแบ่งโครงสร้าง USERS, SAVINGS และ GOALS อย่างชัดเจนบน Google Sheets</p>
+                                <p>การทำงานสไตล์ Asynchronous: ประสิทธิภาพในการอัปเดตแบบไร้สะดุดด้วย Google Apps Script Web App Endpoint</p>
                             </div>
                         </div>
                     </div>
@@ -689,7 +736,7 @@
             <form id="add-goal-form" class="space-y-4">
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">หัวข้อ / ชื่อโครงการความสำเร็จ</label>
-                    <input type="text" id="goal-title" required class="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-xs outline-none transition" placeholder="เช่น ทุนสำรองกรณีเจ็บป่วย, ทุนเพื่อการศึกษาระดับปริญญาโท">
+                    <input type="text" id="goal-title" required class="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-xs outline-none transition" placeholder="เช่น ทุนสำรองเพื่อความปลอดภัยทางการเงิน">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -761,13 +808,13 @@
             savings: [],
             goals: [],
             currency: 'THB',
-            exchangeRate: 36.5, // 1 USD = 36.5 THB Fixed Exchange Benchmark Context
+            exchangeRate: 35.0, // 1 USD = 35.0 THB Fixed Exchange Benchmark Context
             theme: 'light',
             currentCalendarYear: 2026,
             currentCalendarMonth: 4 // พฤษภาคม 2026 is index 4 (0-based)
         };
 
-        // Material Symbols Mapping to categories
+        // Material Symbols Mapping to categories (Clean, No Emojis)
         const categoryIconMap = {
             "การศึกษา": "school",
             "การลงทุน": "trending_up",
@@ -783,7 +830,9 @@
         let allocationChartObj = null;
         let categoryBarChartObj = null;
 
-        // Custom notification system (Toasts)
+        /**
+         * Custom Premium Toasts Alerts (No Emojis)
+         */
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -805,7 +854,7 @@
         }
 
         window.onload = function() {
-            // Clock controller
+            // Live clock updater
             updateClock();
             setInterval(updateClock, 1000);
             
@@ -841,7 +890,7 @@
 
         function updateClock() {
             const now = new Date();
-            const year = 2026; // Set exact system benchmark year requirement
+            const year = 2026; // Exact target benchmark year
             const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             const monthStr = monthNames[now.getMonth()];
             const dateVal = now.getDate();
@@ -868,6 +917,8 @@
                 renderAllocationCharts();
             } else if (tabId === 'calendar') {
                 renderCalendar();
+            } else if (tabId === 'profile') {
+                renderProfileView();
             }
         }
 
@@ -898,7 +949,7 @@
                 return await response.json();
             } catch (error) {
                 console.error("API error: ", error);
-                return { success: false, message: "เชื่อมต่อเซิร์ฟเวอร์ระบบ Apps Script ล้มเหลว" };
+                return { success: false, message: "เชื่อมต่อเซิร์ฟเวอร์ Apps Script ล้มเหลว โปรดตรวจสอบสิทธิ์เชื่อมต่อ" };
             }
         }
 
@@ -908,11 +959,11 @@
             const password = document.getElementById('reg-password').value;
 
             if (username.length < 3 || password.length < 4) {
-                showToast("ชื่อผู้ใช้งานต้องอย่างน้อย 3 อักษร รหัสผ่านอย่างน้อย 4 ตัวอักษร", "error");
+                showToast("ชื่อผู้ใช้งานต้องมากกว่า 3 อักษร รหัสผ่านมากกว่า 4 อักษร", "error");
                 return;
             }
 
-            showToast("กำลังสมัครบัญชีลงทะเบียนใน Google Sheets...", "info");
+            showToast("กำลังส่งคำขอลงทะเบียน...", "info");
             const res = await apiRequest("register", { username, password });
             if (res.success) {
                 showToast(res.message, "success");
@@ -927,7 +978,7 @@
             const username = document.getElementById('login-username').value.trim();
             const password = document.getElementById('login-password').value;
 
-            showToast("กำลังตรวจสอบข้อมูลความปลอดภัยระบบ...", "info");
+            showToast("กำลังเริ่มตรวจสอบข้อมูลผู้ใช้...", "info");
             const res = await apiRequest("login", { username, password });
             if (res.success) {
                 state.user = res.username;
@@ -944,7 +995,7 @@
             state.user = null;
             document.getElementById('auth-page').classList.remove('hidden');
             document.getElementById('main-app').classList.add('hidden');
-            showToast("ออกจากระบบสมุดบัญชีออมแล้ว", "info");
+            showToast("ออกจากสมุดบัญชีการเงินแล้ว", "info");
         }
 
         function showAppUI() {
@@ -961,7 +1012,7 @@
             const syncIcon = document.getElementById('sync-icon');
             syncIcon.classList.add('animate-spin');
             
-            showToast("กำลังรีโหลดฐานข้อมูลคลาวด์...", "info");
+            showToast("กำลังเริ่มประสานข้อมูลคลาวด์ชีต...", "info");
             const res = await apiRequest("getDashboardData");
             syncIcon.classList.remove('animate-spin');
             
@@ -972,7 +1023,7 @@
                 updateUIComponents();
                 showToast("อัปเดตข้อมูลบัญชีสำเร็จ", "success");
             } else {
-                showToast("ไม่สามารถประมวลโหลดจาก Apps Script ได้", "error");
+                showToast("ไม่สามารถซิงค์ดึงข้อมูลสดจาก Apps Script ได้", "error");
             }
         }
 
@@ -1071,19 +1122,18 @@
             }
         }
 
-        /*
-          ระบบวิเคราะห์พฤติกรรมการออมผ่าน AI Engine ภายในตัว (Local AI Engine)
-          ทำงานแบบออโต้ 100% ภายใน 1.5 วินาทีเมื่อข้อมูลอัปเดต โดยไม่ต้องพึ่งเครือข่าย API นอก
-          ให้ข้อมูลเชิงวิเคราะห์จริงจัง ละเอียด และเป็นทางการ ปราศจาก Emoji
-        */
+        /**
+         * ระบบ AI วิเคราะห์แนวโน้มวินัยพฤติกรรมทางการเงินแบบวิเคราะห์ภายใน (Local Analysis Engine)
+         * ทำงานอย่างปลอดภัยและรวดเร็วเสร็จสิ้นภายใน 1.5 วินาที ไร้สัญลักษณ์ Emoji
+         */
         function triggerLocalAIAnalysis() {
             const aiInsightBox = document.getElementById('ai-insight-box');
             
-            // แสดงสถานะการวิเคราะห์จำลอง 1.2 วินาทีเพื่อความสมจริงสไตล์ Fintech Premium
+            // แสดงหน้าจอจำลองการคิดวิเคราะห์ประเมินผลทางการเงินอย่างรวดเร็ว
             aiInsightBox.innerHTML = `
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined animate-spin text-sm text-blue-400">sync</span>
-                    <span>AI โค้ชการเงิน กำลังคำนวณและประมวลผลโมเดลสถิติความถี่...</span>
+                    <span>AI วิเคราะห์ความมั่นคง กำลังตรวจสอบโครงสร้างประวัติการออมของคุณ...</span>
                 </div>
             `;
 
@@ -1100,19 +1150,16 @@
                     }
                 });
 
-                // จัดลำดับหมวดหมู่ที่เน้นออมสูงสุด
+                // ตรวจสอบพฤติกรรมการจัดหมวดหมู่ยอดนิยม
                 let sortedCats = Object.entries(categories).sort((a,b) => b[1] - a[1]);
                 let topCategory = sortedCats.length > 0 ? sortedCats[0][0] : "ไม่ระบุ";
                 
-                // คำนวณสัดส่วนความเสี่ยงตามทฤษฎีการจัดสรรสินทรัพย์
+                // คำนวณร้อยละตามทฤษฎีความปลอดภัยสากล
                 let investmentAmt = categories["การลงทุน"] || 0;
                 let reserveAmt = categories["กองทุนสำรอง"] || 0;
-                let educationAmt = categories["การศึกษา"] || 0;
-                
                 let investPercent = total > 0 ? (investmentAmt / total) * 100 : 0;
                 let reservePercent = total > 0 ? (reserveAmt / total) * 100 : 0;
 
-                // ตรวจสอบเป้าหมายทางการเงิน
                 let activeGoalsCount = state.goals.length;
                 let lowestGoalProg = 100;
                 let targetGoalTitle = "";
@@ -1124,45 +1171,42 @@
                     }
                 });
 
-                // สร้างบทวิเคราะห์แบบ Dynamic และเป็นทางการ 3 มิติเชิงทฤษฎีการวางแผนการเงิน
+                // การประกอบบทความวิเคราะห์ทางการเงินระดับมาตรฐาน ไร้สัญลักษณ์ Emoji
                 let report = "";
                 
-                // ส่วนที่ 1: จุดเด่นเชิงพฤติกรรม
-                report += "1. จุดเด่นการออมเชิงพฤติกรรมในรอบปัจจุบัน:\n";
+                report += "1. ผลประเมินพฤติกรรมการจัดสรรทรัพย์สิน:\n";
                 if (total === 0) {
-                    report += "- ระบบเปิดบัญชีใหม่พร้อมใช้งานในสมรรถนะสูงสุด แนะนำให้นำร่องฝากออมในหมวดหมู่กองทุนสำรอง เพื่อสร้างเกณฑ์ความมั่นคงขั้นพื้นฐานของพอร์ตการเงิน\n";
+                    report += "- ไม่พบบันทึกการออมตั้งต้น ระบบพร้อมรับข้อมูลรายการฝากออมแรกเพื่อเริ่มนำร่องแผนวิเคราะห์กองทุนสำรองทันที\n";
                 } else {
-                    report += `- บัญชีมีความเคลื่อนไหวสะสมยอดสุทธิ ${formatValue(total)} โดยมีการจัดสรรหนักแน่นที่สุดไปที่หมวดหมู่ [${topCategory}] ซึ่งสะท้อนเป้าหมายระยะสั้นที่ชัดเจน\n`;
-                    if (reservePercent >= 30) {
-                        report += `- โครงสร้างปลอดภัยสูง: คุณจัดสัดส่วนกองทุนสำรองไว้ถึง ${reservePercent.toFixed(1)}% ของสินทรัพย์ทั้งหมด ผ่านเกณฑ์ความปลอดภัยทางการเงินพื้นฐานอย่างยอดเยี่ยม\n`;
+                    report += `- ยอดออมสะสมของคุณคือ ${formatValue(total)} โดยมีการจัดกลุ่มอย่างสม่ำเสมอในหมวดหมู่ [${topCategory}] ซึ่งบ่งชี้ทิศทางการสะสมระยะสั้น\n`;
+                    if (reservePercent >= 25) {
+                        report += `- โครงสร้างปลอดภัยยอดเยี่ยม: สินทรัพย์ในรูปแบบกองทุนสำรองฉุกเฉินคิดเป็นร้อยละ ${reservePercent.toFixed(1)} ซึ่งเป็นระดับความมั่นคงที่น่าพึงพอใจ\n`;
                     } else {
-                        report += `- มีการกระจายสินทรัพย์เริ่มต้นอย่างสร้างสรรค์เพื่อเป้าหมายต่างวาระ\n`;
+                        report += `- ข้อแนะนำด้านสัดส่วน: ปัจจุบันยอดกองทุนสำรองยังมีสัดส่วนค่อนข้างต่ำ แนะนำให้พิจารณาเพิ่มเป้าหมายนี้เพื่อรองรับเหตุฉุกเฉิน\n`;
                     }
                 }
 
-                // ส่วนที่ 2: จุดบกพร่อง/ความเสี่ยง
-                report += "\n2. จุดบกพร่อง/ความเสี่ยงที่น่าเฝ้าระวังสูงสุด:\n";
+                report += "\n2. รายการเฝ้าระวังและการระบุความเสี่ยง:\n";
                 if (total > 0 && investPercent < 15) {
-                    report += `- ขาดมิติความมั่งคั่งเชิงรุก: มีสัดส่วนสินทรัพย์ด้านการลงทุนเพื่อเอาชนะอัตราเงินเฟ้อเพียง ${investPercent.toFixed(1)}% (ต่ำกว่าเกณฑ์แนะนำขั้นต่ำที่ 15%)\n`;
+                    report += `- ขาดการเร่งความเติบโตของพอร์ต: มีการจัดสรรเงินเพื่อสร้างผลตอบแทนสู้เงินเฟ้อ (หมวดการลงทุน) เพียงร้อยละ ${investPercent.toFixed(1)} ซึ่งน้อยกว่าสัดส่วนมาตรฐานที่แนะนำคือร้อยละ 15\n`;
                 } else if (total > 0 && investPercent >= 15) {
-                    report += `- พอร์ตเชิงรุกโดดเด่น แต่อย่าลืมเฝ้าระวังสภาพคล่องของเงินหมุนเวียนหลัก\n`;
+                    report += `- พอร์ตมีความก้าวหน้าเชิงรุกที่ดี การจัดวางแผนการลงทุนอยู่ในระดับที่น่าชื่นชม\n`;
                 }
                 if (activeGoalsCount === 0) {
-                    report += "- ความเสี่ยงเป้าหมายคลุมเครือ: ปัจจุบันพอร์ตของคุณยังไม่มีเป้าหมายที่กำหนดเดดไลน์ที่แน่นอน อาจส่งผลให้วินัยการเงินลดถอยลงในระยะยาว\n";
+                    report += "- ปราศจากแผนความสำเร็จ: ไม่มีประวัติโครงการเป้าหมายที่เชื่อมโยงเดดไลน์ อาจส่งผลให้วินัยในการออมสม่ำเสมอในภาพรวมลดลง\n";
                 } else if (lowestGoalProg < 30) {
-                    report += `- ความก้าวหน้าล่าช้า: โครงการเป้าหมาย [${targetGoalTitle}] มีความคืบหน้าสะสมค่อนข้างต่ำที่ ${lowestGoalProg.toFixed(1)}% เสี่ยงต่อการบรรลุเป้าหมายไม่ทันรอบกำหนดเดดไลน์\n`;
+                    report += `- ความเสี่ยงด้านเวลา: โครงการ [${targetGoalTitle}] ดำเนินไปอย่างล่าช้า มีสัดส่วนความคืบหน้าต่ำกว่าร้อยละ 30 มีความเสี่ยงที่จะไม่บรรลุยอดทันตามกำหนดเวลาเป้าหมาย\n`;
                 } else {
-                    report += "- สภาพคล่องพอร์ตโดยรวมทำงานอยู่ในกรอบปกติ\n";
+                    report += "- สถานะของเป้าหมายและสภาพคล่องทางพอร์ตมีความสมดุลและอยู่ในเกณฑ์ปกติ\n";
                 }
 
-                // ส่วนที่ 3: แนวทางปฏิบัติจริง
-                report += "\n3. แนวทางปฏิบัติจริง (Actionable Strategic Steps):\n";
-                report += `[ขั้นตอนที่ 1] ปรับอัตราการออมสะสมรายเดือนให้คงที่ โดยแบ่งโควตาออมในวันแรกที่ได้รับรายได้ เพื่อหลีกเลี่ยงความเสี่ยงในการใช้จ่ายส่วนเกิน\n`;
-                report += `[ขั้นตอนที่ 2] พิจารณากระจายสัดส่วนการออมไปที่ หมวดหมู่การลงทุน เพิ่มขึ้นทีละ 5% เพื่อสร้างมูลค่าส่วนเพิ่มจากการทบต้น\n`;
-                if (activeGoalsCount === 0) {
-                    report += `[ขั้นตอนที่ 3] มุ่งหน้าไปที่แท็บ 'เป้าหมายการออม' เพื่อกำหนดขีดจำกัดเป้าหมายและวันที่ครบกำหนดโครงการแรกอย่างเป็นทางการ\n`;
+                report += "\n3. แผนปฏิบัติการที่จับต้องได้สำหรับสัปดาห์นี้:\n";
+                report += "[ขั้นตอนที่ 1] สร้างเป้าหมายกองทุนสำรองฉุกเฉินหรือสะสมเป้าหมายหลักเป็นอันดับแรกทันทีเมื่อมีกระแสเงินสดเข้าพอร์ต\n";
+                report += "[ขั้นตอนที่ 2] พยายามกระจายสัดส่วนการออมไปที่หมวดหมู่ สินทรัพย์ดิจิทัล หรือการลงทุน ในสัดส่วน 5% ของยอดรวมทั้งหมด\n";
+                if (activeGoalsCount > 0) {
+                    report += `[ขั้นตอนที่ 3] จัดสรรออมเพิ่มสำหรับโครงการ [${targetGoalTitle || "เป้าหมายหลัก"}] เพิ่มขึ้นอย่างต่อเนื่องเพื่อให้พ้นขีดระดับความคืบหน้าเบื้องต้น\n`;
                 } else {
-                    report += `[ขั้นตอนที่ 3] เพิ่มสัดส่วนการโปะส่งเงินสะสมไปที่เป้าหมาย [${targetGoalTitle || "โครงการปัจจุบัน"}] ให้ได้ขั้นต่ำสัปดาห์ละ 500 บาท เพื่อเร่งให้พ้นขีดระดับเริ่มต้น\n`;
+                    report += "[ขั้นตอนที่ 3] มุ่งหน้าไปยังหน้าเป้าหมายการออมเพื่อสร้างเป้าหมายทางการเงินโครงการแรกที่มีเดดไลน์อย่างชัดเจน\n";
                 }
 
                 aiInsightBox.innerText = report;
@@ -1336,7 +1380,7 @@
             const note = document.getElementById('saving-note').value;
 
             if (state.currency === 'USD') {
-                amount = amount * state.exchangeRate; // Convert input back to THB base for database consistency
+                amount = amount * state.exchangeRate; // Base is saved in THB inside spreadsheet
             }
 
             const data = {
@@ -1347,7 +1391,7 @@
                 note: note
             };
 
-            showToast("กำลังประมวลผลจัดเก็บบันทึกยอดออม...", "info");
+            showToast("กำลังส่งข้อมูลรายการธุรกรรมสะสมใหม่...", "info");
             const res = await apiRequest("addSaving", data);
             
             if (res.success) {
@@ -1391,7 +1435,7 @@
             goalsList.innerHTML = '';
             
             if (state.goals.length === 0) {
-                goalsList.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold">ไม่พบสถิติโครงการสะสมเงินของบัญชีนี้</div>';
+                goalsList.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold">ไม่พบบัญชีความสำเร็จโครงการสะสมเงินใดๆ</div>';
             } else {
                 state.goals.slice(0, 3).forEach(goal => {
                     const percent = Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100));
@@ -1422,7 +1466,7 @@
             renderHistoryTable();
             renderCalendar();
             
-            // AI Coach automatic internal analysis trigger
+            // Automatic execution of Local AI Coaching analytics
             triggerLocalAIAnalysis();
         }
 
@@ -1431,7 +1475,7 @@
             grid.innerHTML = '';
 
             if (state.goals.length === 0) {
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400 font-bold text-xs">ไม่พบสถิติรายละเอียดโครงการออมเงินสะสมใดๆ</div>';
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400 font-bold text-xs">ไม่พบบัญชีโครงการสะสมเป้าหมายใดๆ ในพอร์ตนี้</div>';
                 return;
             }
 
@@ -1525,7 +1569,7 @@
                 val = val * state.exchangeRate;
             }
 
-            showToast("กำลังคำนวณบันทึกเป้าหมาย...", "info");
+            showToast("กำลังส่งคำขอบันทึกข้อมูลยอดสะสม...", "info");
             const res = await apiRequest("updateGoalProgress", {
                 id: goalId,
                 username: state.user,
@@ -1670,7 +1714,7 @@
                 note: note
             };
 
-            showToast("กำลังบันทึกรายการแก้ไขเข้าชีต...", "info");
+            showToast("กำลังบันทึกรายการแก้ไขเข้าคลาวด์...", "info");
             const res = await apiRequest("editSaving", data);
             if (res.success) {
                 showToast(res.message, "success");
@@ -1750,6 +1794,28 @@
                 state.currentCalendarYear--;
             }
             renderCalendar();
+        }
+
+        function renderProfileView() {
+            document.getElementById('profile-display-username').innerText = state.user;
+            document.getElementById('profile-avatar-large').innerText = state.user.substring(0,2).toUpperCase();
+            
+            let totalSavings = 0;
+            state.savings.forEach(item => {
+                totalSavings += item.amount;
+            });
+
+            document.getElementById('profile-total-saving').innerText = formatValue(totalSavings);
+            document.getElementById('profile-transaction-count').innerText = `${state.savings.length} ครั้ง`;
+
+            let rank = "Bronze Saver";
+            if (totalSavings >= 100000) rank = "Savings Legend";
+            else if (totalSavings >= 50000) rank = "Diamond Wealth";
+            else if (totalSavings >= 20000) rank = "Platinum Investor";
+            else if (totalSavings >= 10000) rank = "Gold Saver";
+            else if (totalSavings >= 2500) rank = "Silver Saver";
+
+            document.getElementById('profile-rank-badge-text').innerText = rank;
         }
 
         function toggleDarkMode() {
