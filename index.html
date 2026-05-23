@@ -6,9 +6,9 @@
     <title>Smart Wealth - ระบบบันทึกการออมอัจฉริยะส่วนตัว</title>
     <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Premier Typography -->
+    <!-- Inter Premium Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Google Material Symbols (Fully Clean, No Emojis, Clean Modern Outlined) -->
+    <!-- Google Material Symbols (Fully Clean, No Emojis, Outlined Style) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" />
     <!-- Chart.js Platform Link -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -47,7 +47,6 @@
             font-family: 'Inter', sans-serif;
             transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Custom Premium Soft Scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -62,7 +61,6 @@
         .dark ::-webkit-scrollbar-thumb {
             background: #334155;
         }
-        /* High Performance Sliding Animations */
         .page-enter {
             animation: slideUpFade 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -188,7 +186,7 @@
     <!-- Main Dashboard Application Layout -->
     <div id="main-app" class="hidden min-h-screen flex flex-col md:flex-row bg-slate-50 dark:bg-slate-950">
         <!-- Sidebar Navigation Frame -->
-        <aside class="w-full md:w-64 bg-white/95 dark:bg-slate-900/90 backdrop-glass border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col z-30 fixed bottom-0 md:relative md:h-screen flex">
+        <aside class="w-full md:w-64 bg-white/95 dark:bg-slate-900/90 backdrop-glass border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col z-30 fixed bottom-0 md:relative md:h-screen">
             <!-- Brand Identity Header -->
             <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center hidden md:flex">
                 <div class="flex items-center gap-3">
@@ -333,7 +331,7 @@
                             </div>
                             <div class="mt-4 flex items-center gap-1.5 text-[9px] text-slate-500 font-bold">
                                 <span class="material-symbols-outlined text-indigo-500 text-sm">bar_chart</span>
-                                <span id="stat-savings-month-label">อ้างอิงข้อมูล พฤษภาคม 2026</span>
+                                <span id="stat-savings-month-label">อ้างอิงข้อมูล ปัจจุบัน</span>
                             </div>
                         </div>
 
@@ -352,7 +350,7 @@
                             <div class="mt-4 space-y-2">
                                 <div class="flex justify-between text-[9px] text-slate-300 font-bold">
                                     <span>ยศลำดับขั้นถัดไป</span>
-                                    <span id="badge-progress-text">฿0 / ฿2,500</span>
+                                    <span id="badge-progress-text">฿0 / ฿5,000</span>
                                 </div>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                                     <div id="badge-progress-bar" class="bg-gradient-to-r from-yellow-400 to-amber-500 h-full rounded-full transition-all duration-750" style="width: 0%"></div>
@@ -375,7 +373,7 @@
                             </div>
                         </div>
 
-                        <!-- Real-time Local AI Financial Coach Panel -->
+                        <!-- Real-time Local AI Financial Coach Panel (100% Offline / Local) -->
                         <div class="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950 text-white border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between space-y-4">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center gap-2">
@@ -386,11 +384,11 @@
                             </div>
                             <div class="flex-1 overflow-y-auto max-h-56 pr-1 space-y-3 mt-2">
                                 <div id="ai-insight-box" class="text-[11px] text-slate-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/5 whitespace-pre-line font-medium">
-                                    กำลังเริ่มคำนวณสถิติและวิเคราะห์แนวทางการจัดการทางการเงินส่วนบุคคลของคุณ...
+                                    กำลังวิเคราะห์สถิติเพื่อประเมินความก้าวหน้าและการจัดการพอร์ตโฟลิโอของคุณในทันที...
                                 </div>
                             </div>
                             <div class="text-[9px] text-slate-500 dark:text-slate-400 flex items-center justify-between font-bold pt-3 border-t border-white/5">
-                                <span>Engine: SmartWealth Analytics 2026</span>
+                                <span>Engine: SmartWealth Local Coach 2026</span>
                                 <span class="flex h-1.5 w-1.5 relative">
                                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                   <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
@@ -475,7 +473,7 @@
                     </div>
 
                     <div id="goals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Populated dynamically via JS -->
+                        <!-- Populated dynamically -->
                     </div>
                 </section>
 
@@ -621,7 +619,7 @@
                             </div>
                             <div class="bg-blue-500/5 p-4 rounded-2xl border border-blue-200/20 dark:border-blue-900/10">
                                 <p class="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed font-semibold">
-                                    สถิติความถี่จะวัดเกณฑ์ความสม่ำเสมอ แนะนำให้ส่งยอดนำออมในหมวดหมู่ทั่วไปเป็นประจำทุกวันหรืออย่างสม่ำเสมอเพื่อสร้างวินัยการเงินที่ดี
+                                    สถิติความถี่จะวัดเกณฑ์ความสม่ำเสมอ แนะนำให้ส่งยอดนำออมในหมวดหมู่ทั่วไปเป็นประจำเพื่อสร้างวินัยการเงินที่ดีขึ้น
                                 </p>
                             </div>
                         </div>
@@ -808,13 +806,13 @@
             savings: [],
             goals: [],
             currency: 'THB',
-            exchangeRate: 35.0, // 1 USD = 35.0 THB Fixed Exchange Benchmark Context
+            exchangeRate: 35.0, // 1 USD = 35.0 THB exchange benchmark
             theme: 'light',
             currentCalendarYear: 2026,
-            currentCalendarMonth: 4 // พฤษภาคม 2026 is index 4 (0-based)
+            currentCalendarMonth: 4 // พฤษภาคม 2026 index 4 (0-based)
         };
 
-        // Material Symbols Mapping to categories (Clean, No Emojis)
+        // Material Symbols Mapping to categories
         const categoryIconMap = {
             "การศึกษา": "school",
             "การลงทุน": "trending_up",
@@ -825,13 +823,13 @@
             "สินทรัพย์ดิจิทัล": "monetization_on"
         };
 
-        // Chart components
+        // Chart objects cache
         let dashboardChartObj = null;
         let allocationChartObj = null;
         let categoryBarChartObj = null;
 
         /**
-         * Custom Premium Toasts Alerts (No Emojis)
+         * Custom Premium Toasts Alerts
          */
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -858,10 +856,15 @@
             updateClock();
             setInterval(updateClock, 1000);
             
-            // Fixed System sandbox dates preset
-            const defaultDateStr = '2026-05-23';
-            document.getElementById('saving-date').value = defaultDateStr;
-            document.getElementById('goal-deadline').value = '2026-12-31';
+            // Set dynamic current date for saving input & goal deadline
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const todayDateStr = `${year}-${month}-${day}`;
+            
+            document.getElementById('saving-date').value = todayDateStr;
+            document.getElementById('goal-deadline').value = `${year}-12-31`;
 
             // Cache validation
             const cachedUser = localStorage.getItem('savings_user');
@@ -890,14 +893,14 @@
 
         function updateClock() {
             const now = new Date();
-            const year = 2026; // Exact target benchmark year
+            const yearStr = now.getFullYear();
             const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             const monthStr = monthNames[now.getMonth()];
             const dateVal = now.getDate();
             const timeStr = now.toTimeString().split(' ')[0];
             
             document.getElementById('current-time-string').innerText = `${timeStr} น.`;
-            document.getElementById('current-date-string').innerText = `${dateVal} ${monthStr} ${year}`;
+            document.getElementById('current-date-string').innerText = `${dateVal} ${monthStr} ${yearStr}`;
         }
 
         function switchTab(tabId) {
@@ -948,8 +951,8 @@
                 });
                 return await response.json();
             } catch (error) {
-                console.error("API error: ", error);
-                return { success: false, message: "เชื่อมต่อเซิร์ฟเวอร์ Apps Script ล้มเหลว โปรดตรวจสอบสิทธิ์เชื่อมต่อ" };
+                console.error("API Error: ", error);
+                return { success: false, message: "เชื่อมต่อเซิร์ฟเวอร์ Apps Script ล้มเหลว โปรดตรวจสอบการติดตั้งสิทธิ์แอป" };
             }
         }
 
@@ -963,7 +966,7 @@
                 return;
             }
 
-            showToast("กำลังส่งคำขอลงทะเบียน...", "info");
+            showToast("กำลังส่งคำขอลงทะเบียนบัญชีใหม่...", "info");
             const res = await apiRequest("register", { username, password });
             if (res.success) {
                 showToast(res.message, "success");
@@ -978,7 +981,7 @@
             const username = document.getElementById('login-username').value.trim();
             const password = document.getElementById('login-password').value;
 
-            showToast("กำลังเริ่มตรวจสอบข้อมูลผู้ใช้...", "info");
+            showToast("กำลังตรวจสอบข้อมูลการยืนยันสิทธิ์...", "info");
             const res = await apiRequest("login", { username, password });
             if (res.success) {
                 state.user = res.username;
@@ -995,7 +998,7 @@
             state.user = null;
             document.getElementById('auth-page').classList.remove('hidden');
             document.getElementById('main-app').classList.add('hidden');
-            showToast("ออกจากสมุดบัญชีการเงินแล้ว", "info");
+            showToast("ออกจากระบบสมุดการจัดการเงินปลอดภัยแล้ว", "info");
         }
 
         function showAppUI() {
@@ -1021,9 +1024,19 @@
                 state.goals = res.data.goals || [];
                 
                 updateUIComponents();
-                showToast("อัปเดตข้อมูลบัญชีสำเร็จ", "success");
+                showToast("ข้อมูลสมบูรณ์และเป็นปัจจุบันที่สุดแล้ว", "success");
             } else {
-                showToast("ไม่สามารถซิงค์ดึงข้อมูลสดจาก Apps Script ได้", "error");
+                showToast("ซิงค์ดึงข้อมูลสดล้มเหลว กำลังแสดงผลจากความจำชั่วคราว", "error");
+            }
+        }
+
+        // Silent background sync
+        async function fetchDatabaseDataSilently() {
+            const res = await apiRequest("getDashboardData");
+            if (res.success) {
+                state.savings = res.data.savings || [];
+                state.goals = res.data.goals || [];
+                updateUIComponents();
             }
         }
 
@@ -1075,41 +1088,41 @@
 
             let rank = "Bronze Saver";
             let icon = "workspace_premium";
-            let maxVal = 2500;
+            let maxVal = 5000;
             let minVal = 0;
 
-            if (totalSavings >= 100000) {
+            if (totalSavings >= 1000000) {
                 rank = "Savings Legend";
                 icon = "military_tech";
-                minVal = 100000;
-                maxVal = 100000;
-            } else if (totalSavings >= 50000) {
+                minVal = 1000000;
+                maxVal = 1000000;
+            } else if (totalSavings >= 500000) {
                 rank = "Diamond Wealth";
                 icon = "diamond";
-                minVal = 50000;
-                maxVal = 100000;
-            } else if (totalSavings >= 20000) {
+                minVal = 500000;
+                maxVal = 1000000;
+            } else if (totalSavings >= 100000) {
                 rank = "Platinum Investor";
                 icon = "shield_with_heart";
-                minVal = 20000;
-                maxVal = 50000;
-            } else if (totalSavings >= 10000) {
+                minVal = 100000;
+                maxVal = 500000;
+            } else if (totalSavings >= 25000) {
                 rank = "Gold Saver";
                 icon = "stars";
-                minVal = 10000;
-                maxVal = 20000;
-            } else if (totalSavings >= 2500) {
+                minVal = 25000;
+                maxVal = 100000;
+            } else if (totalSavings >= 5000) {
                 rank = "Silver Saver";
                 icon = "award";
-                minVal = 2500;
-                maxVal = 10000;
+                minVal = 5000;
+                maxVal = 25000;
             }
 
             rankTitle.innerText = rank;
             sidebarRank.innerText = rank;
             rankIcon.innerText = icon;
             
-            if (totalSavings >= 100000) {
+            if (totalSavings >= 1000000) {
                 progText.innerText = "สะสมถึงเกณฑ์ขีดสุดระดับตำนาน";
                 progBar.style.width = "100%";
             } else {
@@ -1123,17 +1136,16 @@
         }
 
         /**
-         * ระบบ AI วิเคราะห์แนวโน้มวินัยพฤติกรรมทางการเงินแบบวิเคราะห์ภายใน (Local Analysis Engine)
-         * ทำงานอย่างปลอดภัยและรวดเร็วเสร็จสิ้นภายใน 1.5 วินาที ไร้สัญลักษณ์ Emoji
+         * ระบบ AI วิเคราะห์วินัยพฤติกรรมทางการเงินแบบประมวลผลภายใน (100% Offline Local Engine)
+         * ทำงานเสร็จสิ้นภายใน 1.5 วินาทีโดยไม่ต้องเชื่อม API ภายนอกที่เป็นความเสี่ยง
          */
         function triggerLocalAIAnalysis() {
             const aiInsightBox = document.getElementById('ai-insight-box');
             
-            // แสดงหน้าจอจำลองการคิดวิเคราะห์ประเมินผลทางการเงินอย่างรวดเร็ว
             aiInsightBox.innerHTML = `
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined animate-spin text-sm text-blue-400">sync</span>
-                    <span>AI วิเคราะห์ความมั่นคง กำลังตรวจสอบโครงสร้างประวัติการออมของคุณ...</span>
+                    <span>AI โค้ชการเงิน กำลังคำนวณและประเมินพฤติกรรมความสำเร็จของคุณ...</span>
                 </div>
             `;
 
@@ -1142,19 +1154,20 @@
                 let categories = {};
                 let monthTotal = 0;
                 
+                const now = new Date();
+                const currentMonthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
                 state.savings.forEach(item => {
                     total += item.amount;
                     categories[item.category] = (categories[item.category] || 0) + item.amount;
-                    if (item.date.startsWith('2026-05')) {
+                    if (item.date.startsWith(currentMonthPrefix)) {
                         monthTotal += item.amount;
                     }
                 });
 
-                // ตรวจสอบพฤติกรรมการจัดหมวดหมู่ยอดนิยม
                 let sortedCats = Object.entries(categories).sort((a,b) => b[1] - a[1]);
                 let topCategory = sortedCats.length > 0 ? sortedCats[0][0] : "ไม่ระบุ";
                 
-                // คำนวณร้อยละตามทฤษฎีความปลอดภัยสากล
                 let investmentAmt = categories["การลงทุน"] || 0;
                 let reserveAmt = categories["กองทุนสำรอง"] || 0;
                 let investPercent = total > 0 ? (investmentAmt / total) * 100 : 0;
@@ -1171,46 +1184,46 @@
                     }
                 });
 
-                // การประกอบบทความวิเคราะห์ทางการเงินระดับมาตรฐาน ไร้สัญลักษณ์ Emoji
                 let report = "";
                 
-                report += "1. ผลประเมินพฤติกรรมการจัดสรรทรัพย์สิน:\n";
+                report += "1. ผลประเมินโครงสร้างและสัดส่วนสินทรัพย์:\n";
                 if (total === 0) {
-                    report += "- ไม่พบบันทึกการออมตั้งต้น ระบบพร้อมรับข้อมูลรายการฝากออมแรกเพื่อเริ่มนำร่องแผนวิเคราะห์กองทุนสำรองทันที\n";
+                    report += "- ไม่พบบันทึกธุรกรรมสะสมตั้งต้น ระบบพร้อมวิเคราะห์สถิติทันทีเมื่อท่านมีบันทึกรายการฝากออมครั้งแรก\n";
                 } else {
-                    report += `- ยอดออมสะสมของคุณคือ ${formatValue(total)} โดยมีการจัดกลุ่มอย่างสม่ำเสมอในหมวดหมู่ [${topCategory}] ซึ่งบ่งชี้ทิศทางการสะสมระยะสั้น\n`;
-                    if (reservePercent >= 25) {
-                        report += `- โครงสร้างปลอดภัยยอดเยี่ยม: สินทรัพย์ในรูปแบบกองทุนสำรองฉุกเฉินคิดเป็นร้อยละ ${reservePercent.toFixed(1)} ซึ่งเป็นระดับความมั่นคงที่น่าพึงพอใจ\n`;
+                    report += `- ยอดทรัพย์ออมสะสมรวมคือ ${formatValue(total)} โดยมีการกระจุกตัวสูงสุดในกลุ่มการออม [${topCategory}]\n`;
+                    if (reservePercent >= 20) {
+                        report += `- ระดับความปลอดภัย: โครงสร้างกองทุนสำรองฉุกเฉินปัจจุบันคิดเป็นร้อยละ ${reservePercent.toFixed(1)} ซึ่งสอดคล้องกับสภาพคล่องทางการเงินที่แข็งแกร่ง\n`;
                     } else {
-                        report += `- ข้อแนะนำด้านสัดส่วน: ปัจจุบันยอดกองทุนสำรองยังมีสัดส่วนค่อนข้างต่ำ แนะนำให้พิจารณาเพิ่มเป้าหมายนี้เพื่อรองรับเหตุฉุกเฉิน\n`;
+                        report += `- แผนปรับปรุงสัดส่วน: ยอดเงินกองทุนสำรองฉุกเฉินยังมีสัดส่วนที่ต่ำเกินเกณฑ์มาตรฐาน (ต่ำกว่าร้อยละ 20) ควรตั้งเป้าหมายกลุ่มนี้เพิ่มเติมเพื่อรับมือกับความไม่แน่นอน\n`;
                     }
                 }
 
-                report += "\n2. รายการเฝ้าระวังและการระบุความเสี่ยง:\n";
+                report += "\n2. ดัชนีความก้าวหน้าและการจัดการความเสี่ยง:\n";
                 if (total > 0 && investPercent < 15) {
-                    report += `- ขาดการเร่งความเติบโตของพอร์ต: มีการจัดสรรเงินเพื่อสร้างผลตอบแทนสู้เงินเฟ้อ (หมวดการลงทุน) เพียงร้อยละ ${investPercent.toFixed(1)} ซึ่งน้อยกว่าสัดส่วนมาตรฐานที่แนะนำคือร้อยละ 15\n`;
+                    report += `- อัตราการเติบโต: มีการแบ่งออมในสินทรัพย์เพื่อเพิ่มมูลค่าเอาชนะเงินเฟ้อเพียงร้อยละ ${investPercent.toFixed(1)} แนะนำให้ค่อยๆ ขยับสัดส่วนการลงทุนขึ้นสู่อัตราร้อยละ 15 ของพอร์ตรวม\n`;
                 } else if (total > 0 && investPercent >= 15) {
-                    report += `- พอร์ตมีความก้าวหน้าเชิงรุกที่ดี การจัดวางแผนการลงทุนอยู่ในระดับที่น่าชื่นชม\n`;
+                    report += `- อัตราการสร้างความเติบโตของพอร์ตทำได้ยอดเยี่ยม การจัดสัดส่วนพึ่งพาผลตอบแทนระยะยาวอย่างเหมาะสม\n`;
                 }
+                
                 if (activeGoalsCount === 0) {
-                    report += "- ปราศจากแผนความสำเร็จ: ไม่มีประวัติโครงการเป้าหมายที่เชื่อมโยงเดดไลน์ อาจส่งผลให้วินัยในการออมสม่ำเสมอในภาพรวมลดลง\n";
+                    report += "- สถานะวินัย: ไม่พบการระบุเป้าหมายอย่างเป็นทางการ การไร้ทิศทางและเดดไลน์อาจส่งผลให้ความสม่ำเสมอของวินัยระยะยาวลดน้อยลงได้\n";
                 } else if (lowestGoalProg < 30) {
-                    report += `- ความเสี่ยงด้านเวลา: โครงการ [${targetGoalTitle}] ดำเนินไปอย่างล่าช้า มีสัดส่วนความคืบหน้าต่ำกว่าร้อยละ 30 มีความเสี่ยงที่จะไม่บรรลุยอดทันตามกำหนดเวลาเป้าหมาย\n`;
+                    report += `- โครงการเฝ้าระวัง: โครงการ [${targetGoalTitle}] มีอัตราความสำเร็จที่ล่าช้า (ต่ำกว่าร้อยละ 30) ควรเริ่มกระจายยอดเงินออมเพื่อรักษากำหนดเป้าหมายอย่างจริงจัง\n`;
                 } else {
-                    report += "- สถานะของเป้าหมายและสภาพคล่องทางพอร์ตมีความสมดุลและอยู่ในเกณฑ์ปกติ\n";
+                    report += "- ภาพรวมการบริหารโครงการและการรักษาวินัยความถี่ดำเนินการเป็นปกติและมีเสถียรภาพดีมาก\n";
                 }
 
                 report += "\n3. แผนปฏิบัติการที่จับต้องได้สำหรับสัปดาห์นี้:\n";
                 report += "[ขั้นตอนที่ 1] สร้างเป้าหมายกองทุนสำรองฉุกเฉินหรือสะสมเป้าหมายหลักเป็นอันดับแรกทันทีเมื่อมีกระแสเงินสดเข้าพอร์ต\n";
                 report += "[ขั้นตอนที่ 2] พยายามกระจายสัดส่วนการออมไปที่หมวดหมู่ สินทรัพย์ดิจิทัล หรือการลงทุน ในสัดส่วน 5% ของยอดรวมทั้งหมด\n";
                 if (activeGoalsCount > 0) {
-                    report += `[ขั้นตอนที่ 3] จัดสรรออมเพิ่มสำหรับโครงการ [${targetGoalTitle || "เป้าหมายหลัก"}] เพิ่มขึ้นอย่างต่อเนื่องเพื่อให้พ้นขีดระดับความคืบหน้าเบื้องต้น\n`;
+                    report += `[ขั้นตอนที่ 3] มุ่งจัดส่งยอดออมเพิ่มเติมสำหรับโครงการสะสมหลัก [${targetGoalTitle || "เป้าหมายหลัก"}] เพื่อกระตุ้นยอดสะสมทะลุผ่านเกณฑ์ความล่าช้าขั้นแรก\n`;
                 } else {
-                    report += "[ขั้นตอนที่ 3] มุ่งหน้าไปยังหน้าเป้าหมายการออมเพื่อสร้างเป้าหมายทางการเงินโครงการแรกที่มีเดดไลน์อย่างชัดเจน\n";
+                    report += "[ขั้นตอนที่ 3] เข้าสู่เมนูโครงการเป้าหมายเพื่อสร้างและระบุจุดหมายสำคัญพร้อมวันครบกำหนดที่จะบรรลุ\n";
                 }
 
                 aiInsightBox.innerText = report;
-            }, 1200);
+            }, 1000);
         }
 
         function renderDashboardCharts() {
@@ -1218,12 +1231,12 @@
             const labels = [];
             const amounts = [];
             
-            // Generate last 7 days chart array
+            // Build visual 7-day stats block
             for (let i = 6; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
                 const dateStr = d.toISOString().split('T')[0];
-                labels.push(dateStr.substring(5)); // Format MM-DD
+                labels.push(dateStr.substring(5)); // Show MM-DD format
                 
                 let daySum = 0;
                 state.savings.forEach(item => {
@@ -1380,29 +1393,49 @@
             const note = document.getElementById('saving-note').value;
 
             if (state.currency === 'USD') {
-                amount = amount * state.exchangeRate; // Base is saved in THB inside spreadsheet
+                amount = amount * state.exchangeRate; // Base calculation saved in THB in Sheets
             }
 
-            const data = {
-                username: state.user,
+            const tempId = "SAV_TEMP_" + Date.now();
+            const newSavingItem = {
+                id: tempId,
                 amount: amount,
                 category: category,
                 date: date,
                 note: note
             };
 
-            showToast("กำลังส่งข้อมูลรายการธุรกรรมสะสมใหม่...", "info");
-            const res = await apiRequest("addSaving", data);
+            // OPTIMISTIC UPDATE: Add to local state immediately
+            state.savings.push(newSavingItem);
+            updateUIComponents(); // Re-render Dashboard, stats, ranks instantly
+            
+            // UI feedback
+            showToast("ส่งรายการออมขึ้นระบบสำเร็จ (กำลังซิงค์กับชีตเบื้องหลัง...)", "info");
+            document.getElementById('add-saving-form').reset();
+            
+            // Reset fields
+            const today = new Date();
+            document.getElementById('saving-date').value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+            switchTab('dashboard');
+
+            // API execution in the background
+            const res = await apiRequest("addSaving", {
+                id: tempId,
+                username: state.user,
+                amount: amount,
+                category: category,
+                date: date,
+                note: note
+            });
             
             if (res.success) {
-                showToast(res.message, "success");
-                document.getElementById('add-saving-form').reset();
-                document.getElementById('saving-date').value = '2026-05-23';
-                
-                await fetchDatabaseData();
-                switchTab('dashboard');
+                // Silently refresh values to ensure database alignment
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                // Rollback local state on failure
+                state.savings = state.savings.filter(s => s.id !== tempId);
+                updateUIComponents();
+                showToast("ไม่สามารถอัปเดตข้อมูลไปยังคลาวด์ได้: " + res.message, "error");
             }
         });
 
@@ -1411,8 +1444,10 @@
             let savingsToday = 0;
             let savingsMonth = 0;
             
-            const todayStr = '2026-05-23'; 
-            const currentMonthPrefix = '2026-05';
+            // Build current real-time target indicators
+            const now = new Date();
+            const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            const currentMonthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
             state.savings.forEach(item => {
                 totalSavings += item.amount;
@@ -1424,9 +1459,13 @@
                 }
             });
 
+            // Instant updates
             document.getElementById('stat-total-savings').innerText = formatValue(totalSavings);
             document.getElementById('stat-savings-today').innerText = formatValue(savingsToday);
             document.getElementById('stat-savings-month').innerText = formatValue(savingsMonth);
+
+            const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            document.getElementById('stat-savings-month-label').innerText = `อ้างอิงข้อมูล ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
 
             calculateAndRenderSavingsRank(totalSavings);
 
@@ -1466,7 +1505,7 @@
             renderHistoryTable();
             renderCalendar();
             
-            // Automatic execution of Local AI Coaching analytics
+            // Automatic running of local analytics
             triggerLocalAIAnalysis();
         }
 
@@ -1537,23 +1576,38 @@
                 start = start * state.exchangeRate;
             }
 
-            const data = {
-                username: state.user,
+            const tempGoalId = "GOA_TEMP_" + Date.now();
+            const newGoalItem = {
+                id: tempGoalId,
                 title: title,
                 target_amount: target,
                 current_amount: start,
                 deadline: deadline
             };
 
-            showToast("กำลังประมวลสร้างเป้าหมายโครงการ...", "info");
-            const res = await apiRequest("addGoal", data);
+            // OPTIMISTIC UPDATE: Add Goal locally
+            state.goals.push(newGoalItem);
+            updateUIComponents();
+            
+            showToast("สร้างโครงการเป้าหมายเรียบร้อย (ซิงค์เบื้องหลัง)", "info");
+            closeAddGoalModal();
+            document.getElementById('add-goal-form').reset();
+
+            const res = await apiRequest("addGoal", {
+                id: tempGoalId,
+                username: state.user,
+                title: title,
+                target_amount: target,
+                current_amount: start,
+                deadline: deadline
+            });
+            
             if (res.success) {
-                showToast(res.message, "success");
-                closeAddGoalModal();
-                document.getElementById('add-goal-form').reset();
-                await fetchDatabaseData();
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                state.goals = state.goals.filter(g => g.id !== tempGoalId);
+                updateUIComponents();
+                showToast("ไม่สามารถระบุลงคลาวด์ชีตได้: " + res.message, "error");
             }
         });
 
@@ -1561,7 +1615,7 @@
             const inputVal = document.getElementById(`prog-val-${goalId}`);
             let val = parseFloat(inputVal.value);
             if (isNaN(val) || val < 0) {
-                showToast("โปรดป้อนจำนวนเงินที่ถูกต้องเพื่อสมทบยอดการออม", "error");
+                showToast("โปรดป้อนจำนวนเงินออมให้ถูกต้องเพื่อบันทึกประวัติสะสม", "error");
                 return;
             }
 
@@ -1569,7 +1623,18 @@
                 val = val * state.exchangeRate;
             }
 
-            showToast("กำลังส่งคำขอบันทึกข้อมูลยอดสะสม...", "info");
+            // OPTIMISTIC UPDATE: Update target progress locally
+            let oldAmount = 0;
+            state.goals = state.goals.map(g => {
+                if (g.id === goalId) {
+                    oldAmount = g.current_amount;
+                    return { ...g, current_amount: val };
+                }
+                return g;
+            });
+            updateUIComponents();
+            showToast("กำลังส่งความก้าวหน้าโครงการเข้าสู่ระบบ...", "info");
+
             const res = await apiRequest("updateGoalProgress", {
                 id: goalId,
                 username: state.user,
@@ -1577,21 +1642,36 @@
             });
 
             if (res.success) {
-                showToast(res.message, "success");
-                await fetchDatabaseData();
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                // Rollback on failure
+                state.goals = state.goals.map(g => {
+                    if (g.id === goalId) {
+                        return { ...g, current_amount: oldAmount };
+                    }
+                    return g;
+                });
+                updateUIComponents();
+                showToast("ไม่สามารถอัปเดตความสำเร็จโครงการได้: " + res.message, "error");
             }
         }
 
         async function deleteGoal(goalId) {
-            showToast("กำลังประมวลผลดึงเป้าหมายออก...", "info");
+            const originalGoals = [...state.goals];
+            
+            // OPTIMISTIC UPDATE: Filter out deleted goal locally
+            state.goals = state.goals.filter(g => g.id !== goalId);
+            updateUIComponents();
+            
+            showToast("ถอดถอนโครงการเป้าหมายเรียบร้อย (ซิงค์เบื้องหลัง...)", "info");
+
             const res = await apiRequest("deleteGoal", { id: goalId, username: state.user });
             if (res.success) {
-                showToast(res.message, "success");
-                await fetchDatabaseData();
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                state.goals = originalGoals;
+                updateUIComponents();
+                showToast("ไม่สามารถยกเลิกเป้าหมายออกจากชีตสำเร็จ: " + res.message, "error");
             }
         }
 
@@ -1663,13 +1743,21 @@
         }
 
         async function deleteSaving(id) {
-            showToast("กำลังส่งคำขอดึงรายการออมออกจากชีต...", "info");
+            const originalSavings = [...state.savings];
+            
+            // OPTIMISTIC UPDATE: Delete locally
+            state.savings = state.savings.filter(s => s.id !== id);
+            updateUIComponents();
+            
+            showToast("ดึงบันทึกรายการออมออกแล้ว (กำลังซิงค์เบื้องหลัง...)", "info");
+
             const res = await apiRequest("deleteSaving", { id: id, username: state.user });
             if (res.success) {
-                showToast(res.message, "success");
-                await fetchDatabaseData();
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                state.savings = originalSavings;
+                updateUIComponents();
+                showToast("ไม่สามารถนำยอดธุรกรรมออกได้: " + res.message, "error");
             }
         }
 
@@ -1705,23 +1793,35 @@
                 amount = amount * state.exchangeRate;
             }
 
-            const data = {
+            const originalSavings = [...state.savings];
+
+            // OPTIMISTIC UPDATE: Update item details locally
+            state.savings = state.savings.map(s => {
+                if (s.id === id) {
+                    return { ...s, amount, category, date, note };
+                }
+                return s;
+            });
+            updateUIComponents();
+            
+            showToast("แก้ไขบันทึกรายการนำออมเรียบร้อย (ซิงค์เบื้องหลัง...)", "info");
+            closeEditSavingModal();
+
+            const res = await apiRequest("editSaving", {
                 id: id,
                 username: state.user,
                 amount: amount,
                 category: category,
                 date: date,
                 note: note
-            };
-
-            showToast("กำลังบันทึกรายการแก้ไขเข้าคลาวด์...", "info");
-            const res = await apiRequest("editSaving", data);
+            });
+            
             if (res.success) {
-                showToast(res.message, "success");
-                closeEditSavingModal();
-                await fetchDatabaseData();
+                fetchDatabaseDataSilently();
             } else {
-                showToast(res.message, "error");
+                state.savings = originalSavings;
+                updateUIComponents();
+                showToast("ปรับปรุงข้อมูลธุรกรรมการออมผิดพลาด: " + res.message, "error");
             }
         });
 
@@ -1809,11 +1909,11 @@
             document.getElementById('profile-transaction-count').innerText = `${state.savings.length} ครั้ง`;
 
             let rank = "Bronze Saver";
-            if (totalSavings >= 100000) rank = "Savings Legend";
-            else if (totalSavings >= 50000) rank = "Diamond Wealth";
-            else if (totalSavings >= 20000) rank = "Platinum Investor";
-            else if (totalSavings >= 10000) rank = "Gold Saver";
-            else if (totalSavings >= 2500) rank = "Silver Saver";
+            if (totalSavings >= 1000000) rank = "Savings Legend";
+            else if (totalSavings >= 500000) rank = "Diamond Wealth";
+            else if (totalSavings >= 100000) rank = "Platinum Investor";
+            else if (totalSavings >= 25000) rank = "Gold Saver";
+            else if (totalSavings >= 5000) rank = "Silver Saver";
 
             document.getElementById('profile-rank-badge-text').innerText = rank;
         }
