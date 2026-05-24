@@ -137,7 +137,7 @@
               </span>
               <input type="password" id="authPassword" required placeholder="ป้อนรหัสผ่านของคุณ" class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all text-sm font-medium">
             </div>
-            <p id="authNote" class="text-[11px] text-brand-600 dark:text-brand-400 mt-1.5 hidden">* บัญชีเดิมต้องระบุรหัสผ่านที่เคยสมัครไว้เพื่อความปลอดภัยสูงสุุด</p>
+            <p id="authNote" class="text-[11px] text-brand-600 dark:text-brand-400 mt-1.5">* บัญชีเดิมต้องระบุรหัสผ่านที่เคยสมัครไว้เพื่อความปลอดภัยสูงสุด</p>
           </div>
 
           <!-- Additional Register Fields (Hidden by default) -->
@@ -203,6 +203,11 @@
           <button onclick="switchView('calendar')" id="nav-calendar" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 transition-all group hover:bg-slate-800 hover:text-white">
             <span class="material-symbols-rounded text-xl group-hover:scale-110 transition-transform">calendar_month</span>
             <span>ปฏิทินการออม</span>
+          </button>
+
+          <button onclick="switchView('profile')" id="nav-profile" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 transition-all group hover:bg-slate-800 hover:text-white">
+            <span class="material-symbols-rounded text-xl group-hover:scale-110 transition-transform">person</span>
+            <span>โปรไฟล์ของฉัน</span>
           </button>
 
           <button onclick="switchView('settings')" id="nav-settings" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 transition-all group hover:bg-slate-800 hover:text-white">
@@ -276,7 +281,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center space-x-2">
-                    <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">ระบบ AI วิเคราะห์การออม (อัปเดตออโต้ <5 วินาที)</span>
+                    <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">ระบบ AI วิเคราะห์การออม (อัปเดตออโต้ &lt; 5 วินาที)</span>
                     <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
                   </div>
                   <h4 class="font-bold text-sm text-slate-800 dark:text-white mt-1">บทวิเคราะห์และแนวโน้มการออมของคุณในปัจจุบัน:</h4>
@@ -383,18 +388,27 @@
 
                 <div class="space-y-2">
                   <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">เกณฑ์การจัดอันดับระดับโปร:</p>
-                  <div class="space-y-1.5 text-xs">
-                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400">
-                      <span>🥈 นักออมอัจฉริยะ (Smart Saver)</span>
-                      <span class="font-bold font-mono">สะสม 5,000+</span>
+                  <div class="space-y-2 text-xs">
+                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/50 p-2 rounded-xl">
+                      <div class="flex items-center space-x-2">
+                        <span class="material-symbols-rounded text-slate-400 text-sm">workspace_premium</span>
+                        <span>นักออมอัจฉริยะ (Smart Saver)</span>
+                      </div>
+                      <span class="font-bold font-mono text-brand-500">สะสม 5,000+</span>
                     </div>
-                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400">
-                      <span>🏆 จอมทัพนักออม (Elite Saver)</span>
-                      <span class="font-bold font-mono">สะสม 20,000+</span>
+                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/50 p-2 rounded-xl">
+                      <div class="flex items-center space-x-2">
+                        <span class="material-symbols-rounded text-amber-500 text-sm">workspace_premium</span>
+                        <span>จอมทัพนักออม (Elite Saver)</span>
+                      </div>
+                      <span class="font-bold font-mono text-brand-500">สะสม 20,000+</span>
                     </div>
-                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400">
-                      <span>👑 มหาเศรษฐีผู้มั่งคั่ง (Wealth Lord)</span>
-                      <span class="font-bold font-mono">สะสม 100,000+</span>
+                    <div class="flex justify-between items-center text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/50 p-2 rounded-xl">
+                      <div class="flex items-center space-x-2">
+                        <span class="material-symbols-rounded text-yellow-500 text-sm">crown</span>
+                        <span>มหาเศรษฐีผู้มั่งคั่ง (Wealth Lord)</span>
+                      </div>
+                      <span class="font-bold font-mono text-brand-500">สะสม 100,000+</span>
                     </div>
                   </div>
                 </div>
@@ -408,9 +422,9 @@
                 <div>
                   <div class="flex items-center space-x-2">
                     <span class="material-symbols-rounded text-brand-500">history</span>
-                    <h3 class="font-bold text-sm text-slate-800 dark:text-white">ประวัติการออมของคุณ (ระบบทำความสะอาดออโต้ <span class="text-red-500 font-bold">10 นาที</span>)</h3>
+                    <h3 class="font-bold text-sm text-slate-800 dark:text-white">ประวัติการออมของคุณ (ลบประวัติอัตโนมัติภายใน <span class="text-rose-500 font-bold font-mono">10 นาที</span>)</h3>
                   </div>
-                  <p class="text-xs text-slate-400 mt-0.5">รายการแต่ละรายการจะหมดเวลาและถูกเคลียร์ออกจากประวัติย่อนี้อัตโนมัติเมื่อครบ 10 นาทีหลังบันทึก</p>
+                  <p class="text-xs text-slate-400 mt-0.5">รายการจะหายไปจากประวัติย่อนี้อัตโนมัติภายใน 10 นาทีนับจากการทำรายการ (เพื่อความคล่องตัวในการทำงาน)</p>
                 </div>
                 
                 <!-- Filter bar -->
@@ -423,8 +437,8 @@
                   </div>
                   
                   <select id="savingSort" onchange="filterSavingsList()" class="bg-slate-100 dark:bg-slate-800 rounded-xl text-xs px-3 py-1.5 border-transparent outline-none cursor-pointer">
-                    <option value="date-desc">ล่าสุด -> เก่าสุด</option>
-                    <option value="date-asc">เก่าสุด -> ล่าสุด</option>
+                    <option value="date-desc">ล่าสุด -&gt; เก่าสุด</option>
+                    <option value="date-asc">เก่าสุด -&gt; ล่าสุด</option>
                     <option value="amount-desc">เงินออมมากที่สุด</option>
                     <option value="amount-asc">เงินออมน้อยที่สุด</option>
                   </select>
@@ -440,7 +454,7 @@
                       <th class="pb-3">เป้าหมาย</th>
                       <th class="pb-3">ประเภท/ช่องทาง</th>
                       <th class="pb-3">จำนวนเงิน</th>
-                      <th class="pb-3 text-right pr-3">เวลาที่เหลืออยู่ในประวัติ</th>
+                      <th class="pb-3 text-right pr-3">เวลาที่เหลือในประวัติ</th>
                     </tr>
                   </thead>
                   <tbody id="savingHistoryTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -582,6 +596,81 @@
                 <span class="flex items-center"><span class="w-3.5 h-3.5 rounded bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-300/40 mr-2"></span>ออม 1 - 500 บาท</span>
                 <span class="flex items-center"><span class="w-3.5 h-3.5 rounded bg-emerald-300 dark:bg-emerald-800/80 mr-2"></span>ออม 501 - 2,000 บาท</span>
                 <span class="flex items-center"><span class="w-3.5 h-3.5 rounded bg-emerald-500 mr-2"></span>ออมมากกว่า 2,000 บาท</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== VIEW: PROFILE ==================== -->
+          <div id="view-profile" class="space-y-6 hidden">
+            <div class="glass-panel p-6 rounded-3xl shadow-sm">
+              <div class="flex items-center space-x-2 mb-6">
+                <span class="material-symbols-rounded text-brand-500">account_circle</span>
+                <div>
+                  <h3 class="font-bold text-sm text-slate-800 dark:text-white">ข้อมูลส่วนตัวสมาชิกผู้ใช้ระบบ</h3>
+                  <p class="text-xs text-slate-400 mt-0.5">การตรวจสอบสถานะ บัญชี และเกียรติยศการออมของคุณแบบรวมศูนย์</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <!-- Visual Card Badge -->
+                <div class="w-full md:w-1/3 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 text-white text-center flex flex-col items-center justify-between shadow-xl relative overflow-hidden">
+                  <div class="absolute -right-10 -bottom-10 opacity-5 text-9xl font-bold select-none">PRO+</div>
+                  
+                  <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-brand-500 to-emerald-400 flex items-center justify-center text-3xl font-bold shadow-lg border-2 border-white/20 mb-4">
+                    <span id="profileBadgeLetter">U</span>
+                  </div>
+
+                  <div>
+                    <h4 id="profileDisplayName" class="text-lg font-bold text-white">Display Name</h4>
+                    <p id="profileUsername" class="text-xs text-slate-400">@username</p>
+                  </div>
+
+                  <div class="my-4 py-1.5 px-3 bg-brand-500/10 rounded-full border border-brand-500/20 inline-flex items-center space-x-1.5">
+                    <span class="material-symbols-rounded text-brand-500 text-[14px]">military_tech</span>
+                    <span id="profileRankText" class="text-[10px] font-bold text-brand-400 uppercase tracking-wider">ผู้เริ่มหัดออม</span>
+                  </div>
+
+                  <div class="w-full grid grid-cols-2 gap-2 text-left pt-4 border-t border-white/10 text-xs">
+                    <div>
+                      <span class="text-slate-400 block">ยอดออมสะสม</span>
+                      <span id="profileStatTotal" class="font-bold font-mono text-emerald-400">0.00 THB</span>
+                    </div>
+                    <div>
+                      <span class="text-slate-400 block">จำนวนเป้าหมาย</span>
+                      <span id="profileStatGoalsCount" class="font-bold font-mono text-indigo-400">0 รายการ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Profile Information Forms -->
+                <div class="flex-1 w-full space-y-4">
+                  <h4 class="font-bold text-sm text-slate-800 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">ระบบความปลอดภัย & ความเป็นส่วนตัว</h4>
+                  
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <span class="text-xs font-semibold text-slate-400 block mb-1">ระดับสิทธิ์ผู้ใช้งาน</span>
+                      <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center space-x-2">
+                        <span class="material-symbols-rounded text-emerald-500 text-sm">verified</span>
+                        <span>สมาชิก Pro+ Premium (เจ้าของสิทธิ์)</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span class="text-xs font-semibold text-slate-400 block mb-1">รหัสความปลอดภัยเดิม</span>
+                      <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center space-x-2">
+                        <span class="material-symbols-rounded text-slate-500 text-sm">vpn_key</span>
+                        <span>•••••••••••••••• (เข้ารหัสสมบูรณ์)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20 flex items-start space-x-3 mt-4">
+                    <span class="material-symbols-rounded text-amber-500 text-2xl">security_update_good</span>
+                    <div class="text-xs leading-relaxed text-amber-800 dark:text-amber-300">
+                      <strong>นโยบายความเป็นส่วนตัว:</strong> บัญชีของท่านถูกผูกติดกับรหัสผ่านเดิมที่ทำการลงทะเบียนไว้ใน Google Sheet โดยตรง เพื่อความปลอดภัยห้ามลงทะเบียนซ้ำด้วยบัญชีเดิมเพื่อหลีกเลี่ยงการถูกทับข้อมูล
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -838,7 +927,6 @@
       const months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
       
       const now = new Date();
-      // Force to year 2026 for simulation sync if necessary, but we read system date dynamically
       const dayName = days[now.getDay()];
       const day = now.getDate();
       const monthName = months[now.getMonth()];
@@ -897,6 +985,7 @@
       document.getElementById('view-dashboard').classList.add('hidden');
       document.getElementById('view-analytics').classList.add('hidden');
       document.getElementById('view-calendar').classList.add('hidden');
+      document.getElementById('view-profile').classList.add('hidden');
       document.getElementById('view-settings').classList.add('hidden');
       
       // Deactivate all navigation buttons
@@ -930,6 +1019,8 @@
         updateAnalyticsGoalList();
       } else if (viewId === 'calendar') {
         renderCalendar();
+      } else if (viewId === 'profile') {
+        updateProfilePage();
       } else if (viewId === 'settings') {
         loadSettingsForm();
       }
@@ -1176,8 +1267,11 @@
           filterSavingsList();
           renderCharts();
           runAIAnalysis();
+        } else {
+          // If state didn't change, we still need to refresh the countdown text in UI rows
+          filterSavingsList();
         }
-      }, 10000); // Check every 10 seconds
+      }, 1000); // Check and re-render timer countdown every second for accurate UI display
     }
 
 
@@ -1236,7 +1330,7 @@
         rankDesc = "น่าชื่นชม! คุณผ่านระดับเริ่มต้นมาแล้ว วินัยการออมของคุณเริ่มส่งผลอย่างสวยงาม";
       }
 
-      document.getElementById('userRankText').innerText = rankName.split(' ')[0]; // short for sidebar
+      document.getElementById('userRankText').innerText = rankName.split(' ')[0] || "ผู้เริ่มหัดออม"; // short for sidebar
       document.getElementById('cardRankName').innerText = rankName;
       document.getElementById('cardRankCriteria').innerText = rankDesc;
 
@@ -1278,6 +1372,7 @@
       const query = document.getElementById('savingSearch').value.toLowerCase();
       const sortVal = document.getElementById('savingSort').value;
       const tbody = document.getElementById('savingHistoryTableBody');
+      if (!tbody) return;
       tbody.innerHTML = '';
 
       let filtered = state.savings.filter(item => {
@@ -1323,6 +1418,9 @@
           const remMins = Math.floor(remainingMs / 1000 / 60);
           const remSecs = Math.floor((remainingMs / 1000) % 60);
           countdownText = `${remMins}m ${remSecs}s`;
+        } else {
+          // Skip rendering if expired (the filter loop will handle next time, but just in case)
+          return;
         }
 
         const dateFormatted = new Date(item.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
@@ -1349,6 +1447,7 @@
     // Run an offline-simulated AI calculation algorithm instantly on data change (takes < 5 seconds)
     function runAIAnalysis() {
       const aiText = document.getElementById('aiAnalysisText');
+      if (!aiText) return;
       aiText.innerText = "AI กำลังตรวจสอบแนวโน้มเงินออมของคุณ...";
 
       setTimeout(() => {
@@ -1518,6 +1617,7 @@
       const lastDay = new Date(year, month + 1, 0).getDate();
       
       const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       const monthsThai = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
@@ -1586,6 +1686,30 @@
     }
 
 
+    // ==================== VIEW: PROFILE PAGE ====================
+    function updateProfilePage() {
+      if (!state.user) return;
+      
+      const totalAmount = state.savings.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+      let rankName = "ผู้เริ่มหัดออม";
+      
+      if (totalAmount >= 100000) {
+        rankName = "มหาเศรษฐีผู้มั่งคั่ง";
+      } else if (totalAmount >= 20000) {
+        rankName = "จอมทัพนักออม";
+      } else if (totalAmount >= 5000) {
+        rankName = "นักออมอัจฉริยะ";
+      }
+
+      document.getElementById('profileBadgeLetter').innerText = state.user.displayName.charAt(0).toUpperCase();
+      document.getElementById('profileDisplayName').innerText = state.user.displayName;
+      document.getElementById('profileUsername').innerText = `@${state.user.username}`;
+      document.getElementById('profileRankText').innerText = rankName;
+      document.getElementById('profileStatTotal').innerText = formatMoney(totalAmount);
+      document.getElementById('profileStatGoalsCount').innerText = `${state.goals.length} รายการ`;
+    }
+
+
     // ==================== VIEW: SETTINGS MANAGEMENT ====================
     function loadSettingsForm() {
       document.getElementById('settingFrequency').value = state.settings.frequency || 'daily';
@@ -1647,6 +1771,7 @@
 
     function updateGoalSelectors() {
       const select = document.getElementById('savingGoalId');
+      if (!select) return;
       select.innerHTML = '';
 
       if (state.goals.length === 0) {
@@ -1782,15 +1907,17 @@
 
     function updateAnalyticsGoalList() {
       const grid = document.getElementById('goalsGrid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       const miniList = document.getElementById('analyticsGoalsList');
+      if (!miniList) return;
       miniList.innerHTML = '';
 
       if (state.goals.length === 0) {
         grid.innerHTML = `
           <div class="py-12 text-center col-span-full text-slate-400 text-xs">
-            ยังไม่มีเป้าหมายการออม คลื่นพลังการออมเริ่มจากความฝันของคุณ!
+            ยังไม่มีการเพิ่มเป้าหมายการออม คลื่นพลังการออมเริ่มจากความฝันของคุณ!
           </div>
         `;
         return;
