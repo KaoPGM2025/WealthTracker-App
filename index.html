@@ -424,7 +424,7 @@
                     <span class="material-symbols-rounded text-brand-500">history</span>
                     <h3 class="font-bold text-sm text-slate-800 dark:text-white">ประวัติการออมของคุณ (ลบประวัติอัตโนมัติภายใน <span class="text-rose-500 font-bold font-mono">10 นาที</span>)</h3>
                   </div>
-                  <p class="text-xs text-slate-400 mt-0.5">รายการจะหายไปจากประวัติย่อนี้อัตโนมัติภายใน 10 นาทีนับจากการทำรายการ (เพื่อความคล่องตัวในการทำงาน)</p>
+                  <p class="text-xs text-slate-400 mt-0.5">รายการจะหายไปจากประวัติย่อนี้อัตโนมัติภายใน 10 นาทีนับจากการทำรายการ (เพื่อความคล่องตัวสูงสุด)</p>
                 </div>
                 
                 <!-- Filter bar -->
@@ -451,16 +451,15 @@
                   <thead>
                     <tr class="text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                       <th class="pb-3 pl-3">วันที่/เวลา</th>
-                      <th class="pb-3">เป้าหมาย</th>
-                      <th class="pb-3">ประเภท/ช่องทาง</th>
-                      <th class="pb-3">จำนวนเงิน</th>
+                      <th class="pb-3">ประเภท/ช่องทางฝากเงิน</th>
+                      <th class="pb-3">จำนวนเงินที่ออม</th>
                       <th class="pb-3 text-right pr-3">เวลาที่เหลือในประวัติ</th>
                     </tr>
                   </thead>
                   <tbody id="savingHistoryTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/50">
                     <!-- Dynamic Rows here -->
                     <tr>
-                      <td colspan="5" class="py-6 text-center text-xs text-slate-400">ยังไม่มีประวัติการออมที่บันทึกในช่วง 10 นาทีนี้</td>
+                      <td colspan="4" class="py-6 text-center text-xs text-slate-400">ยังไม่มีประวัติการออมที่บันทึกในช่วง 10 นาทีนี้</td>
                     </tr>
                   </tbody>
                 </table>
@@ -476,14 +475,14 @@
                 <span class="material-symbols-rounded text-brand-500">analytics</span>
                 <div>
                   <h3 class="font-bold text-sm text-slate-800 dark:text-white">รายงานวิเคราะห์ผลการทำรายการออมสะสม</h3>
-                  <p class="text-xs text-slate-400 mt-0.5">ภาพรวมแบบแยกสัปดาห์, เดือน และสัดส่วนหมวดหมู่</p>
+                  <p class="text-xs text-slate-400 mt-0.5">ภาพรวมการจัดสรรกระเป๋าเงินและการเติบโตสะสม</p>
                 </div>
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Doughnut Chart Categories -->
                 <div class="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <h4 class="font-bold text-xs text-slate-600 dark:text-slate-300 mb-4 uppercase tracking-wider">สัดส่วนเงินออมแบ่งตามเป้าหมาย/หมวดหมู่</h4>
+                  <h4 class="font-bold text-xs text-slate-600 dark:text-slate-300 mb-4 uppercase tracking-wider">สัดส่วนเงินออมแบ่งตามช่องทางฝากเงิน</h4>
                   <div class="relative h-56 flex items-center justify-center">
                     <canvas id="categoryChart"></canvas>
                   </div>
@@ -528,7 +527,7 @@
                     <span class="material-symbols-rounded text-brand-500">crisis_line</span>
                     <h3 class="font-bold text-sm text-slate-800 dark:text-white">จัดการเป้าหมายการออมเงิน (Goals)</h3>
                   </div>
-                  <p class="text-xs text-slate-400 mt-0.5">สร้างและบริหารเป้าหมายการเงินเพื่อให้คุณมีจุดมุ่งหมายในการออม</p>
+                  <p class="text-xs text-slate-400 mt-0.5">สร้างและบริหารเป้าหมายการเงินโดยคำนวณจากยอดออมรวมอัตโนมัติ</p>
                 </div>
                 
                 <button onclick="openGoalModal()" class="px-3.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white rounded-xl text-xs font-semibold hover:bg-slate-800 dark:hover:bg-slate-700 transition-all flex items-center space-x-1">
@@ -729,6 +728,250 @@
               </form>
             </div>
             
+            <!-- GOOGLE APPS SCRIPT SOURCE FOR CONVENIENT COPY-PASTE -->
+            <div class="glass-panel p-6 rounded-3xl shadow-sm border border-brand-500/10">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-2">
+                  <span class="material-symbols-rounded text-brand-500">code</span>
+                  <h4 class="font-bold text-sm text-slate-800 dark:text-white">โค้ด Backend (code.gs) สำหรับ Google Apps Script</h4>
+                </div>
+                <button onclick="copyAppsScriptCode()" class="px-3 py-1 bg-slate-800 text-white rounded-lg text-xs font-bold hover:bg-slate-700 transition-all flex items-center space-x-1">
+                  <span class="material-symbols-rounded text-[14px]">content_copy</span>
+                  <span>คัดลอกโค้ด GS</span>
+                </button>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">คัดลอกส่วนนี้ไปวางใน Google Apps Script ของท่านแทนไฟล์เดิม เพื่อใช้งานฐานข้อมูลเวอร์ชันอัปเกรดแบบไม่มีปัญหาการลิงก์</p>
+              <textarea id="appsScriptArea" readonly class="w-full h-48 bg-slate-900 text-emerald-400 text-xs font-mono p-4 rounded-xl border border-slate-800 outline-none resize-none">/**
+ * Smart Saving Pro+ - Backend Google Apps Script (code.gs)
+ * อัปเดตโครงสร้างแบบยืดหยุ่น: ตัดการผูกโยง GoalID รายธุรกรรม
+ */
+
+function doPost(e) {
+  var response = { success: false, message: "ไม่มีคำสั่งทำรายการ" };
+  try {
+    var params = JSON.parse(e.postData.contents);
+    var action = params.action;
+    
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    checkAndCreateSheets(ss);
+
+    if (action === "register") {
+      response = handleRegister(ss, params);
+    } else if (action === "login") {
+      response = handleLogin(ss, params);
+    } else if (action === "getData") {
+      response = handleGetData(ss, params);
+    } else if (action === "addSaving") {
+      response = handleAddSaving(ss, params);
+    } else if (action === "addGoal") {
+      response = handleAddGoal(ss, params);
+    } else if (action === "saveSettings") {
+      response = handleSaveSettings(ss, params);
+    }
+    
+  } catch (err) {
+    response = { success: false, message: "เซิร์ฟเวอร์ขัดข้อง: " + err.toString() };
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(response))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: "running", version: "24.05.2026 Pro+" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function checkAndCreateSheets(ss) {
+  var requiredSheets = ["USERS", "SAVINGS", "GOALS", "SETTINGS"];
+  for (var i = 0; i < requiredSheets.length; i++) {
+    var sheetName = requiredSheets[i];
+    var sheet = ss.getSheetByName(sheetName);
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+      if (sheetName === "USERS") {
+        sheet.appendRow(["username", "password", "displayName", "createdDate"]);
+      } else if (sheetName === "SAVINGS") {
+        sheet.appendRow(["id", "username", "amount", "date", "time", "channel"]);
+      } else if (sheetName === "GOALS") {
+        sheet.appendRow(["id", "username", "title", "targetAmount", "category"]);
+      } else if (sheetName === "SETTINGS") {
+        sheet.appendRow(["username", "frequency", "quote", "currency", "defaultCategory"]);
+      }
+    }
+  }
+}
+
+function handleRegister(ss, params) {
+  var sheet = ss.getSheetByName("USERS");
+  var data = sheet.getDataRange().getValues();
+  var username = params.username.toLowerCase();
+  
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0].toString().toLowerCase() === username) {
+      return { success: false, message: "ชื่อผู้ใช้นี้ถูกใช้งานแล้วในระบบฐานข้อมูล" };
+    }
+  }
+  
+  sheet.appendRow([
+    username, 
+    params.password, 
+    params.displayName || username, 
+    new Date().toISOString()
+  ]);
+  
+  return { 
+    success: true, 
+    user: { username: username, displayName: params.displayName || username } 
+  };
+}
+
+function handleLogin(ss, params) {
+  var sheet = ss.getSheetByName("USERS");
+  var data = sheet.getDataRange().getValues();
+  var username = params.username.toLowerCase();
+  var password = params.password;
+  
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0].toString().toLowerCase() === username) {
+      if (data[i][1].toString() === password) {
+        return { 
+          success: true, 
+          user: { username: username, displayName: data[i][2] } 
+        };
+      } else {
+        return { success: false, message: "รหัสผ่านไม่ถูกต้อง กรุณาป้อนรหัสผ่านเดิมที่สมัครไว้" };
+      }
+    }
+  }
+  
+  return { success: false, message: "ไม่พบบัญชีผู้ใช้รายนี้ในฐานข้อมูล กรุณาสลับไปหน้าสมัครใช้งาน" };
+}
+
+function handleGetData(ss, params) {
+  var username = params.username.toLowerCase();
+  
+  var savingsSheet = ss.getSheetByName("SAVINGS");
+  var savingsData = savingsSheet.getDataRange().getValues();
+  var userSavings = [];
+  for (var i = 1; i < savingsData.length; i++) {
+    if (savingsData[i][1].toString().toLowerCase() === username) {
+      userSavings.push({
+        id: savingsData[i][0],
+        amount: parseFloat(savingsData[i][2]),
+        date: savingsData[i][3],
+        time: savingsData[i][4],
+        channel: savingsData[i][5]
+      });
+    }
+  }
+  userSavings.reverse();
+
+  var goalsSheet = ss.getSheetByName("GOALS");
+  var goalsData = goalsSheet.getDataRange().getValues();
+  var userGoals = [];
+  for (var j = 1; j < goalsData.length; j++) {
+    if (goalsData[j][1].toString().toLowerCase() === username) {
+      userGoals.push({
+        id: goalsData[j][0],
+        title: goalsData[j][2],
+        targetAmount: parseFloat(goalsData[j][3]),
+        category: goalsData[j][4]
+      });
+    }
+  }
+
+  var settingsSheet = ss.getSheetByName("SETTINGS");
+  var settingsData = settingsSheet.getDataRange().getValues();
+  var userSettings = {};
+  for (var k = 1; k < settingsData.length; k++) {
+    if (settingsData[k][0].toString().toLowerCase() === username) {
+      userSettings = {
+        frequency: settingsData[k][1],
+        quote: settingsData[k][2],
+        currency: settingsData[k][3],
+        defaultCategory: settingsData[k][4]
+      };
+      break;
+    }
+  }
+
+  return {
+    success: true,
+    savings: userSavings,
+    goals: userGoals,
+    settings: userSettings
+  };
+}
+
+function handleAddSaving(ss, params) {
+  var sheet = ss.getSheetByName("SAVINGS");
+  var username = params.username.toLowerCase();
+  var saving = params.saving;
+  var savingId = "SAV" + new Date().getTime();
+  
+  sheet.appendRow([
+    savingId,
+    username,
+    saving.amount,
+    saving.date,
+    saving.time,
+    saving.channel
+  ]);
+  
+  return { success: true, savingId: savingId };
+}
+
+function handleAddGoal(ss, params) {
+  var sheet = ss.getSheetByName("GOALS");
+  var username = params.username.toLowerCase();
+  var goal = params.goal;
+  var goalId = "GOAL" + new Date().getTime();
+  
+  sheet.appendRow([
+    goalId,
+    username,
+    goal.title,
+    goal.targetAmount,
+    goal.category
+  ]);
+  
+  return { success: true, goalId: goalId };
+}
+
+function handleSaveSettings(ss, params) {
+  var sheet = ss.getSheetByName("SETTINGS");
+  var data = sheet.getDataRange().getValues();
+  var username = params.username.toLowerCase();
+  var settings = params.settings;
+  var foundIndex = -1;
+  
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0].toString().toLowerCase() === username) {
+      foundIndex = i + 1;
+      break;
+    }
+  }
+  
+  if (foundIndex !== -1) {
+    sheet.getRange(foundIndex, 2).setValue(settings.frequency);
+    sheet.getRange(foundIndex, 3).setValue(settings.quote);
+    sheet.getRange(foundIndex, 4).setValue(settings.currency);
+    sheet.getRange(foundIndex, 5).setValue(settings.defaultCategory);
+  } else {
+    sheet.appendRow([
+      username,
+      settings.frequency,
+      settings.quote,
+      settings.currency,
+      settings.defaultCategory
+    ]);
+  }
+  
+  return { success: true };
+}</textarea>
+            </div>
+            
             <!-- GOOGLE SHEET SYNC INFORMATION CARD -->
             <div class="glass-panel p-6 rounded-3xl shadow-sm border border-brand-500/10 bg-gradient-to-tr from-brand-50/10 to-transparent">
               <div class="flex items-start space-x-4">
@@ -763,7 +1006,7 @@
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-base font-bold text-slate-800 dark:text-white flex items-center space-x-2">
           <span class="material-symbols-rounded text-brand-500">add_circle</span>
-          <span>เพิ่มบันทึกการนำออมเงิน</span>
+          <span>เพิ่มบันทึกการนำออมเงิน (ออมง่ายในหนึ่งคลิก)</span>
         </h3>
         <button onclick="closeSavingModal()" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all">
           <span class="material-symbols-rounded text-base">close</span>
@@ -793,17 +1036,9 @@
             <input type="time" id="savingTime" required class="w-full px-3.5 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-sm font-mono">
           </div>
 
-          <!-- Field: Goal Association -->
-          <div>
-            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">เชื่อมโยงไปยังเป้าหมาย (Goal)</label>
-            <select id="savingGoalId" required class="w-full px-3.5 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-sm">
-              <!-- Dynamically rendered -->
-            </select>
-          </div>
-
           <!-- Field: Type / Channel -->
-          <div>
-            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">ช่องทางฝากเงิน</label>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">ช่องทางฝากเก็บเงินออม</label>
             <select id="savingChannel" required class="w-full px-3.5 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-sm">
               <option value="เงินสดส่วนตัว">เงินสดส่วนตัว</option>
               <option value="บัญชีเงินฝาก">บัญชีเงินฝาก</option>
@@ -817,7 +1052,7 @@
           <button type="button" onclick="closeSavingModal()" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">ยกเลิก</button>
           <button type="submit" class="px-5 py-2 bg-brand-500 text-white text-xs font-bold rounded-xl hover:bg-brand-600 transition-all flex items-center space-x-1">
             <span class="material-symbols-rounded text-sm">save</span>
-            <span>บันทึกทันที</span>
+            <span>บันทึกการออมทันที</span>
           </button>
         </div>
       </form>
@@ -1213,7 +1448,6 @@
 
           // Apply calculations
           updateDashboardNumbers();
-          updateGoalSelectors();
           filterSavingsList();
           renderCharts();
           
@@ -1254,8 +1488,6 @@
           const diffMins = diffMs / 1000 / 60;
           
           if (diffMins >= 10 && diffMins < 1440) { // Keep older data in sheets, but auto delete expired session list here OR trigger API delete.
-            // Requirement asks to auto-delete after 10 minutes. We can filter them out from the immediate display
-            // and optionally call backend to clean up if required. Let's filter out from local view.
             changed = true;
             return false; 
           }
@@ -1334,13 +1566,9 @@
       document.getElementById('cardRankName').innerText = rankName;
       document.getElementById('cardRankCriteria').innerText = rankDesc;
 
-      // 5. Active Goal Progress (Grab first incomplete goal or the one with highest progress)
-      const activeGoal = state.goals.find(g => {
-        const savedForThis = state.savings
-          .filter(s => s.goalId === g.id)
-          .reduce((sum, s) => sum + parseFloat(s.amount), 0);
-        return savedForThis < parseFloat(g.targetAmount);
-      }) || state.goals[0];
+      // 5. Active Goal Progress
+      // Since saving isn't coupled with goal, goals are independent targets and we compare target with total saving accumulation!
+      const activeGoal = state.goals.find(g => totalAmount < parseFloat(g.targetAmount)) || state.goals[0];
 
       const goalProgress = document.getElementById('statGoalProgress');
       const goalPercent = document.getElementById('statGoalPercent');
@@ -1348,16 +1576,13 @@
       const activeGoalTitle = document.getElementById('statActiveGoal');
 
       if (activeGoal) {
-        const savedAmount = state.savings
-          .filter(s => s.goalId === activeGoal.id)
-          .reduce((sum, s) => sum + parseFloat(s.amount), 0);
         const target = parseFloat(activeGoal.targetAmount);
-        const percent = Math.min(Math.round((savedAmount / target) * 100), 100);
+        const percent = Math.min(Math.round((totalAmount / target) * 100), 100);
 
         activeGoalTitle.innerText = activeGoal.title;
         goalProgress.style.width = `${percent}%`;
         goalPercent.innerText = `${percent}%`;
-        goalValues.innerText = `${formatMoney(savedAmount)} / ${formatMoney(target)}`;
+        goalValues.innerText = `${formatMoney(totalAmount)} / ${formatMoney(target)}`;
       } else {
         activeGoalTitle.innerText = "สร้างเป้าหมายเพื่อเริ่มกระตุ้น";
         goalProgress.style.width = '0%';
@@ -1376,11 +1601,8 @@
       tbody.innerHTML = '';
 
       let filtered = state.savings.filter(item => {
-        const matchingGoal = state.goals.find(g => g.id === item.goalId);
-        const goalName = matchingGoal ? matchingGoal.title : '';
         return (
           item.channel.toLowerCase().includes(query) || 
-          goalName.toLowerCase().includes(query) ||
           item.amount.toString().includes(query)
         );
       });
@@ -1397,16 +1619,13 @@
       }
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-xs text-slate-400">ไม่พบประวัติที่ตรงตามเงื่อนไข หรือพ้น 10 นาทีไปแล้ว</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-xs text-slate-400">ไม่พบประวัติที่ตรงตามเงื่อนไข หรือพ้น 10 นาทีไปแล้ว</td></tr>`;
         return;
       }
 
       const now = new Date();
 
       filtered.forEach(item => {
-        const matchingGoal = state.goals.find(g => g.id === item.goalId);
-        const goalName = matchingGoal ? matchingGoal.title : 'ทั่วไป';
-        
         // Calculate remaining seconds/minutes for the 10 mins auto-delete
         const saveDateStr = item.date.split('T')[0] || item.date;
         const combinedDateTime = new Date(`${saveDateStr}T${item.time || '00:00'}`);
@@ -1419,7 +1638,6 @@
           const remSecs = Math.floor((remainingMs / 1000) % 60);
           countdownText = `${remMins}m ${remSecs}s`;
         } else {
-          // Skip rendering if expired (the filter loop will handle next time, but just in case)
           return;
         }
 
@@ -1429,9 +1647,8 @@
         tr.className = "hover:bg-slate-100/50 dark:hover:bg-slate-800/30 text-xs text-slate-600 dark:text-slate-300 transition-colors";
         tr.innerHTML = `
           <td class="py-3.5 pl-3 font-mono font-medium">${dateFormatted} ${item.time || ''}</td>
-          <td class="py-3.5 font-bold text-slate-800 dark:text-slate-200">${goalName}</td>
           <td class="py-3.5">
-            <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-semibold text-slate-500">
+            <span class="px-2.5 py-1 bg-brand-50 dark:bg-brand-950/20 text-brand-600 dark:text-brand-400 border border-brand-200/40 rounded-lg text-[10px] font-semibold">
               ${item.channel}
             </span>
           </td>
@@ -1444,7 +1661,6 @@
 
 
     // ==================== REAL-TIME AI ANALYTICS ENGINE ====================
-    // Run an offline-simulated AI calculation algorithm instantly on data change (takes < 5 seconds)
     function runAIAnalysis() {
       const aiText = document.getElementById('aiAnalysisText');
       if (!aiText) return;
@@ -1453,27 +1669,14 @@
       setTimeout(() => {
         const total = state.savings.reduce((sum, s) => sum + parseFloat(s.amount), 0);
         const count = state.savings.length;
-        const goalsCount = state.goals.length;
 
         if (count === 0) {
           aiText.innerText = "ระบบ AI ไม่พบประวัติออมของคุณในปัจจุบัน โปรดเพิ่มข้อมูลรายการออมแรก หรือตั้งเป้าหมายชีวิตเพื่อเริ่มกระตุ้นความมั่นคงทางการเงินของคุณ!";
           return;
         }
 
-        // Calculate average amount
         const avg = total / count;
         
-        // Calculate goal achievement index
-        let goalProgressAvg = 0;
-        if (goalsCount > 0) {
-          let sumOfPercents = 0;
-          state.goals.forEach(g => {
-            const saved = state.savings.filter(s => s.goalId === g.id).reduce((sum, s) => sum + parseFloat(s.amount), 0);
-            sumOfPercents += Math.min((saved / parseFloat(g.targetAmount)) * 100, 100);
-          });
-          goalProgressAvg = sumOfPercents / goalsCount;
-        }
-
         let diagnosis = "";
         if (avg < 500) {
           diagnosis = "วินัยระยะสั้นของคุณยอดเยี่ยม แต่เน้นออมปริมาณย่อย แนะนำให้พยายามกำหนดเป้าหมายออมรายสัปดาห์เพิ่มขึ้น 10% เพื่อทวีคูณความมั่นคง";
@@ -1485,7 +1688,7 @@
 
         const quote = state.settings.quote ? ` "${state.settings.quote}"` : "";
         aiText.innerHTML = `<strong>สรุปสุขภาพการเงิน:</strong> ${diagnosis} เพื่อสานฝันเป้าหมายชีวิตของคุณให้สำเร็จทันตามรอบปฏิทิน และเพื่อตอบรับเจตจำนงค์ของคุณ: <span class="text-brand-500 font-bold">${quote}</span>`;
-      }, 1500); // Artificial 1.5 seconds delay (under 5 seconds) to give realistic premium fintech AI feel
+      }, 1500);
     }
 
 
@@ -1502,7 +1705,6 @@
           trendChartInstance.destroy();
         }
 
-        // Aggregate last 7 days from savings
         const last7Days = [];
         const dailyAmounts = [];
         const daysThai = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
@@ -1556,7 +1758,7 @@
         });
       }
 
-      // 2. Savings breakdown per target doughnut chart
+      // 2. Savings breakdown per category/channel doughnut chart
       const ctxCat = document.getElementById('categoryChart')?.getContext('2d');
       if (ctxCat) {
         if (categoryChartInstance) {
@@ -1565,9 +1767,7 @@
 
         const categories = {};
         state.savings.forEach(item => {
-          const matchingGoal = state.goals.find(g => g.id === item.goalId);
-          const name = matchingGoal ? matchingGoal.title : 'ทั่วไป';
-          
+          const name = item.channel || 'ทั่วไป';
           const amount = state.currentCurrency === 'USD' ? parseFloat(item.amount) * state.exchangeRate : parseFloat(item.amount);
           categories[name] = (categories[name] || 0) + amount;
         });
@@ -1623,24 +1823,20 @@
       const monthsThai = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
       document.getElementById('calendarCurrentMonth').innerText = `${monthsThai[month]} ${year + 543}`;
 
-      // Insert empty cells before day 1
       for (let i = 0; i < firstDayIndex; i++) {
         const emptyCell = document.createElement('div');
         grid.appendChild(emptyCell);
       }
 
-      // Generate days cells
       for (let day = 1; day <= lastDay; day++) {
         const cell = document.createElement('div');
         cell.className = "aspect-square rounded-2xl flex flex-col justify-between p-1.5 md:p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-750 text-slate-800 dark:text-slate-100 hover:scale-105 transition-all cursor-pointer relative group";
         
-        // Sum savings for this day
         const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const daySavingsTotal = state.savings
           .filter(item => item.date.split('T')[0] === cellDateStr)
           .reduce((sum, item) => sum + parseFloat(item.amount), 0);
 
-        // Styling according to savings quantity
         if (daySavingsTotal > 0) {
           if (daySavingsTotal > 2000) {
             cell.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600');
@@ -1658,7 +1854,6 @@
           <span class="text-xs font-bold font-mono">${day}</span>
           ${daySavingsTotal > 0 ? `<span class="text-[9px] font-black truncate">${state.currentCurrency === 'USD' ? '$' + (daySavingsTotal * state.exchangeRate).toFixed(0) : daySavingsTotal.toFixed(0) + '฿'}</span>` : ''}
           
-          <!-- Tooltip on hover -->
           <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-32 bg-slate-900 text-white text-[10px] p-2 rounded-xl text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
             ออมเงินทั้งหมด: ${daySavingsTotal} บาท
           </div>
@@ -1752,15 +1947,20 @@
     }
 
 
+    // ==================== COPIER: APPS SCRIPT CODE ====================
+    function copyAppsScriptCode() {
+      const textArea = document.getElementById('appsScriptArea');
+      textArea.select();
+      document.execCommand('copy');
+      showToast("คัดลอกรหัส Apps Script (code.gs) ไปยังคลิปบอร์ดแล้ว!", "success");
+    }
+
+
     // ==================== MANAGEMENT: ADD SAVINGS ====================
     function openSavingModal() {
-      // Pre-fill date and time
       const today = new Date();
       document.getElementById('savingDate').value = today.toISOString().split('T')[0];
       document.getElementById('savingTime').value = String(today.getHours()).padStart(2, '0') + ":" + String(today.getMinutes()).padStart(2, '0');
-      
-      updateGoalSelectors();
-      
       document.getElementById('modalSaving').classList.remove('hidden');
     }
 
@@ -1769,39 +1969,12 @@
       document.getElementById('savingForm').reset();
     }
 
-    function updateGoalSelectors() {
-      const select = document.getElementById('savingGoalId');
-      if (!select) return;
-      select.innerHTML = '';
-
-      if (state.goals.length === 0) {
-        const option = document.createElement('option');
-        option.value = '';
-        option.innerText = '(กรุณาสร้างเป้าหมายเงินออมก่อนอย่างน้อย 1 รายการ)';
-        select.appendChild(option);
-        return;
-      }
-
-      state.goals.forEach(goal => {
-        const option = document.createElement('option');
-        option.value = goal.id;
-        option.innerText = `${goal.title} (เป้าหมาย: ${parseFloat(goal.targetAmount).toLocaleString()} ฿)`;
-        select.appendChild(option);
-      });
-    }
-
     async function handleSavingSubmit(e) {
       e.preventDefault();
       const amount = parseFloat(document.getElementById('savingAmount').value);
       const date = document.getElementById('savingDate').value;
       const time = document.getElementById('savingTime').value;
-      const goalId = document.getElementById('savingGoalId').value;
       const channel = document.getElementById('savingChannel').value;
-
-      if (!goalId) {
-        showToast("คุณต้องเลือกเป้าหมายก่อนออมเงิน! สร้างได้ที่สถิติการนำออม", "error");
-        return;
-      }
 
       if (amount <= 0) {
         showToast("กรุณาระบุจำนวนเงินออมให้มากกว่า 0 บาท", "error");
@@ -1814,19 +1987,18 @@
         const response = await apiRequest({
           action: 'addSaving',
           username: state.user.username,
-          saving: { amount, date, time, goalId, channel }
+          saving: { amount, date, time, channel }
         });
 
         hideLoading();
 
         if (response.success) {
-          // Immediately append and update state locally to prevent unneeded heavy round-trips
+          // Immediately append and update state locally
           state.savings.unshift({
             id: response.savingId,
             amount: amount,
             date: date,
             time: time,
-            goalId: goalId,
             channel: channel
           });
 
@@ -1888,7 +2060,6 @@
             category
           });
 
-          // Refresh displays
           updateDashboardNumbers();
           updateAnalyticsGoalList();
           renderCharts();
@@ -1923,14 +2094,11 @@
         return;
       }
 
+      const totalAmount = state.savings.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+
       state.goals.forEach(goal => {
-        // Calculate collected progress
-        const savedAmount = state.savings
-          .filter(s => s.goalId === goal.id)
-          .reduce((sum, s) => sum + parseFloat(s.amount), 0);
-        
         const target = parseFloat(goal.targetAmount);
-        const percent = Math.min(Math.round((savedAmount / target) * 100), 100);
+        const percent = Math.min(Math.round((totalAmount / target) * 100), 100);
 
         // Big Cards Grid in Analytics View
         const card = document.createElement('div');
@@ -1951,7 +2119,7 @@
               <div style="width: ${percent}%" class="bg-gradient-to-r from-brand-500 to-emerald-400 h-full rounded-full transition-all duration-300"></div>
             </div>
             <div class="flex justify-between items-center text-[11px] font-bold text-slate-500">
-              <span>สะสมแล้ว: ${formatMoney(savedAmount)}</span>
+              <span>สะสมแล้ว: ${formatMoney(totalAmount)}</span>
               <span class="text-slate-400">เป้าหมาย: ${formatMoney(target)}</span>
             </div>
           </div>
