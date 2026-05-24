@@ -1468,41 +1468,17 @@ function handleSaveSettings(ss, params) {
       }
     }
 
-    // Start timer that counts and deletes logs that were saved > 10 minutes ago
+    // Start timer that counts and filters display-level elements
+    // This allows recent savings to automatically drop from UI history table after 10 minutes
+    // while perfectly preserving state.savings in the background for correct calculations!
     function startAutoDeleteTimer() {
       if (autoDeleteTimerInterval) {
         clearInterval(autoDeleteTimerInterval);
       }
       
       autoDeleteTimerInterval = setInterval(() => {
-        const now = new Date();
-        let changed = false;
-        
-        // Loop and check savings that were created
-        state.savings = state.savings.filter(save => {
-          const saveDateStr = save.date.split('T')[0] || save.date;
-          const combinedDateTime = new Date(`${saveDateStr}T${save.time || '00:00'}`);
-          
-          // Calculate difference in milliseconds
-          const diffMs = now - combinedDateTime;
-          const diffMins = diffMs / 1000 / 60;
-          
-          if (diffMins >= 10 && diffMins < 1440) { // Keep older data in sheets, but auto delete expired session list here OR trigger API delete.
-            changed = true;
-            return false; 
-          }
-          return true;
-        });
-
-        if (changed) {
-          updateDashboardNumbers();
-          filterSavingsList();
-          renderCharts();
-          runAIAnalysis();
-        } else {
-          // If state didn't change, we still need to refresh the countdown text in UI rows
-          filterSavingsList();
-        }
+        // Redraw recent history list to recalculate remaining countdown values dynamically
+        filterSavingsList();
       }, 1000); // Check and re-render timer countdown every second for accurate UI display
     }
 
@@ -1593,15 +1569,25 @@ function handleSaveSettings(ss, params) {
 
 
     // ==================== FILTER & SEARCH SAVINGS TABLE ====================
+    // Displays recent transactions that were saved under 10 minutes ago
+    // Items exceeding 10 minutes will auto-expire from this list but stay in database calculation
     function filterSavingsList() {
-      const query = document.getElementById('savingSearch').value.toLowerCase();
-      const sortVal = document.getElementById('savingSort').value;
+      const query = document.getElementById('savingSearch')?.value.toLowerCase() || '';
+      const sortVal = document.getElementById('savingSort')?.value || 'date-desc';
       const tbody = document.getElementById('savingHistoryTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
 
+      // Keep item in UI table ONLY if it's less than 10 minutes old
+      const now = new Date();
       let filtered = state.savings.filter(item => {
-        return (
+        const saveDateStr = item.date.split('T')[0] || item.date;
+        const combinedDateTime = new Date(`${saveDateStr}T${item.time || '00:00'}`);
+        const diffMs = now - combinedDateTime;
+        const diffMins = diffMs / 1000 / 60;
+
+        // Must be less than 10 minutes old & match search query
+        return (diffMins < 10) && (
           item.channel.toLowerCase().includes(query) || 
           item.amount.toString().includes(query)
         );
@@ -1619,26 +1605,23 @@ function handleSaveSettings(ss, params) {
       }
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-xs text-slate-400">ไม่พบประวัติที่ตรงตามเงื่อนไข หรือพ้น 10 นาทีไปแล้ว</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-xs text-slate-400">ยังไม่มีประวัติการออมที่บันทึกในช่วง 10 นาทีนี้</td></tr>`;
         return;
       }
 
-      const now = new Date();
-
       filtered.forEach(item => {
-        // Calculate remaining seconds/minutes for the 10 mins auto-delete
         const saveDateStr = item.date.split('T')[0] || item.date;
         const combinedDateTime = new Date(`${saveDateStr}T${item.time || '00:00'}`);
         const diffMs = now - combinedDateTime;
         const remainingMs = (10 * 60 * 1000) - diffMs;
-        let countdownText = "หมดเวลาแสดง";
+        let countdownText = "หมดเวลา";
         
         if (remainingMs > 0) {
           const remMins = Math.floor(remainingMs / 1000 / 60);
           const remSecs = Math.floor((remainingMs / 1000) % 60);
           countdownText = `${remMins}m ${remSecs}s`;
         } else {
-          return;
+          return; // Skip rendering
         }
 
         const dateFormatted = new Date(item.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
@@ -1648,7 +1631,7 @@ function handleSaveSettings(ss, params) {
         tr.innerHTML = `
           <td class="py-3.5 pl-3 font-mono font-medium">${dateFormatted} ${item.time || ''}</td>
           <td class="py-3.5">
-            <span class="px-2.5 py-1 bg-brand-50 dark:bg-brand-950/20 text-brand-600 dark:text-brand-400 border border-brand-200/40 rounded-lg text-[10px] font-semibold">
+            <span class="px-2.5 py-1 bg-brand-5:10 dark:bg-brand-950/20 text-brand-600 dark:text-brand-400 border border-brand-200/40 rounded-lg text-[10px] font-semibold">
               ${item.channel}
             </span>
           </td>
@@ -1949,8 +1932,8 @@ function handleSaveSettings(ss, params) {
 
     // ==================== COPIER: APPS SCRIPT CODE ====================
     function copyAppsScriptCode() {
-      const textArea = document.getElementById('appsScriptArea');
-      textArea.select();
+      const text = document.getElementById('appsScriptArea');
+      text.select();
       document.execCommand('copy');
       showToast("คัดลอกรหัส Apps Script (code.gs) ไปยังคลิปบอร์ดแล้ว!", "success");
     }
