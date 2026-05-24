@@ -285,7 +285,7 @@
                 
                 <!-- Tab View: Dashboard -->
                 <section id="view-dashboard" class="app-view space-y-6">
-                    <!-- Summary Card Group -->
+                    <!-- Summary Card Group (Day, Week, Month are permanently visible now) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <!-- Stat Card: Total Savings -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
@@ -308,7 +308,7 @@
                             <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-500/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดการเงินออมวันนี้</p>
+                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดเงินนำออมวันนี้ (เรียลไทม์)</p>
                                     <h3 id="stat-savings-today" class="text-2xl font-black tracking-tight mt-1 text-emerald-600 dark:text-emerald-400">฿0.00</h3>
                                 </div>
                                 <span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-2.5 rounded-xl">calendar_view_day</span>
@@ -319,12 +319,28 @@
                             </div>
                         </div>
 
+                        <!-- Stat Card: This Week's Savings -->
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
+                            <div class="absolute top-0 right-0 w-28 h-28 bg-indigo-500/5 rounded-full -mr-14 -mt-14"></div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดออมสัปดาห์นี้ (7 วัน)</p>
+                                    <h3 id="stat-savings-week" class="text-2xl font-black tracking-tight mt-1 text-indigo-600 dark:text-indigo-400">฿0.00</h3>
+                                </div>
+                                <span class="material-symbols-outlined text-indigo-500 bg-indigo-500/10 p-2.5 rounded-xl">view_week</span>
+                            </div>
+                            <div class="mt-4 flex items-center gap-1.5 text-[9px] text-slate-500 font-bold">
+                                <span class="material-symbols-outlined text-indigo-500 text-sm">schedule</span>
+                                <span>สถิติความถี่ใน 1 สัปดาห์</span>
+                            </div>
+                        </div>
+
                         <!-- Stat Card: Monthly Savings -->
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-sm">
                             <div class="absolute top-0 right-0 w-28 h-28 bg-indigo-500/5 rounded-full -mr-14 -mt-14"></div>
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดออมสะสมรอบเดือนนี้</p>
+                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">ยอดออมสะสมรอบเดือนนี้ (เรียลไทม์)</p>
                                     <h3 id="stat-savings-month" class="text-2xl font-black tracking-tight mt-1 text-indigo-600 dark:text-indigo-400">฿0.00</h3>
                                 </div>
                                 <span class="material-symbols-outlined text-indigo-500 bg-indigo-500/10 p-2.5 rounded-xl">calendar_month</span>
@@ -332,29 +348,6 @@
                             <div class="mt-4 flex items-center gap-1.5 text-[9px] text-slate-500 font-bold">
                                 <span class="material-symbols-outlined text-indigo-500 text-sm">bar_chart</span>
                                 <span id="stat-savings-month-label">อ้างอิงข้อมูล ปัจจุบัน</span>
-                            </div>
-                        </div>
-
-                        <!-- Stat Card: Pro Savings Rank System -->
-                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-lg border border-slate-800">
-                            <div class="absolute top-0 right-0 w-28 h-28 bg-white/5 rounded-full -mr-14 -mt-14"></div>
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">ระดับชั้นวินัยการออม</p>
-                                    <h3 id="badge-rank-title" class="text-base font-black mt-1 text-yellow-400">Bronze Saver</h3>
-                                </div>
-                                <div class="bg-white/10 p-2 rounded-xl">
-                                    <span id="badge-rank-icon" class="material-symbols-outlined text-yellow-400 text-lg leading-none">workspace_premium</span>
-                                </div>
-                            </div>
-                            <div class="mt-4 space-y-2">
-                                <div class="flex justify-between text-[9px] text-slate-300 font-bold">
-                                    <span>ยศลำดับขั้นถัดไป</span>
-                                    <span id="badge-progress-text">฿0 / ฿5,000</span>
-                                </div>
-                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                                    <div id="badge-progress-bar" class="bg-gradient-to-r from-yellow-400 to-amber-500 h-full rounded-full transition-all duration-750" style="width: 0%"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -366,6 +359,11 @@
                                 <div>
                                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">แนวโน้มประวัติการออมของคุณ</h3>
                                     <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">สถิติธุรกรรมการนำออมในรอบ 7 วันล่าสุด</p>
+                                </div>
+                                <!-- Toggle view for Day / Month trends -->
+                                <div class="bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl flex gap-0.5 text-[9px] font-bold">
+                                    <button onclick="setChartInterval('day')" id="chart-toggle-day" class="px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm">วัน</button>
+                                    <button onclick="setChartInterval('month')" id="chart-toggle-month" class="px-3 py-1.5 rounded-lg transition text-slate-500 dark:text-slate-400">เดือน</button>
                                 </div>
                             </div>
                             <div class="relative w-full h-60">
@@ -397,17 +395,43 @@
                         </div>
                     </div>
 
-                    <!-- Target Goals Micro Panel -->
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">เป้าหมายสะสมเงินที่กำลังดำเนินโครงการ</h3>
-                                <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">ความคืบหน้าของโครงการเพื่อเสถียรภาพความมั่นคงในการเงิน</p>
+                    <!-- Target Goals Micro Panel (Real-time & Rank Display) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left: Target Goals List -->
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm lg:col-span-2 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">เป้าหมายสะสมเงินล่าสุด (เรียลไทม์)</h3>
+                                    <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">ความคืบหน้าของโครงการเพื่อเสถียรภาพความมั่นคงในการเงิน</p>
+                                </div>
+                                <button onclick="switchTab('goals')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold">ดูเป้าหมายทั้งหมด</button>
                             </div>
-                            <button onclick="switchTab('goals')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold">ดูเป้าหมายทั้งหมด</button>
+                            <div id="dashboard-goals-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold">ไม่พบบัญชีโครงการออมใดในระบบบัญชีนี้ของคุณ</div>
+                            </div>
                         </div>
-                        <div id="dashboard-goals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold">ไม่พบบัญชีโครงการออมใดในระบบบัญชีนี้ของคุณ</div>
+
+                        <!-- Right: Pro Savings Rank System System -->
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-lg border border-slate-800">
+                            <div class="absolute top-0 right-0 w-28 h-28 bg-white/5 rounded-full -mr-14 -mt-14"></div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">ระดับชั้นวินัยการออม</p>
+                                    <h3 id="badge-rank-title" class="text-base font-black mt-1 text-yellow-400">Bronze Saver</h3>
+                                </div>
+                                <div class="bg-white/10 p-2 rounded-xl">
+                                    <span id="badge-rank-icon" class="material-symbols-outlined text-yellow-400 text-lg leading-none">workspace_premium</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 space-y-2">
+                                <div class="flex justify-between text-[9px] text-slate-300 font-bold">
+                                    <span>ยศลำดับขั้นถัดไป</span>
+                                    <span id="badge-progress-text">฿0 / ฿5,000</span>
+                                </div>
+                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                                    <div id="badge-progress-bar" class="bg-gradient-to-r from-yellow-400 to-amber-500 h-full rounded-full transition-all duration-750" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -809,10 +833,11 @@
             exchangeRate: 35.0, // 1 USD = 35.0 THB exchange benchmark
             theme: 'light',
             currentCalendarYear: 2026,
-            currentCalendarMonth: 4 // พฤษภาคม 2026 index 4 (0-based)
+            currentCalendarMonth: 4, // May 2026 index 4 (0-based)
+            chartInterval: 'day' // 'day' or 'month'
         };
 
-        // Material Symbols Mapping to categories
+        // Material Symbols Mapping to categories (Emojis strictly removed)
         const categoryIconMap = {
             "การศึกษา": "school",
             "การลงทุน": "trending_up",
@@ -1030,7 +1055,7 @@
             }
         }
 
-        // Silent background sync
+        // Silent background sync to secure database alignment
         async function fetchDatabaseDataSilently() {
             const res = await apiRequest("getDashboardData");
             if (res.success) {
@@ -1226,28 +1251,70 @@
             }, 1000);
         }
 
+        function setChartInterval(interval) {
+            state.chartInterval = interval;
+            
+            const dayBtn = document.getElementById('chart-toggle-day');
+            const monthBtn = document.getElementById('chart-toggle-month');
+            
+            if (interval === 'day') {
+                dayBtn.className = "px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm";
+                monthBtn.className = "px-3 py-1.5 rounded-lg transition text-slate-500 dark:text-slate-400";
+            } else {
+                monthBtn.className = "px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm";
+                dayBtn.className = "px-3 py-1.5 rounded-lg transition text-slate-500 dark:text-slate-400";
+            }
+            
+            renderDashboardCharts();
+        }
+
         function renderDashboardCharts() {
             const ctx = document.getElementById('dashboardChart').getContext('2d');
             const labels = [];
             const amounts = [];
             
-            // Build visual 7-day stats block
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                const dateStr = d.toISOString().split('T')[0];
-                labels.push(dateStr.substring(5)); // Show MM-DD format
-                
-                let daySum = 0;
-                state.savings.forEach(item => {
-                    if (item.date === dateStr) {
-                        daySum += item.amount;
+            if (state.chartInterval === 'day') {
+                // Build 7-day stats trend curve
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const dateStr = d.toISOString().split('T')[0];
+                    labels.push(dateStr.substring(5)); // Show MM-DD format
+                    
+                    let daySum = 0;
+                    state.savings.forEach(item => {
+                        if (item.date === dateStr) {
+                            daySum += item.amount;
+                        }
+                    });
+                    if (state.currency === 'USD') {
+                        daySum = daySum / state.exchangeRate;
                     }
-                });
-                if (state.currency === 'USD') {
-                    daySum = daySum / state.exchangeRate;
+                    amounts.push(daySum);
                 }
-                amounts.push(daySum);
+            } else {
+                // Build 6-month stats trend curve
+                for (let i = 5; i >= 0; i--) {
+                    const d = new Date();
+                    d.setMonth(d.getMonth() - i);
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const monthPrefix = `${year}-${month}`;
+                    
+                    const monthNamesShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+                    labels.push(monthNamesShort[d.getMonth()]);
+                    
+                    let monthSum = 0;
+                    state.savings.forEach(item => {
+                        if (item.date.startsWith(monthPrefix)) {
+                            monthSum += item.amount;
+                        }
+                    });
+                    if (state.currency === 'USD') {
+                        monthSum = monthSum / state.exchangeRate;
+                    }
+                    amounts.push(monthSum);
+                }
             }
 
             if (dashboardChartObj) {
@@ -1261,7 +1328,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: `สถิตินำออมรายวัน (${state.currency})`,
+                        label: `สถิตินำออม (${state.currency})`,
                         data: amounts,
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37, 99, 235, 0.12)',
@@ -1405,11 +1472,10 @@
                 note: note
             };
 
-            // OPTIMISTIC UPDATE: Add to local state immediately
+            // OPTIMISTIC UPDATE: Add to local state immediately (Instantly updates UI real-time)
             state.savings.push(newSavingItem);
-            updateUIComponents(); // Re-render Dashboard, stats, ranks instantly
+            updateUIComponents();
             
-            // UI feedback
             showToast("ส่งรายการออมขึ้นระบบสำเร็จ (กำลังซิงค์กับชีตเบื้องหลัง...)", "info");
             document.getElementById('add-saving-form').reset();
             
@@ -1429,7 +1495,6 @@
             });
             
             if (res.success) {
-                // Silently refresh values to ensure database alignment
                 fetchDatabaseDataSilently();
             } else {
                 // Rollback local state on failure
@@ -1442,12 +1507,22 @@
         function updateUIComponents() {
             let totalSavings = 0;
             let savingsToday = 0;
+            let savingsWeek = 0;
             let savingsMonth = 0;
             
             // Build current real-time target indicators
             const now = new Date();
             const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
             const currentMonthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+            // Calculate start of this week (Monday)
+            const dayOfWeek = now.getDay();
+            const diffToMonday = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+            const startOfWeek = new Date(now.setDate(diffToMonday));
+            startOfWeek.setHours(0,0,0,0);
+
+            // Restore now date after modification
+            const currentDateVal = new Date();
 
             state.savings.forEach(item => {
                 totalSavings += item.amount;
@@ -1457,15 +1532,23 @@
                 if (item.date.startsWith(currentMonthPrefix)) {
                     savingsMonth += item.amount;
                 }
+
+                // Check if saving is in current week
+                const itemDate = new Date(item.date);
+                itemDate.setHours(0,0,0,0);
+                if (itemDate >= startOfWeek && itemDate <= currentDateVal) {
+                    savingsWeek += item.amount;
+                }
             });
 
             // Instant updates
             document.getElementById('stat-total-savings').innerText = formatValue(totalSavings);
             document.getElementById('stat-savings-today').innerText = formatValue(savingsToday);
+            document.getElementById('stat-savings-week').innerText = formatValue(savingsWeek);
             document.getElementById('stat-savings-month').innerText = formatValue(savingsMonth);
 
             const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-            document.getElementById('stat-savings-month-label').innerText = `อ้างอิงข้อมูล ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+            document.getElementById('stat-savings-month-label').innerText = `อ้างอิงข้อมูล ${monthNames[currentDateVal.getMonth()]} ${currentDateVal.getFullYear()}`;
 
             calculateAndRenderSavingsRank(totalSavings);
 
@@ -1474,9 +1557,9 @@
             goalsList.innerHTML = '';
             
             if (state.goals.length === 0) {
-                goalsList.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold">ไม่พบบัญชีความสำเร็จโครงการสะสมเงินใดๆ</div>';
+                goalsList.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-bold font-semibold">ไม่พบบัญชีความสำเร็จโครงการสะสมเงินใดๆ</div>';
             } else {
-                state.goals.slice(0, 3).forEach(goal => {
+                state.goals.slice(0, 2).forEach(goal => {
                     const percent = Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100));
                     const card = document.createElement('div');
                     card.className = "bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl space-y-3";
@@ -1492,7 +1575,7 @@
                             <div class="bg-blue-500 h-full rounded-full" style="width: ${percent}%"></div>
                         </div>
                         <div class="flex justify-between text-[9px] text-slate-400 font-bold">
-                            <span>สะสมสะสม: ${formatValue(goal.current_amount)}</span>
+                            <span>สะสมแล้ว: ${formatValue(goal.current_amount)}</span>
                             <span>เดดไลน์: ${goal.deadline}</span>
                         </div>
                     `;
@@ -1542,7 +1625,7 @@
                         </div>
                         <div class="text-[9px] text-slate-400 font-bold flex items-center gap-1">
                             <span class="material-symbols-outlined text-xs">calendar_today</span>
-                            <span>เดดไลน์เดดไลน์: ${goal.deadline}</span>
+                            <span>เดดไลน์: ${goal.deadline}</span>
                         </div>
                     </div>
                     <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex gap-2">
