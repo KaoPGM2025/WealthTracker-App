@@ -145,7 +145,7 @@
                         <span class="material-symbols-rounded text-3xl">savings</span>
                     </div>
                     <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">SmartSave Pro+</h2>
-                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 25/05/2026</p>
+                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 26/05/2026</p>
                 </div>
 
                 <!-- Tab Controller -->
@@ -273,7 +273,7 @@
                         </div>
                         <div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-50 dark:border-slate-800/80">
                             <span class="material-symbols-rounded text-brand-500 text-sm">calendar_month</span>
-                            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">สรุปรอบเดือนพฤษภาคม</span>
+                            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">สรุปรอบเดือนปัจจุบัน</span>
                         </div>
                     </div>
                 </div>
@@ -647,6 +647,21 @@
                             <div class="flex p-1 bg-slate-100 dark:bg-slate-850 rounded-xl">
                                 <button onclick="setGlobalCurrency('THB')" id="currTHBBtn" class="px-4 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white">THB</button>
                                 <button onclick="setGlobalCurrency('USD')" id="currUSDBtn" class="px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-500 dark:text-slate-400">USD</button>
+                            </div>
+                        </div>
+
+                        <!-- Danger Zone for Clearing All Data -->
+                        <div class="border-t border-rose-100 dark:border-rose-950/40 pt-6">
+                            <h4 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-2">พื้นที่อันตราย (Danger Zone)</h4>
+                            <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="space-y-1">
+                                    <p class="text-xs font-extrabold text-rose-900 dark:text-rose-300">ลบข้อมูลประวัติการออมทั้งหมด</p>
+                                    <p class="text-[10px] text-rose-700 dark:text-rose-400 leading-relaxed font-semibold">ธุรกรรมและประวัติการฝากเงินออมทั้งหมดจะถูกลบออกจาก Google Sheet ถาวรและไม่สามารถกู้คืนได้</p>
+                                </div>
+                                <button onclick="clearAllSavingsDatabase()" class="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-rose-500/10 flex items-center justify-center gap-1.5 flex-shrink-0">
+                                    <span class="material-symbols-rounded text-sm">delete_forever</span>
+                                    <span>ลบข้อมูลทั้งหมด</span>
+                                </button>
                             </div>
                         </div>
 
@@ -1286,6 +1301,49 @@
             renderSavingsChart();
             applyFilters();
             showToast(`ปรับสกุลเงินแสดงผลหลักเป็น ${currency}`);
+        }
+
+        // Action for clearing entire user savings database (Permanently)
+        function clearAllSavingsDatabase() {
+            if (!appState.user) return;
+            
+            // Double-check modal sequence for security
+            const firstConfirm = confirm("คำเตือน! คุณกำลังจะลบข้อมูลธุรกรรมการออมเงินทั้งหมดในระบบออนไลน์ ยืนยันที่จะทำรายการหรือไม่?");
+            if (!firstConfirm) return;
+            
+            const secondConfirm = confirm("คุณแน่ใจจริงๆ หรือไม่? ข้อมูลทั้งหมดที่ถูกลบจะไม่สามารถกู้คืนได้ไม่ว่ากรณีใดๆ");
+            if (!secondConfirm) return;
+
+            toggleLoader(true, "กำลังทำการเคลียร์ฐานข้อมูลคลาวด์ของคุณทั้งหมด...");
+
+            fetch(`${GOOGLE_SCRIPT_URL}`, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    action: 'clearAllSavings',
+                    userId: appState.user.id
+                })
+            })
+            .then(() => {
+                toggleLoader(false);
+                appState.savings = [];
+                
+                updateRankUI();
+                updateDashboardMetrics();
+                renderSavingsChart();
+                applyFilters();
+                startAutoHistoryCleaner();
+                
+                showToast("ระบบได้ทำการเคลียร์ล้างข้อมูลประวัติออมทรัพย์ทั้งหมดสำเร็จแล้ว", "success");
+            })
+            .catch(() => {
+                toggleLoader(false);
+                // Fallback direct clearance inside state memory
+                appState.savings = [];
+                updateDashboardMetrics();
+                showToast("การเชื่อมต่อสะดุด ระบบได้ล้างประวัติใน RAM ชั่วคราว", "error");
+            });
         }
 
         // Interaction event setups
