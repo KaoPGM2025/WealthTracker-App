@@ -145,7 +145,7 @@
                         <span class="material-symbols-rounded text-3xl">savings</span>
                     </div>
                     <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">SmartSave Pro+</h2>
-                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 26/05/2026</p>
+                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 27/05/2026</p>
                 </div>
 
                 <!-- Tab Controller -->
@@ -973,7 +973,7 @@
             
             document.getElementById('profileDisplayName').innerText = appState.user.name;
             document.getElementById('profileUserHandle').innerText = `@${appState.user.username}`;
-            document.getElementById('profileRegDate').innerText = appState.user.joinedDate || "25/05/2026";
+            document.getElementById('profileRegDate').innerText = appState.user.joinedDate || "27/05/2026";
             document.getElementById('profileSavedCount').innerText = `${appState.savings.length} ครั้ง`;
         }
 
@@ -1418,7 +1418,7 @@
                     .catch(() => {
                         toggleLoader(false);
                         // Safe simulated sandbox login fallback
-                        const mock = { id: 'USR_PRO_MOCK', name: user, username: user, joinedDate: '25/05/2026' };
+                        const mock = { id: 'USR_PRO_MOCK', name: user, username: user, joinedDate: '27/05/2026' };
                         appState.user = mock;
                         localStorage.setItem('savings_app_user', JSON.stringify(mock));
                         loadCloudData();
