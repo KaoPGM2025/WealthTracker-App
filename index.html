@@ -145,7 +145,7 @@
                         <span class="material-symbols-rounded text-3xl">savings</span>
                     </div>
                     <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">SmartSave Pro+</h2>
-                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 27/05/2026</p>
+                    <p class="text-xs text-slate-400 mt-1.5">ระบบบันทึกเงินออมระดับโปรประจำวันที่ 28/05/2026</p>
                 </div>
 
                 <!-- Tab Controller -->
@@ -419,7 +419,7 @@
                             <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">บันทึกความจำสั้น</label>
                             <div class="relative">
                                 <span class="material-symbols-rounded absolute left-3.5 top-3 text-slate-400">notes</span>
-                                <input type="text" id="saveNote" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs placeholder:text-slate-400" placeholder="ระบุคำอธิบายสั้น ๆ ป้องกันลืม">
+                                <input type="text" id="saveNote" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs placeholder:text-slate-400" placeholder="ระบุคำอธิบายสั้น ๆ ป้องกันลืม">
                             </div>
                         </div>
 
@@ -526,6 +526,12 @@
                         </div>
                     </div>
 
+                    <!-- Daily Lock Warning Notice (1 Action per Day) -->
+                    <div id="disciplineAlertBox" class="p-3.5 bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-900/50 rounded-2xl text-xs text-teal-800 dark:text-teal-400 flex gap-2.5 font-semibold items-center mb-6">
+                        <span class="material-symbols-rounded text-lg text-teal-600 flex-shrink-0">gavel</span>
+                        <span>กฎระเบียบวินัย Pro+: สามารถกดแก้ไขหรือลบข้อมูลธุรกรรมการออมเงินในระบบได้เพียง 1 ครั้งต่อวัน เพื่อรักษาพฤติกรรมความซื่อสัตย์ของการเก็บเงิน</span>
+                    </div>
+
                     <!-- Statistics Overviews -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-800/50 border border-emerald-100 dark:border-slate-800">
@@ -551,7 +557,7 @@
                                     <th class="p-4">หมวดหมู่</th>
                                     <th class="p-4">บันทึกความจำสั้น</th>
                                     <th class="p-4 text-right">จำนวนเงิน</th>
-                                    <th class="p-4 text-center">ลบ</th>
+                                    <th class="p-4 text-center">จัดการ</th>
                                 </tr>
                             </thead>
                             <tbody id="analyticsTableBody" class="text-xs divide-y divide-slate-100 dark:divide-slate-800">
@@ -973,7 +979,7 @@
             
             document.getElementById('profileDisplayName').innerText = appState.user.name;
             document.getElementById('profileUserHandle').innerText = `@${appState.user.username}`;
-            document.getElementById('profileRegDate').innerText = appState.user.joinedDate || "27/05/2026";
+            document.getElementById('profileRegDate').innerText = appState.user.joinedDate || "28/05/2026";
             document.getElementById('profileSavedCount').innerText = `${appState.savings.length} ครั้ง`;
         }
 
@@ -1303,6 +1309,24 @@
             showToast(`ปรับสกุลเงินแสดงผลหลักเป็น ${currency}`);
         }
 
+        // Check and log user daily edit/delete discipline limit
+        function checkDailyEditDisciplineAllowed() {
+            const todayStr = new Date().toDateString();
+            const actionKey = `savings_edit_date_${appState.user.id}`;
+            const lastActionDate = localStorage.getItem(actionKey);
+
+            if (lastActionDate && lastActionDate === todayStr) {
+                return false; // Limit exceeded for today
+            }
+            return true;
+        }
+
+        function markDailyEditDisciplineUsed() {
+            const todayStr = new Date().toDateString();
+            const actionKey = `savings_edit_date_${appState.user.id}`;
+            localStorage.setItem(actionKey, todayStr);
+        }
+
         // Action for clearing entire user savings database (Permanently)
         function clearAllSavingsDatabase() {
             if (!appState.user) return;
@@ -1418,7 +1442,7 @@
                     .catch(() => {
                         toggleLoader(false);
                         // Safe simulated sandbox login fallback
-                        const mock = { id: 'USR_PRO_MOCK', name: user, username: user, joinedDate: '27/05/2026' };
+                        const mock = { id: 'USR_PRO_MOCK', name: user, username: user, joinedDate: '28/05/2026' };
                         appState.user = mock;
                         localStorage.setItem('savings_app_user', JSON.stringify(mock));
                         loadCloudData();
@@ -1549,7 +1573,7 @@
             }
         }
 
-        // Apply advanced analytic filtering
+        // Apply advanced analytic filtering and check edit rule
         function applyFilters() {
             const query = document.getElementById('analyticsSearch').value.toLowerCase();
             const cat = document.getElementById('analyticsFilterCategory').value;
@@ -1589,9 +1613,17 @@
             }
             document.getElementById('statMaxCategory').innerText = maxCatName;
 
-            // Render table records
+            const isDisciplineAllowed = checkDailyEditDisciplineAllowed();
+
+            // Render table records with lock logic
             table.innerHTML = filtered.map(item => {
                 const dateText = new Date(item.date).toLocaleDateString('th-TH');
+                
+                // If daily limit exceeded, style delete button disabled
+                const deleteBtnClass = isDisciplineAllowed 
+                    ? 'p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-500 rounded-lg transition hover:scale-105'
+                    : 'p-1.5 text-slate-300 dark:text-slate-600 cursor-not-allowed rounded-lg';
+
                 return `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
                         <td class="p-4 font-bold text-slate-600 dark:text-slate-300">${dateText}</td>
@@ -1603,7 +1635,7 @@
                         <td class="p-4 text-slate-500 dark:text-slate-400 font-semibold">${item.note || '-'}</td>
                         <td class="p-4 text-right font-black text-brand-600 dark:text-brand-400">${formatVal(item.amount)} ${appState.settings.currency}</td>
                         <td class="p-4 text-center">
-                            <button onclick="deleteSavingRecord('${item.timestamp || item.date}')" class="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-500 rounded-lg transition">
+                            <button onclick="deleteSavingRecord('${item.timestamp || item.date}')" class="${deleteBtnClass}" title="${isDisciplineAllowed ? 'ลบข้อมูล' : 'จำกัดสิทธิ์แก้ไข 1 ครั้งต่อวันใช้แล้ว'}">
                                 <span class="material-symbols-rounded text-sm block">delete</span>
                             </button>
                         </td>
@@ -1612,9 +1644,14 @@
             }).join('');
         }
 
-        // Delete recorded transaction
+        // Delete recorded transaction with 1 edit limit per day protocol
         function deleteSavingRecord(idKey) {
-            if (!confirm("คุณมั่นใจที่จะลบรายการออมประวัตินี้ออกจากระบบหรือไม่?")) return;
+            if (!checkDailyEditDisciplineAllowed()) {
+                showToast("ขออภัย! คุณได้สิทธิ์แก้ไข/ลบข้อมูลของวันนี้ไปแล้ว (จำกัด 1 ครั้งต่อวันเพื่อวินัย)", "error");
+                return;
+            }
+
+            if (!confirm("คุณมั่นใจที่จะลบรายการออมประวัตินี้ออกจากระบบหรือไม่? (สิทธิ์การลบ/แก้ไขประจำวันนี้จะถูกใช้งานทันที)")) return;
 
             toggleLoader(true, "กำลังส่งข้อมูลขอลบประวัติจาก Google Sheets...");
             
@@ -1632,18 +1669,22 @@
                 toggleLoader(false);
                 appState.savings = appState.savings.filter(s => (s.timestamp || s.date) !== idKey);
                 
+                // Lock discipline for today
+                markDailyEditDisciplineUsed();
+                
                 updateRankUI();
                 updateDashboardMetrics();
                 applyFilters();
                 renderSavingsChart();
-                showToast("ประวัติข้อมูลถูกลบเรียบร้อยแล้ว");
+                showToast("ลบข้อมูลประวัติและใช้วินัยโควตาการแก้ไขของวันนี้แล้ว");
             })
             .catch(() => {
                 toggleLoader(false);
                 appState.savings = appState.savings.filter(s => (s.timestamp || s.date) !== idKey);
+                markDailyEditDisciplineUsed();
                 updateDashboardMetrics();
                 applyFilters();
-                showToast("ลบข้อมูลจาก Cache สำเร็จ");
+                showToast("ลบข้อมูลจาก Cache สำเร็จ และสิทธิ์ประจำวันถูกบันทึกแล้ว");
             });
         }
 
